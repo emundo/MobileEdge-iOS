@@ -20,12 +20,12 @@
 		23FD6741198A64C500D1A344 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8142F57F1988CEDC0088B18B /* UIKit.framework */; };
 		23FD6749198A64C500D1A344 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 23FD6747198A64C500D1A344 /* InfoPlist.strings */; };
 		23FD674B198A64C500D1A344 /* MobileEdgeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD674A198A64C500D1A344 /* MobileEdgeTests.m */; };
-		23FD675E198A665000D1A344 /* MOBIDDetailVIewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD6753198A665000D1A344 /* MOBIDDetailVIewController.m */; };
-		23FD675F198A665000D1A344 /* MOBIDObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD6755198A665000D1A344 /* MOBIDObject.m */; };
-		23FD6760198A665000D1A344 /* MOBIDTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD6757198A665000D1A344 /* MOBIDTableViewController.m */; };
-		23FD6761198A665000D1A344 /* MOBSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD6759198A665000D1A344 /* MOBSettingsViewController.m */; };
-		23FD6762198A665000D1A344 /* MOBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD675B198A665000D1A344 /* MOBViewController.m */; };
-		23FD6768198A6E1600D1A344 /* MOBBonusSystemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD6767198A6E1600D1A344 /* MOBBonusSystemViewController.m */; };
+		23FD77A0198A8FCA00E3CD76 /* MOBIDObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD779F198A8FCA00E3CD76 /* MOBIDObject.m */; };
+		23FD77AD198A904400E3CD76 /* MOBBonusSystemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77A2198A904400E3CD76 /* MOBBonusSystemViewController.m */; };
+		23FD77AE198A904400E3CD76 /* MOBIDDetailVIewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77A4198A904400E3CD76 /* MOBIDDetailVIewController.m */; };
+		23FD77AF198A904400E3CD76 /* MOBIDTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77A6198A904400E3CD76 /* MOBIDTableViewController.m */; };
+		23FD77B1198A904400E3CD76 /* MOBSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77AA198A904400E3CD76 /* MOBSettingsViewController.m */; };
+		23FD77B2198A904400E3CD76 /* MOBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77AC198A904400E3CD76 /* MOBViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,18 +53,18 @@
 		23FD6746198A64C500D1A344 /* MobileEdgeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MobileEdgeTests-Info.plist"; sourceTree = "<group>"; };
 		23FD6748198A64C500D1A344 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		23FD674A198A64C500D1A344 /* MobileEdgeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MobileEdgeTests.m; sourceTree = "<group>"; };
-		23FD6752198A665000D1A344 /* MOBIDDetailVIewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBIDDetailVIewController.h; sourceTree = "<group>"; };
-		23FD6753198A665000D1A344 /* MOBIDDetailVIewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBIDDetailVIewController.m; sourceTree = "<group>"; };
-		23FD6754198A665000D1A344 /* MOBIDObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBIDObject.h; sourceTree = "<group>"; };
-		23FD6755198A665000D1A344 /* MOBIDObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBIDObject.m; sourceTree = "<group>"; };
-		23FD6756198A665000D1A344 /* MOBIDTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBIDTableViewController.h; sourceTree = "<group>"; };
-		23FD6757198A665000D1A344 /* MOBIDTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBIDTableViewController.m; sourceTree = "<group>"; };
-		23FD6758198A665000D1A344 /* MOBSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBSettingsViewController.h; sourceTree = "<group>"; };
-		23FD6759198A665000D1A344 /* MOBSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBSettingsViewController.m; sourceTree = "<group>"; };
-		23FD675A198A665000D1A344 /* MOBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBViewController.h; sourceTree = "<group>"; };
-		23FD675B198A665000D1A344 /* MOBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBViewController.m; sourceTree = "<group>"; };
-		23FD6766198A6E1600D1A344 /* MOBBonusSystemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBBonusSystemViewController.h; sourceTree = "<group>"; };
-		23FD6767198A6E1600D1A344 /* MOBBonusSystemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBBonusSystemViewController.m; sourceTree = "<group>"; };
+		23FD779E198A8FCA00E3CD76 /* MOBIDObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBIDObject.h; path = Model/MOBIDObject.h; sourceTree = "<group>"; };
+		23FD779F198A8FCA00E3CD76 /* MOBIDObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBIDObject.m; path = Model/MOBIDObject.m; sourceTree = "<group>"; };
+		23FD77A1198A904400E3CD76 /* MOBBonusSystemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBBonusSystemViewController.h; path = ViewControllers/MOBBonusSystemViewController.h; sourceTree = "<group>"; };
+		23FD77A2198A904400E3CD76 /* MOBBonusSystemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBBonusSystemViewController.m; path = ViewControllers/MOBBonusSystemViewController.m; sourceTree = "<group>"; };
+		23FD77A3198A904400E3CD76 /* MOBIDDetailVIewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBIDDetailVIewController.h; path = ViewControllers/MOBIDDetailVIewController.h; sourceTree = "<group>"; };
+		23FD77A4198A904400E3CD76 /* MOBIDDetailVIewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBIDDetailVIewController.m; path = ViewControllers/MOBIDDetailVIewController.m; sourceTree = "<group>"; };
+		23FD77A5198A904400E3CD76 /* MOBIDTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBIDTableViewController.h; path = ViewControllers/MOBIDTableViewController.h; sourceTree = "<group>"; };
+		23FD77A6198A904400E3CD76 /* MOBIDTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBIDTableViewController.m; path = ViewControllers/MOBIDTableViewController.m; sourceTree = "<group>"; };
+		23FD77A9198A904400E3CD76 /* MOBSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBSettingsViewController.h; path = ViewControllers/MOBSettingsViewController.h; sourceTree = "<group>"; };
+		23FD77AA198A904400E3CD76 /* MOBSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBSettingsViewController.m; path = ViewControllers/MOBSettingsViewController.m; sourceTree = "<group>"; };
+		23FD77AB198A904400E3CD76 /* MOBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBViewController.h; path = ViewControllers/MOBViewController.h; sourceTree = "<group>"; };
+		23FD77AC198A904400E3CD76 /* MOBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBViewController.m; path = ViewControllers/MOBViewController.m; sourceTree = "<group>"; };
 		8142F5781988CEDC0088B18B /* MOBviewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MOBviewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8142F57B1988CEDC0088B18B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8142F57D1988CEDC0088B18B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -107,8 +107,8 @@
 		23FD6720198A64C400D1A344 /* MobileEdge */ = {
 			isa = PBXGroup;
 			children = (
+				23FD6764198A69DF00D1A344 /* Model */,
 				23FD6765198A69FC00D1A344 /* ViewControllers */,
-				23FD6764198A69DF00D1A344 /* Models */,
 				23FD6729198A64C400D1A344 /* MOBAppDelegate.h */,
 				23FD672A198A64C400D1A344 /* MOBAppDelegate.m */,
 				23FD672C198A64C400D1A344 /* Main_iPhone.storyboard */,
@@ -148,28 +148,28 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		23FD6764198A69DF00D1A344 /* Models */ = {
+		23FD6764198A69DF00D1A344 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				23FD6754198A665000D1A344 /* MOBIDObject.h */,
-				23FD6755198A665000D1A344 /* MOBIDObject.m */,
+				23FD779E198A8FCA00E3CD76 /* MOBIDObject.h */,
+				23FD779F198A8FCA00E3CD76 /* MOBIDObject.m */,
 			);
-			name = Models;
+			name = Model;
 			sourceTree = "<group>";
 		};
 		23FD6765198A69FC00D1A344 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				23FD6766198A6E1600D1A344 /* MOBBonusSystemViewController.h */,
-				23FD6767198A6E1600D1A344 /* MOBBonusSystemViewController.m */,
-				23FD6752198A665000D1A344 /* MOBIDDetailVIewController.h */,
-				23FD6753198A665000D1A344 /* MOBIDDetailVIewController.m */,
-				23FD6756198A665000D1A344 /* MOBIDTableViewController.h */,
-				23FD6757198A665000D1A344 /* MOBIDTableViewController.m */,
-				23FD6758198A665000D1A344 /* MOBSettingsViewController.h */,
-				23FD6759198A665000D1A344 /* MOBSettingsViewController.m */,
-				23FD675A198A665000D1A344 /* MOBViewController.h */,
-				23FD675B198A665000D1A344 /* MOBViewController.m */,
+				23FD77A1198A904400E3CD76 /* MOBBonusSystemViewController.h */,
+				23FD77A2198A904400E3CD76 /* MOBBonusSystemViewController.m */,
+				23FD77A3198A904400E3CD76 /* MOBIDDetailVIewController.h */,
+				23FD77A4198A904400E3CD76 /* MOBIDDetailVIewController.m */,
+				23FD77A5198A904400E3CD76 /* MOBIDTableViewController.h */,
+				23FD77A6198A904400E3CD76 /* MOBIDTableViewController.m */,
+				23FD77A9198A904400E3CD76 /* MOBSettingsViewController.h */,
+				23FD77AA198A904400E3CD76 /* MOBSettingsViewController.m */,
+				23FD77AB198A904400E3CD76 /* MOBViewController.h */,
+				23FD77AC198A904400E3CD76 /* MOBViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -308,12 +308,12 @@
 			files = (
 				23FD6727198A64C400D1A344 /* main.m in Sources */,
 				23FD672B198A64C400D1A344 /* MOBAppDelegate.m in Sources */,
-				23FD6768198A6E1600D1A344 /* MOBBonusSystemViewController.m in Sources */,
-				23FD6760198A665000D1A344 /* MOBIDTableViewController.m in Sources */,
-				23FD6761198A665000D1A344 /* MOBSettingsViewController.m in Sources */,
-				23FD675F198A665000D1A344 /* MOBIDObject.m in Sources */,
-				23FD6762198A665000D1A344 /* MOBViewController.m in Sources */,
-				23FD675E198A665000D1A344 /* MOBIDDetailVIewController.m in Sources */,
+				23FD77B1198A904400E3CD76 /* MOBSettingsViewController.m in Sources */,
+				23FD77B2198A904400E3CD76 /* MOBViewController.m in Sources */,
+				23FD77AD198A904400E3CD76 /* MOBBonusSystemViewController.m in Sources */,
+				23FD77AF198A904400E3CD76 /* MOBIDTableViewController.m in Sources */,
+				23FD77A0198A8FCA00E3CD76 /* MOBIDObject.m in Sources */,
+				23FD77AE198A904400E3CD76 /* MOBIDDetailVIewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
