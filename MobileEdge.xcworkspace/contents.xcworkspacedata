@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:MobileEdge/Security/MOBAxolotl.h">
+   </FileRef>
+   <FileRef
+      location = "group:MobileEdge/Security/MOBAxolotl.m">
+   </FileRef>
+   <FileRef
+      location = "group:MobileEdge.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+</Workspace>
