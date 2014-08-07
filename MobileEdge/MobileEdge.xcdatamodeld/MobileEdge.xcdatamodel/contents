@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="12F45" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+    <entity name="BlindedValueToken" representedClassName="MOBBlindedValueToken" syncable="YES">
+        <attribute name="blindedID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="blindingFactor" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="IDToken" representedClassName="MOBIDToken" syncable="YES">
+        <attribute name="info" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="mac" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ValueToken" representedClassName="MOBValueToken" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="BlindedValueToken" positionX="-63" positionY="150" width="128" height="75"/>
+        <element name="IDToken" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="ValueToken" positionX="169" positionY="57" width="128" height="75"/>
+    </elements>
 </model>

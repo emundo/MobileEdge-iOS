@@ -7,11 +7,14 @@
 //
 
 #import "MOBAppDelegate.h"
+#import "EncryptedStore.h"
 
 @implementation MOBAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //NSPersistentStoreCoordinator *coordinator = [EncryptedStore makeStore:[self managedObjectModel]
+                                                                 //passcode:@"SuperSafeMobileEdgePasscode;)"];
     // Override point for customization after application launch.
     return YES;
 }
