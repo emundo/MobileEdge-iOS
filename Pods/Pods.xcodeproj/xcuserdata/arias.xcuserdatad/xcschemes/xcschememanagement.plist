@@ -9,12 +9,32 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-MobileEdge-CocoaLumberjack.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-MobileEdge-EncryptedCoreData.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-MobileEdge-NAChloride.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-MobileEdge-Objection.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-MobileEdge-SQLCipher.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-MobileEdge-libsodium.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -27,22 +47,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2CA17BB25C114B0DA3279AD3</key>
+		<key>50F0A3AD91B246358E10FE0A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>43AAC6B6FD5C49888F50EFFB</key>
+		<key>5BE25536C7054397B4343741</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B26C0A083D2D44E78A52DDD7</key>
+		<key>82FE042443024B2CA78F7EEC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C5312639C90846DF83F244C3</key>
+		<key>86FB672A06EC4FB7A8781B4C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>900E6A0D02DC432F88FC0652</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9BB3E00517E249379188CDD2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C92AE2BAB31B4D94A5FD2F9B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CDA9D86EDDB14F89ADDC36B2</key>
 		<dict>
 			<key>primary</key>
 			<true/>

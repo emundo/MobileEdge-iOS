@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Objection/Objection.h>
 
-@interface MOBObjectionModule : NSObject
+
+@interface MOBObjectionModule : JSObjectionModule
 
 @end

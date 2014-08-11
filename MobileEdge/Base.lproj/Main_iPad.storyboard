@@ -439,7 +439,7 @@
         <!--DetailV Iew Controller-->
         <scene sceneID="6ZS-XR-thW">
             <objects>
-                <viewController storyboardIdentifier="MOBIDDetailView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xyb-00-22D" customClass="MOBIDDetailVIewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MOBIDDetailView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xyb-00-22D" customClass="MOBIDDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="M1i-iS-bio"/>
                         <viewControllerLayoutGuide type="bottom" id="e2A-ZR-Z2M"/>

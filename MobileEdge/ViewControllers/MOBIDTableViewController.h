@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MOBIDDetailVIewController.h"
+#import "MOBIDDetailViewController.h"
 
 @interface MOBIDTableViewController : UITableViewController
 

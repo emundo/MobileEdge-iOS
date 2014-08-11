@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 BOSS. All rights reserved.
 //
 
-#import "MOBIDDetailVIewController.h"
+#import "MOBIDDetailViewController.h"
 
-@interface MOBIDDetailVIewController ()
+@interface MOBIDDetailViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *macLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ttlLabel;
@@ -21,7 +21,7 @@
 
 @end
 
-@implementation MOBIDDetailVIewController
+@implementation MOBIDDetailViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

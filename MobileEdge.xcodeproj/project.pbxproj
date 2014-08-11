@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23AF8C3D1998E63B00DB4B2B /* AMErrorHandlerUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8C3A1998E63B00DB4B2B /* AMErrorHandlerUI.m */; };
+		23AF8C3E1998E63B00DB4B2B /* AMErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8C3C1998E63B00DB4B2B /* AMErrorManager.m */; };
+		23AF8C3F1998F7C700DB4B2B /* MOBIDDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77A4198A904400E3CD76 /* MOBIDDetailViewController.m */; };
 		23F37DC419910F230074E62D /* MobileEdge.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DC219910F230074E62D /* MobileEdge.xcdatamodeld */; };
 		23F37DD819936F970074E62D /* MOBAxolotl.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DD719936F970074E62D /* MOBAxolotl.m */; };
 		23F37DE11993700A0074E62D /* AMADataAccessCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DE01993700A0074E62D /* AMADataAccessCoreData.m */; };
@@ -15,9 +18,8 @@
 		23F37DEA199372620074E62D /* MOBValueToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DE9199372620074E62D /* MOBValueToken.m */; };
 		23F37DED199372620074E62D /* MOBBlindedValueToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DEC199372620074E62D /* MOBBlindedValueToken.m */; };
 		23F37DF0199372620074E62D /* MOBIDToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DEF199372620074E62D /* MOBIDToken.m */; };
-		23F37DF3199372C50074E62D /* MOBBlindedValueToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DF2199372C50074E62D /* MOBBlindedValueToken.m */; };
-		23F37DF6199372C60074E62D /* MOBValueToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DF5199372C60074E62D /* MOBValueToken.m */; };
-		23F37DF9199372C60074E62D /* MOBIDToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DF8199372C60074E62D /* MOBIDToken.m */; };
+		23F37DFC1998A1420074E62D /* MOBObjectionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DFB1998A1420074E62D /* MOBObjectionModule.m */; };
+		23F37DFF1998A34F0074E62D /* MOBTorInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DFE1998A34F0074E62D /* MOBTorInterface.m */; };
 		23FD671D198A64C400D1A344 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8142F57B1988CEDC0088B18B /* Foundation.framework */; };
 		23FD671E198A64C400D1A344 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8142F57D1988CEDC0088B18B /* CoreGraphics.framework */; };
 		23FD671F198A64C400D1A344 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8142F57F1988CEDC0088B18B /* UIKit.framework */; };
@@ -31,9 +33,8 @@
 		23FD6741198A64C500D1A344 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8142F57F1988CEDC0088B18B /* UIKit.framework */; };
 		23FD6749198A64C500D1A344 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 23FD6747198A64C500D1A344 /* InfoPlist.strings */; };
 		23FD674B198A64C500D1A344 /* MobileEdgeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD674A198A64C500D1A344 /* MobileEdgeTests.m */; };
-		23FD77A0198A8FCA00E3CD76 /* MOBIDObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD779F198A8FCA00E3CD76 /* MOBIDObject.m */; };
+		23FD77A0198A8FCA00E3CD76 /* MOBIdentity.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD779F198A8FCA00E3CD76 /* MOBIdentity.m */; };
 		23FD77AD198A904400E3CD76 /* MOBBonusSystemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77A2198A904400E3CD76 /* MOBBonusSystemViewController.m */; };
-		23FD77AE198A904400E3CD76 /* MOBIDDetailVIewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77A4198A904400E3CD76 /* MOBIDDetailVIewController.m */; };
 		23FD77AF198A904400E3CD76 /* MOBIDTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77A6198A904400E3CD76 /* MOBIDTableViewController.m */; };
 		23FD77B1198A904400E3CD76 /* MOBSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77AA198A904400E3CD76 /* MOBSettingsViewController.m */; };
 		23FD77B2198A904400E3CD76 /* MOBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77AC198A904400E3CD76 /* MOBViewController.m */; };
@@ -51,6 +52,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		23AF8C381998E63B00DB4B2B /* AMErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMErrorHandler.h; sourceTree = "<group>"; };
+		23AF8C391998E63B00DB4B2B /* AMErrorHandlerUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMErrorHandlerUI.h; sourceTree = "<group>"; };
+		23AF8C3A1998E63B00DB4B2B /* AMErrorHandlerUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMErrorHandlerUI.m; sourceTree = "<group>"; };
+		23AF8C3B1998E63B00DB4B2B /* AMErrorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMErrorManager.h; sourceTree = "<group>"; };
+		23AF8C3C1998E63B00DB4B2B /* AMErrorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMErrorManager.m; sourceTree = "<group>"; };
 		23F37DC319910F230074E62D /* MobileEdge.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MobileEdge.xcdatamodel; sourceTree = "<group>"; };
 		23F37DD619936F970074E62D /* MOBAxolotl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBAxolotl.h; sourceTree = "<group>"; };
 		23F37DD719936F970074E62D /* MOBAxolotl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBAxolotl.m; sourceTree = "<group>"; };
@@ -67,12 +73,10 @@
 		23F37DEC199372620074E62D /* MOBBlindedValueToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBBlindedValueToken.m; path = Model/MOBBlindedValueToken.m; sourceTree = "<group>"; };
 		23F37DEE199372620074E62D /* MOBIDToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBIDToken.h; path = Model/MOBIDToken.h; sourceTree = "<group>"; };
 		23F37DEF199372620074E62D /* MOBIDToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBIDToken.m; path = Model/MOBIDToken.m; sourceTree = "<group>"; };
-		23F37DF1199372C50074E62D /* MOBBlindedValueToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBBlindedValueToken.h; path = Model/MOBBlindedValueToken.h; sourceTree = "<group>"; };
-		23F37DF2199372C50074E62D /* MOBBlindedValueToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBBlindedValueToken.m; path = Model/MOBBlindedValueToken.m; sourceTree = "<group>"; };
-		23F37DF4199372C60074E62D /* MOBValueToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBValueToken.h; path = Model/MOBValueToken.h; sourceTree = "<group>"; };
-		23F37DF5199372C60074E62D /* MOBValueToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBValueToken.m; path = Model/MOBValueToken.m; sourceTree = "<group>"; };
-		23F37DF7199372C60074E62D /* MOBIDToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBIDToken.h; path = Model/MOBIDToken.h; sourceTree = "<group>"; };
-		23F37DF8199372C60074E62D /* MOBIDToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBIDToken.m; path = Model/MOBIDToken.m; sourceTree = "<group>"; };
+		23F37DFA1998A1420074E62D /* MOBObjectionModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBObjectionModule.h; sourceTree = "<group>"; };
+		23F37DFB1998A1420074E62D /* MOBObjectionModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBObjectionModule.m; sourceTree = "<group>"; };
+		23F37DFD1998A34F0074E62D /* MOBTorInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBTorInterface.h; sourceTree = "<group>"; };
+		23F37DFE1998A34F0074E62D /* MOBTorInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBTorInterface.m; sourceTree = "<group>"; };
 		23FD671C198A64C400D1A344 /* MobileEdge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileEdge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23FD6722198A64C400D1A344 /* MobileEdge-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MobileEdge-Info.plist"; sourceTree = "<group>"; };
 		23FD6724198A64C400D1A344 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -87,12 +91,12 @@
 		23FD6746198A64C500D1A344 /* MobileEdgeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MobileEdgeTests-Info.plist"; sourceTree = "<group>"; };
 		23FD6748198A64C500D1A344 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		23FD674A198A64C500D1A344 /* MobileEdgeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MobileEdgeTests.m; sourceTree = "<group>"; };
-		23FD779E198A8FCA00E3CD76 /* MOBIDObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBIDObject.h; path = Model/MOBIDObject.h; sourceTree = "<group>"; };
-		23FD779F198A8FCA00E3CD76 /* MOBIDObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBIDObject.m; path = Model/MOBIDObject.m; sourceTree = "<group>"; };
+		23FD779E198A8FCA00E3CD76 /* MOBIdentity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBIdentity.h; path = Model/MOBIdentity.h; sourceTree = "<group>"; };
+		23FD779F198A8FCA00E3CD76 /* MOBIdentity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBIdentity.m; path = Model/MOBIdentity.m; sourceTree = "<group>"; };
 		23FD77A1198A904400E3CD76 /* MOBBonusSystemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBBonusSystemViewController.h; path = ViewControllers/MOBBonusSystemViewController.h; sourceTree = "<group>"; };
 		23FD77A2198A904400E3CD76 /* MOBBonusSystemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBBonusSystemViewController.m; path = ViewControllers/MOBBonusSystemViewController.m; sourceTree = "<group>"; };
-		23FD77A3198A904400E3CD76 /* MOBIDDetailVIewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBIDDetailVIewController.h; path = ViewControllers/MOBIDDetailVIewController.h; sourceTree = "<group>"; };
-		23FD77A4198A904400E3CD76 /* MOBIDDetailVIewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBIDDetailVIewController.m; path = ViewControllers/MOBIDDetailVIewController.m; sourceTree = "<group>"; };
+		23FD77A3198A904400E3CD76 /* MOBIDDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBIDDetailViewController.h; path = ViewControllers/MOBIDDetailViewController.h; sourceTree = "<group>"; };
+		23FD77A4198A904400E3CD76 /* MOBIDDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBIDDetailViewController.m; path = ViewControllers/MOBIDDetailViewController.m; sourceTree = "<group>"; };
 		23FD77A5198A904400E3CD76 /* MOBIDTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBIDTableViewController.h; path = ViewControllers/MOBIDTableViewController.h; sourceTree = "<group>"; };
 		23FD77A6198A904400E3CD76 /* MOBIDTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBIDTableViewController.m; path = ViewControllers/MOBIDTableViewController.m; sourceTree = "<group>"; };
 		23FD77A9198A904400E3CD76 /* MOBSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBSettingsViewController.h; path = ViewControllers/MOBSettingsViewController.h; sourceTree = "<group>"; };
@@ -134,6 +138,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		23AF8C371998E63B00DB4B2B /* ErrorHandler */ = {
+			isa = PBXGroup;
+			children = (
+				23AF8C381998E63B00DB4B2B /* AMErrorHandler.h */,
+				23AF8C391998E63B00DB4B2B /* AMErrorHandlerUI.h */,
+				23AF8C3A1998E63B00DB4B2B /* AMErrorHandlerUI.m */,
+				23AF8C3B1998E63B00DB4B2B /* AMErrorManager.h */,
+				23AF8C3C1998E63B00DB4B2B /* AMErrorManager.m */,
+			);
+			path = ErrorHandler;
+			sourceTree = "<group>";
+		};
 		23F37DD519936F970074E62D /* Security */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +166,10 @@
 				23F37DE3199370560074E62D /* MOBIdentityManagement.m */,
 				23F37DE5199370C80074E62D /* MOBTokenNegotiator.h */,
 				23F37DE6199370C80074E62D /* MOBTokenNegotiator.m */,
+				23F37DFA1998A1420074E62D /* MOBObjectionModule.h */,
+				23F37DFB1998A1420074E62D /* MOBObjectionModule.m */,
+				23F37DFD1998A34F0074E62D /* MOBTorInterface.h */,
+				23F37DFE1998A34F0074E62D /* MOBTorInterface.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -175,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				23F37DDD1993700A0074E62D /* DataAccess */,
+				23AF8C371998E63B00DB4B2B /* ErrorHandler */,
 				23FD6764198A69DF00D1A344 /* Model */,
 				23F37DD519936F970074E62D /* Security */,
 				23F37DDC19936FD80074E62D /* Services */,
@@ -186,12 +207,6 @@
 				23FD6738198A64C400D1A344 /* Images.xcassets */,
 				23FD6721198A64C400D1A344 /* Supporting Files */,
 				23F37DC219910F230074E62D /* MobileEdge.xcdatamodeld */,
-				23F37DF7199372C60074E62D /* MOBIDToken.h */,
-				23F37DF8199372C60074E62D /* MOBIDToken.m */,
-				23F37DF4199372C60074E62D /* MOBValueToken.h */,
-				23F37DF5199372C60074E62D /* MOBValueToken.m */,
-				23F37DF1199372C50074E62D /* MOBBlindedValueToken.h */,
-				23F37DF2199372C50074E62D /* MOBBlindedValueToken.m */,
 			);
 			path = MobileEdge;
 			sourceTree = "<group>";
@@ -234,8 +249,8 @@
 				23F37DEC199372620074E62D /* MOBBlindedValueToken.m */,
 				23F37DE8199372620074E62D /* MOBValueToken.h */,
 				23F37DE9199372620074E62D /* MOBValueToken.m */,
-				23FD779E198A8FCA00E3CD76 /* MOBIDObject.h */,
-				23FD779F198A8FCA00E3CD76 /* MOBIDObject.m */,
+				23FD779E198A8FCA00E3CD76 /* MOBIdentity.h */,
+				23FD779F198A8FCA00E3CD76 /* MOBIdentity.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -245,8 +260,8 @@
 			children = (
 				23FD77A1198A904400E3CD76 /* MOBBonusSystemViewController.h */,
 				23FD77A2198A904400E3CD76 /* MOBBonusSystemViewController.m */,
-				23FD77A3198A904400E3CD76 /* MOBIDDetailVIewController.h */,
-				23FD77A4198A904400E3CD76 /* MOBIDDetailVIewController.m */,
+				23FD77A3198A904400E3CD76 /* MOBIDDetailViewController.h */,
+				23FD77A4198A904400E3CD76 /* MOBIDDetailViewController.m */,
 				23FD77A5198A904400E3CD76 /* MOBIDTableViewController.h */,
 				23FD77A6198A904400E3CD76 /* MOBIDTableViewController.m */,
 				23FD77A9198A904400E3CD76 /* MOBSettingsViewController.h */,
@@ -431,20 +446,21 @@
 				23FD6727198A64C400D1A344 /* main.m in Sources */,
 				23FD672B198A64C400D1A344 /* MOBAppDelegate.m in Sources */,
 				23FD77B1198A904400E3CD76 /* MOBSettingsViewController.m in Sources */,
+				23AF8C3D1998E63B00DB4B2B /* AMErrorHandlerUI.m in Sources */,
 				23FD77B2198A904400E3CD76 /* MOBViewController.m in Sources */,
+				23F37DFF1998A34F0074E62D /* MOBTorInterface.m in Sources */,
 				23F37DE11993700A0074E62D /* AMADataAccessCoreData.m in Sources */,
 				23F37DD819936F970074E62D /* MOBAxolotl.m in Sources */,
-				23F37DF3199372C50074E62D /* MOBBlindedValueToken.m in Sources */,
+				23F37DFC1998A1420074E62D /* MOBObjectionModule.m in Sources */,
 				23F37DED199372620074E62D /* MOBBlindedValueToken.m in Sources */,
 				23F37DF0199372620074E62D /* MOBIDToken.m in Sources */,
 				23F37DE7199370C80074E62D /* MOBTokenNegotiator.m in Sources */,
-				23F37DF9199372C60074E62D /* MOBIDToken.m in Sources */,
+				23AF8C3E1998E63B00DB4B2B /* AMErrorManager.m in Sources */,
 				23FD77AD198A904400E3CD76 /* MOBBonusSystemViewController.m in Sources */,
 				23FD77AF198A904400E3CD76 /* MOBIDTableViewController.m in Sources */,
-				23F37DF6199372C60074E62D /* MOBValueToken.m in Sources */,
-				23FD77A0198A8FCA00E3CD76 /* MOBIDObject.m in Sources */,
+				23FD77A0198A8FCA00E3CD76 /* MOBIdentity.m in Sources */,
 				23F37DE4199370560074E62D /* MOBIdentityManagement.m in Sources */,
-				23FD77AE198A904400E3CD76 /* MOBIDDetailVIewController.m in Sources */,
+				23AF8C3F1998F7C700DB4B2B /* MOBIDDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

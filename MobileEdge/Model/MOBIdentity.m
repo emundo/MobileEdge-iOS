@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 BOSS. All rights reserved.
 //
 
-#import "MOBIDObject.h"
+#import "MOBIdentity.h"
 
-@implementation MOBIDObject
+@implementation MOBIdentity
 @synthesize ttl;
 @synthesize mac;
 @synthesize nonce;

@@ -30,7 +30,7 @@
     // Do any additional setup after loading the view.
     self.arrayIDs = [[NSMutableArray alloc] init];
     
-    MOBIDObject *ID1 = [[MOBIDObject alloc] init];
+    MOBIdentity *ID1 = [[MOBIdentity alloc] init];
     ID1.ttl = @"tomorrow";
     ID1.nonce = @"lalala";
     ID1.mac = @"code";
@@ -65,7 +65,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-    MOBIDObject *idObject = [self.arrayIDs objectAtIndex:indexPath.row];
+    MOBIdentity *idObject = [self.arrayIDs objectAtIndex:indexPath.row];
     cell.textLabel.text = idObject.ttl;
     
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
@@ -74,7 +74,7 @@
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath;
 {
-    MOBIDDetailVIewController *controllerID = [self.storyboard instantiateViewControllerWithIdentifier:@"MOBIDDetailView"];
+    MOBIDDetailViewController *controllerID = [self.storyboard instantiateViewControllerWithIdentifier:@"MOBIDDetailView"];
     
     controllerID.idObject = [self.arrayIDs objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:controllerID animated:YES];

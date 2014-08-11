@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MOBIDObject : NSObject
+@interface MOBIdentity : NSObject
 
 @property (nonatomic, retain) NSString *ttl;
 @property (nonatomic, retain) NSString *nonce;

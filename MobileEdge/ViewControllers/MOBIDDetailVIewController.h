@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MOBIDObject.h"
+#import "MOBIdentity.h"
 
-@interface MOBIDDetailVIewController : UIViewController
+@interface MOBIDDetailViewController : UIViewController
 
-@property (nonatomic, strong) MOBIDObject *idObject;
+@property (nonatomic, strong) MOBIdentity *idObject;
 
 @end

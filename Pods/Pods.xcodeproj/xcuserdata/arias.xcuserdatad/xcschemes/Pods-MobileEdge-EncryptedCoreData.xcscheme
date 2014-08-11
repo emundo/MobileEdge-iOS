@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "43AAC6B6FD5C49888F50EFFB"
+               BlueprintIdentifier = "9BB3E00517E249379188CDD2"
                BuildableName = "libPods-MobileEdge-EncryptedCoreData.a"
                BlueprintName = "Pods-MobileEdge-EncryptedCoreData"
                ReferencedContainer = "container:Pods.xcodeproj">

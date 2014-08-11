@@ -48,11 +48,41 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 3
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 1
 
+// CocoaLumberjack
+#define COCOAPODS_POD_AVAILABLE_CocoaLumberjack
+#define COCOAPODS_VERSION_MAJOR_CocoaLumberjack 1
+#define COCOAPODS_VERSION_MINOR_CocoaLumberjack 9
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack 2
+
+// CocoaLumberjack/Core
+#define COCOAPODS_POD_AVAILABLE_CocoaLumberjack_Core
+#define COCOAPODS_VERSION_MAJOR_CocoaLumberjack_Core 1
+#define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Core 9
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Core 2
+
+// CocoaLumberjack/Extensions
+#define COCOAPODS_POD_AVAILABLE_CocoaLumberjack_Extensions
+#define COCOAPODS_VERSION_MAJOR_CocoaLumberjack_Extensions 1
+#define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Extensions 9
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Extensions 2
+
 // EncryptedCoreData
 #define COCOAPODS_POD_AVAILABLE_EncryptedCoreData
 #define COCOAPODS_VERSION_MAJOR_EncryptedCoreData 2
 #define COCOAPODS_VERSION_MINOR_EncryptedCoreData 0
 #define COCOAPODS_VERSION_PATCH_EncryptedCoreData 0
+
+// NAChloride
+#define COCOAPODS_POD_AVAILABLE_NAChloride
+#define COCOAPODS_VERSION_MAJOR_NAChloride 1
+#define COCOAPODS_VERSION_MINOR_NAChloride 0
+#define COCOAPODS_VERSION_PATCH_NAChloride 8
+
+// Objection
+#define COCOAPODS_POD_AVAILABLE_Objection
+#define COCOAPODS_VERSION_MAJOR_Objection 1
+#define COCOAPODS_VERSION_MINOR_Objection 4
+#define COCOAPODS_VERSION_PATCH_Objection 0
 
 // SQLCipher
 #define COCOAPODS_POD_AVAILABLE_SQLCipher
@@ -71,4 +101,10 @@
 #define COCOAPODS_VERSION_MAJOR_SQLCipher_standard 3
 #define COCOAPODS_VERSION_MINOR_SQLCipher_standard 1
 #define COCOAPODS_VERSION_PATCH_SQLCipher_standard 0
+
+// libsodium
+#define COCOAPODS_POD_AVAILABLE_libsodium
+#define COCOAPODS_VERSION_MAJOR_libsodium 0
+#define COCOAPODS_VERSION_MINOR_libsodium 6
+#define COCOAPODS_VERSION_PATCH_libsodium 1
 

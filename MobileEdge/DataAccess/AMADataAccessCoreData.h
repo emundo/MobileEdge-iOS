@@ -7,14 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 #import "AMADataAccess.h"
-#import "QBErrorHandling.h"
+#import "AMErrorHandler.h"
 
 
 @interface AMADataAccessCoreData : NSObject <AMADataAccess>
 
 @property (nonatomic,strong) NSManagedObjectContext *context;
 
-@property (nonatomic, weak) id<QBErrorHandling> errorHandler;
+@property (nonatomic, weak) id<AMErrorHandler> errorHandler;
 
 @end
