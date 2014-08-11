@@ -10,14 +10,15 @@
 		23AF8C3D1998E63B00DB4B2B /* AMErrorHandlerUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8C3A1998E63B00DB4B2B /* AMErrorHandlerUI.m */; };
 		23AF8C3E1998E63B00DB4B2B /* AMErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8C3C1998E63B00DB4B2B /* AMErrorManager.m */; };
 		23AF8C3F1998F7C700DB4B2B /* MOBIDDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77A4198A904400E3CD76 /* MOBIDDetailViewController.m */; };
+		23CDB7EA1999066A0007C3C5 /* MOBVendorSecret.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CDB7E91999066A0007C3C5 /* MOBVendorSecret.m */; };
+		23CDB7ED1999066B0007C3C5 /* MOBValueToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CDB7EC1999066B0007C3C5 /* MOBValueToken.m */; };
+		23CDB7F01999066B0007C3C5 /* MOBBlindedValueToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CDB7EF1999066B0007C3C5 /* MOBBlindedValueToken.m */; };
+		23CDB7F31999066B0007C3C5 /* MOBIDToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CDB7F21999066B0007C3C5 /* MOBIDToken.m */; };
 		23F37DC419910F230074E62D /* MobileEdge.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DC219910F230074E62D /* MobileEdge.xcdatamodeld */; };
 		23F37DD819936F970074E62D /* MOBAxolotl.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DD719936F970074E62D /* MOBAxolotl.m */; };
 		23F37DE11993700A0074E62D /* AMADataAccessCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DE01993700A0074E62D /* AMADataAccessCoreData.m */; };
 		23F37DE4199370560074E62D /* MOBIdentityManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DE3199370560074E62D /* MOBIdentityManagement.m */; };
 		23F37DE7199370C80074E62D /* MOBTokenNegotiator.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DE6199370C80074E62D /* MOBTokenNegotiator.m */; };
-		23F37DEA199372620074E62D /* MOBValueToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DE9199372620074E62D /* MOBValueToken.m */; };
-		23F37DED199372620074E62D /* MOBBlindedValueToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DEC199372620074E62D /* MOBBlindedValueToken.m */; };
-		23F37DF0199372620074E62D /* MOBIDToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DEF199372620074E62D /* MOBIDToken.m */; };
 		23F37DFC1998A1420074E62D /* MOBObjectionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DFB1998A1420074E62D /* MOBObjectionModule.m */; };
 		23F37DFF1998A34F0074E62D /* MOBTorInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DFE1998A34F0074E62D /* MOBTorInterface.m */; };
 		23FD671D198A64C400D1A344 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8142F57B1988CEDC0088B18B /* Foundation.framework */; };
@@ -57,6 +58,14 @@
 		23AF8C3A1998E63B00DB4B2B /* AMErrorHandlerUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMErrorHandlerUI.m; sourceTree = "<group>"; };
 		23AF8C3B1998E63B00DB4B2B /* AMErrorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMErrorManager.h; sourceTree = "<group>"; };
 		23AF8C3C1998E63B00DB4B2B /* AMErrorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMErrorManager.m; sourceTree = "<group>"; };
+		23CDB7E81999066A0007C3C5 /* MOBVendorSecret.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBVendorSecret.h; path = Model/MOBVendorSecret.h; sourceTree = "<group>"; };
+		23CDB7E91999066A0007C3C5 /* MOBVendorSecret.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBVendorSecret.m; path = Model/MOBVendorSecret.m; sourceTree = "<group>"; };
+		23CDB7EB1999066B0007C3C5 /* MOBValueToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBValueToken.h; path = Model/MOBValueToken.h; sourceTree = "<group>"; };
+		23CDB7EC1999066B0007C3C5 /* MOBValueToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBValueToken.m; path = Model/MOBValueToken.m; sourceTree = "<group>"; };
+		23CDB7EE1999066B0007C3C5 /* MOBBlindedValueToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBBlindedValueToken.h; path = Model/MOBBlindedValueToken.h; sourceTree = "<group>"; };
+		23CDB7EF1999066B0007C3C5 /* MOBBlindedValueToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBBlindedValueToken.m; path = Model/MOBBlindedValueToken.m; sourceTree = "<group>"; };
+		23CDB7F11999066B0007C3C5 /* MOBIDToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBIDToken.h; path = Model/MOBIDToken.h; sourceTree = "<group>"; };
+		23CDB7F21999066B0007C3C5 /* MOBIDToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBIDToken.m; path = Model/MOBIDToken.m; sourceTree = "<group>"; };
 		23F37DC319910F230074E62D /* MobileEdge.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MobileEdge.xcdatamodel; sourceTree = "<group>"; };
 		23F37DD619936F970074E62D /* MOBAxolotl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBAxolotl.h; sourceTree = "<group>"; };
 		23F37DD719936F970074E62D /* MOBAxolotl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBAxolotl.m; sourceTree = "<group>"; };
@@ -67,12 +76,6 @@
 		23F37DE3199370560074E62D /* MOBIdentityManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBIdentityManagement.m; sourceTree = "<group>"; };
 		23F37DE5199370C80074E62D /* MOBTokenNegotiator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBTokenNegotiator.h; sourceTree = "<group>"; };
 		23F37DE6199370C80074E62D /* MOBTokenNegotiator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBTokenNegotiator.m; sourceTree = "<group>"; };
-		23F37DE8199372620074E62D /* MOBValueToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBValueToken.h; path = Model/MOBValueToken.h; sourceTree = "<group>"; };
-		23F37DE9199372620074E62D /* MOBValueToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBValueToken.m; path = Model/MOBValueToken.m; sourceTree = "<group>"; };
-		23F37DEB199372620074E62D /* MOBBlindedValueToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBBlindedValueToken.h; path = Model/MOBBlindedValueToken.h; sourceTree = "<group>"; };
-		23F37DEC199372620074E62D /* MOBBlindedValueToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBBlindedValueToken.m; path = Model/MOBBlindedValueToken.m; sourceTree = "<group>"; };
-		23F37DEE199372620074E62D /* MOBIDToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBIDToken.h; path = Model/MOBIDToken.h; sourceTree = "<group>"; };
-		23F37DEF199372620074E62D /* MOBIDToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBIDToken.m; path = Model/MOBIDToken.m; sourceTree = "<group>"; };
 		23F37DFA1998A1420074E62D /* MOBObjectionModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBObjectionModule.h; sourceTree = "<group>"; };
 		23F37DFB1998A1420074E62D /* MOBObjectionModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBObjectionModule.m; sourceTree = "<group>"; };
 		23F37DFD1998A34F0074E62D /* MOBTorInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBTorInterface.h; sourceTree = "<group>"; };
@@ -243,12 +246,14 @@
 		23FD6764198A69DF00D1A344 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				23F37DEE199372620074E62D /* MOBIDToken.h */,
-				23F37DEF199372620074E62D /* MOBIDToken.m */,
-				23F37DEB199372620074E62D /* MOBBlindedValueToken.h */,
-				23F37DEC199372620074E62D /* MOBBlindedValueToken.m */,
-				23F37DE8199372620074E62D /* MOBValueToken.h */,
-				23F37DE9199372620074E62D /* MOBValueToken.m */,
+				23CDB7F11999066B0007C3C5 /* MOBIDToken.h */,
+				23CDB7F21999066B0007C3C5 /* MOBIDToken.m */,
+				23CDB7EE1999066B0007C3C5 /* MOBBlindedValueToken.h */,
+				23CDB7EF1999066B0007C3C5 /* MOBBlindedValueToken.m */,
+				23CDB7EB1999066B0007C3C5 /* MOBValueToken.h */,
+				23CDB7EC1999066B0007C3C5 /* MOBValueToken.m */,
+				23CDB7E81999066A0007C3C5 /* MOBVendorSecret.h */,
+				23CDB7E91999066A0007C3C5 /* MOBVendorSecret.m */,
 				23FD779E198A8FCA00E3CD76 /* MOBIdentity.h */,
 				23FD779F198A8FCA00E3CD76 /* MOBIdentity.m */,
 			);
@@ -358,6 +363,13 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = eMundo;
 				TargetAttributes = {
+					23FD671B198A64C400D1A344 = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 					23FD673D198A64C500D1A344 = {
 						TestTargetID = 8142F5771988CEDC0088B18B;
 					};
@@ -442,25 +454,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				23F37DC419910F230074E62D /* MobileEdge.xcdatamodeld in Sources */,
-				23F37DEA199372620074E62D /* MOBValueToken.m in Sources */,
 				23FD6727198A64C400D1A344 /* main.m in Sources */,
 				23FD672B198A64C400D1A344 /* MOBAppDelegate.m in Sources */,
+				23CDB7EA1999066A0007C3C5 /* MOBVendorSecret.m in Sources */,
 				23FD77B1198A904400E3CD76 /* MOBSettingsViewController.m in Sources */,
 				23AF8C3D1998E63B00DB4B2B /* AMErrorHandlerUI.m in Sources */,
 				23FD77B2198A904400E3CD76 /* MOBViewController.m in Sources */,
 				23F37DFF1998A34F0074E62D /* MOBTorInterface.m in Sources */,
 				23F37DE11993700A0074E62D /* AMADataAccessCoreData.m in Sources */,
 				23F37DD819936F970074E62D /* MOBAxolotl.m in Sources */,
+				23CDB7F31999066B0007C3C5 /* MOBIDToken.m in Sources */,
 				23F37DFC1998A1420074E62D /* MOBObjectionModule.m in Sources */,
-				23F37DED199372620074E62D /* MOBBlindedValueToken.m in Sources */,
-				23F37DF0199372620074E62D /* MOBIDToken.m in Sources */,
 				23F37DE7199370C80074E62D /* MOBTokenNegotiator.m in Sources */,
+				23CDB7ED1999066B0007C3C5 /* MOBValueToken.m in Sources */,
 				23AF8C3E1998E63B00DB4B2B /* AMErrorManager.m in Sources */,
 				23FD77AD198A904400E3CD76 /* MOBBonusSystemViewController.m in Sources */,
 				23FD77AF198A904400E3CD76 /* MOBIDTableViewController.m in Sources */,
 				23FD77A0198A8FCA00E3CD76 /* MOBIdentity.m in Sources */,
 				23F37DE4199370560074E62D /* MOBIdentityManagement.m in Sources */,
 				23AF8C3F1998F7C700DB4B2B /* MOBIDDetailViewController.m in Sources */,
+				23CDB7F01999066B0007C3C5 /* MOBBlindedValueToken.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

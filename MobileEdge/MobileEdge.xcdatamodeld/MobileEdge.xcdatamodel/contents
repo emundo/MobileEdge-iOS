@@ -12,9 +12,13 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="VendorSecret" representedClassName="MOBVendorSecret" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
+    </entity>
     <elements>
         <element name="BlindedValueToken" positionX="-63" positionY="150" width="128" height="75"/>
         <element name="IDToken" positionX="-63" positionY="-18" width="128" height="75"/>
         <element name="ValueToken" positionX="169" positionY="57" width="128" height="75"/>
+        <element name="VendorSecret" positionX="54" positionY="81" width="128" height="60"/>
     </elements>
 </model>

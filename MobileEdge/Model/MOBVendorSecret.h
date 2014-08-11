@@ -1,5 +1,5 @@
 //
-//  MOBValueToken.h
+//  MOBVendorSecret.h
 //  MobileEdge
 //
 //  Created by Raphael Arias on 8/11/14.
@@ -10,9 +10,8 @@
 #import <CoreData/CoreData.h>
 
 
-@interface MOBValueToken : NSManagedObject
+@interface MOBVendorSecret : NSManagedObject
 
-@property (nonatomic, retain) NSString * id;
-@property (nonatomic, retain) NSString * signature;
+@property (nonatomic, retain) NSData * data;
 
 @end

@@ -1,17 +1,16 @@
 //
-//  MOBValueToken.m
+//  MOBVendorSecret.m
 //  MobileEdge
 //
 //  Created by Raphael Arias on 8/11/14.
 //  Copyright (c) 2014 eMundo. All rights reserved.
 //
 
-#import "MOBValueToken.h"
+#import "MOBVendorSecret.h"
 
 
-@implementation MOBValueToken
+@implementation MOBVendorSecret
 
-@dynamic id;
-@dynamic signature;
+@dynamic data;
 
 @end

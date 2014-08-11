@@ -7,7 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MOBIdentity.h"
 
 @interface MOBIdentityManagement : NSObject
+
+- (MOBIdentity *) createId;
+
+- (MOBIdentity *) createIdWithOptions:(NSString *) options; //TODO change to clearer type
+
+- (MOBIdentity *) refreshId:(MOBIdentity *) aIdentity;
 
 @end

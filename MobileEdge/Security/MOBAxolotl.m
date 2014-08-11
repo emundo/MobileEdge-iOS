@@ -8,7 +8,21 @@
 
 #import "MOBAxolotl.h"
 
+@interface MOBAxolotl ()
+
+@property (nonatomic,strong) MOBIdentity *identity;
+
+@end
+
 @implementation MOBAxolotl
+
+- (instancetype) initWithIdentity: (MOBIdentity *) aIdentity
+{
+    self.identity = aIdentity;
+    return self;
+}
+
+
 #pragma mark -
 #pragma mark Encryption
 - (NSString *) encryptMessage: (NSString *) aMessage
@@ -29,7 +43,7 @@
 
 #pragma mark -
 #pragma mark Key exchange
-- (void) performKeyExchangeWithBob: (MOBIdentity *) aParty
+- (void) performKeyExchangeWithBob: (MOBIdentity *) aBob
     andSendKeyExchangeMessageUsing: (void (^) (NSString * keyExchangeMessage)) sendContinuation
 {
     
