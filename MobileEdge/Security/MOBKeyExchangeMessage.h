@@ -10,4 +10,14 @@
 
 @interface MOBKeyExchangeMessage : NSObject
 
+@property (nonatomic, strong, readonly) NSData *identityKey;
+@property (nonatomic, strong, readonly) NSData *ephemeralKey0;
+@property (nonatomic, strong, readonly) NSData *ephemeralKey1;
+
+- (instancetype) initAsAlice;
+
+- (instancetype) initWithBobsIdentityKey: (NSData *) aIdentityKey
+                           ephemeralKey0: (NSData *) aEphemeralKey0
+                           ephemeralKey1: (NSData *) aEphemeralKey1;
+
 @end

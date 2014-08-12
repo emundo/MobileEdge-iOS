@@ -8,11 +8,21 @@
 
 #import "MOBAxolotl.h"
 
+#pragma mark -
+#pragma mark Class Extension
+
 @interface MOBAxolotl ()
 
 @property (nonatomic,strong) MOBIdentity *identity;
+@property (nonatomic,strong) NSMutableDictionary *sessions;
+
+- (void) addSession: (MOBAxolotlSession *) aSession
+             forBob: (MOBIdentity *) aBobIdentity;
 
 @end
+
+#pragma mark -
+#pragma mark Implementation
 
 @implementation MOBAxolotl
 
