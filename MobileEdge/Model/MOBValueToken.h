@@ -2,7 +2,7 @@
 //  MOBValueToken.h
 //  MobileEdge
 //
-//  Created by Raphael Arias on 8/11/14.
+//  Created by Raphael Arias on 8/12/14.
 //  Copyright (c) 2014 eMundo. All rights reserved.
 //
 
@@ -12,7 +12,7 @@
 
 @interface MOBValueToken : NSManagedObject
 
-@property (nonatomic, retain) NSString * id;
+@property (nonatomic, retain) NSString * uniqueSecret;
 @property (nonatomic, retain) NSString * signature;
 
 @end

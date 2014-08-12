@@ -9,8 +9,8 @@
         <attribute name="mac" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="ValueToken" representedClassName="MOBValueToken" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uniqueSecret" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="VendorSecret" representedClassName="MOBVendorSecret" syncable="YES">
         <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>

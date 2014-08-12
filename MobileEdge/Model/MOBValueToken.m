@@ -2,7 +2,7 @@
 //  MOBValueToken.m
 //  MobileEdge
 //
-//  Created by Raphael Arias on 8/11/14.
+//  Created by Raphael Arias on 8/12/14.
 //  Copyright (c) 2014 eMundo. All rights reserved.
 //
 
@@ -11,7 +11,7 @@
 
 @implementation MOBValueToken
 
-@dynamic id;
+@dynamic uniqueSecret;
 @dynamic signature;
 
 @end
