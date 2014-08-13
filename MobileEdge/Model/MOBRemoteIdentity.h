@@ -15,4 +15,7 @@
 
 @interface MOBRemoteIdentity : MOBBaseIdentity
 
+@property (nonatomic, strong) NSURL *serviceURL;
+@property (nonatomic, strong) NSURL *identityServiceURL;
+
 @end
