@@ -20,13 +20,16 @@
                                                      failure: (void ( ^ ) ( AFHTTPRequestOperation *operation , NSError *error )) failure
 {
     //TODO perform key exchanges/encryption if necessary and possible
+    // options to achieve this:
+    // * check whether the target domain/IP supports MobileEdge by keeping a list of domains
+    // *
     //TODO perform protocol cleaning
     return [super HTTPRequestOperationWithRequest:request success:success failure:failure];
 }
 
-- (void) setShouldUseTor: (BOOL) shouldUseTor
+- (void) setShouldUseTor: (BOOL) aShouldUseTor
 {
-    if (shouldUseTor)
+    if (aShouldUseTor)
     {
         //TODO register class
     }
