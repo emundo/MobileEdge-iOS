@@ -62,7 +62,7 @@ SPEC CHECKSUMS:
   libsodium: 4baff758d2e4b598e12641ea8f2e9ffc18c9fa0b
   NAChloride: 629fb7ecb3a35ee6f21a4d2e15462b9f87e5c4bd
   Objection: 8176a996209cdcd23490c57d6e807a25faa8d54d
-  SodiumObjc: 032dd70b477427f85b41cac9f3b26ee12bdd0734
+  SodiumObjc: 69c90c435fe0d6d91bdb0ac5e5deb8fe0b93502c
   SQLCipher: 981110217eb93c2779c34fb59e646a1c1da918d8
 
 COCOAPODS: 0.33.1
