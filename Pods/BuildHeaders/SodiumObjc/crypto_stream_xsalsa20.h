@@ -1,0 +1,1 @@
+../../SodiumObjc/lib/ios/include/sodium/crypto_stream_xsalsa20.h

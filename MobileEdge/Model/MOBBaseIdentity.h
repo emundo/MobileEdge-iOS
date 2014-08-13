@@ -12,7 +12,10 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <SodiumObjc.h>
 
 @interface MOBBaseIdentity : NSObject
+
+@property (nonatomic,strong) NACLAsymmetricPublicKey *identityKey;
 
 @end

@@ -1,0 +1,1 @@
+../../SodiumObjc/lib/ios/include/sodium/crypto_auth_hmacsha256.h

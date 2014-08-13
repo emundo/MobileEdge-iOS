@@ -12,12 +12,15 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "MOBBaseIdentity.h"
+#import <SodiumObjc.h>
 
-@interface MOBIdentity : NSObject
+@interface MOBIdentity : MOBBaseIdentity
 
-@property (nonatomic, retain) NSString *ttl;
-@property (nonatomic, retain) NSString *nonce;
-@property (nonatomic, retain) NSString *mac;
-@property (nonatomic, retain) NSString *creationDate;
+@property (nonatomic, strong, readonly) NACLAsymmetricPrivateKey *privateIdentityKey;
+@property (nonatomic, strong) NSString *ttl;
+@property (nonatomic, strong) NSString *nonce;
+@property (nonatomic, strong) NSString *mac;
+@property (nonatomic, strong) NSString *creationDate;
 
 @end

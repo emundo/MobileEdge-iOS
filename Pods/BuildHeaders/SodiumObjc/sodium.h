@@ -1,0 +1,1 @@
+../../SodiumObjc/lib/ios/include/sodium.h

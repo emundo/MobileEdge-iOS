@@ -108,6 +108,12 @@
 #define COCOAPODS_VERSION_MINOR_SQLCipher_standard 1
 #define COCOAPODS_VERSION_PATCH_SQLCipher_standard 0
 
+// SodiumObjc
+#define COCOAPODS_POD_AVAILABLE_SodiumObjc
+#define COCOAPODS_VERSION_MAJOR_SodiumObjc 1
+#define COCOAPODS_VERSION_MINOR_SodiumObjc 1
+#define COCOAPODS_VERSION_PATCH_SodiumObjc 0
+
 // libsodium
 #define COCOAPODS_POD_AVAILABLE_libsodium
 #define COCOAPODS_VERSION_MAJOR_libsodium 0
