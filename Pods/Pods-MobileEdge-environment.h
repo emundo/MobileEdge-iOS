@@ -72,6 +72,12 @@
 #define COCOAPODS_VERSION_MINOR_EncryptedCoreData 0
 #define COCOAPODS_VERSION_PATCH_EncryptedCoreData 0
 
+// FXKeychain
+#define COCOAPODS_POD_AVAILABLE_FXKeychain
+#define COCOAPODS_VERSION_MAJOR_FXKeychain 1
+#define COCOAPODS_VERSION_MINOR_FXKeychain 5
+#define COCOAPODS_VERSION_PATCH_FXKeychain 1
+
 // NAChloride
 #define COCOAPODS_POD_AVAILABLE_NAChloride
 #define COCOAPODS_VERSION_MAJOR_NAChloride 1

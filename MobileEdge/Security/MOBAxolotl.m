@@ -7,6 +7,7 @@
 //
 
 #import "MOBAxolotl.h"
+#import "MOBAxolotlSession.h"
 
 #pragma mark -
 #pragma mark Class Extension

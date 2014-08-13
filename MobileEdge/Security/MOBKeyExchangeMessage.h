@@ -14,7 +14,8 @@
 @property (nonatomic, strong, readonly) NSData *ephemeralKey0;
 @property (nonatomic, strong, readonly) NSData *ephemeralKey1;
 
-- (instancetype) initAsAlice;
+- (instancetype) initWithAlicesIdentityKey: (NSData *) aIdentityKey
+                             ephemeralKey0: (NSData *) aEphemeralKey0;
 
 - (instancetype) initWithBobsIdentityKey: (NSData *) aIdentityKey
                            ephemeralKey0: (NSData *) aEphemeralKey0
