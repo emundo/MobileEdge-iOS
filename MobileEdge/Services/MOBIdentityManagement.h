@@ -22,4 +22,6 @@
 
 - (MOBIdentity *) refreshId:(MOBIdentity *) aIdentity;
 
+//- (MOBRemote *) extractRemoteFromData: (NSData *) aData;
+
 @end
