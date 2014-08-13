@@ -15,4 +15,6 @@
 
 @interface MOBHTTPRequestOperationManager : AFHTTPRequestOperationManager
 
+@property (nonatomic,assign) BOOL shouldUseTor;
+
 @end

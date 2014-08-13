@@ -15,4 +15,25 @@
 
 @implementation MOBHTTPRequestOperationManager
 
+- (AFHTTPRequestOperation *) HTTPRequestOperationWithRequest: (NSURLRequest *) request
+                                                     success: (void ( ^ ) ( AFHTTPRequestOperation *operation , id responseObject )) success
+                                                     failure: (void ( ^ ) ( AFHTTPRequestOperation *operation , NSError *error )) failure
+{
+    //TODO perform key exchanges/encryption if necessary and possible
+    //TODO perform protocol cleaning
+    return [super HTTPRequestOperationWithRequest:request success:success failure:failure];
+}
+
+- (void) setShouldUseTor: (BOOL) shouldUseTor
+{
+    if (shouldUseTor)
+    {
+        //TODO register class
+    }
+    else
+    {
+        //TODO unregister class
+    }
+}
+
 @end
