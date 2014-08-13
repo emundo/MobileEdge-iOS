@@ -14,8 +14,5 @@
 #import "MOBIdentity.h"
 
 @implementation MOBIdentity
-@synthesize ttl;
-@synthesize mac;
-@synthesize nonce;
-@synthesize creationDate;
+
 @end
