@@ -23,4 +23,6 @@
 @property (nonatomic, strong) NSString *mac;
 @property (nonatomic, strong) NSString *creationDate;
 
+-(instancetype) initWithKeyPair: (NACLAsymmetricKeyPair *) aKeyPair;
+
 @end

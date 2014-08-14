@@ -18,4 +18,6 @@
 
 @property (nonatomic,strong) NACLAsymmetricPublicKey *identityKey;
 
+- (instancetype) initWithPublicKey: (NACLAsymmetricPublicKey *) aPublicKey;
+
 @end

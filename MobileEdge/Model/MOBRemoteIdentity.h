@@ -18,4 +18,10 @@
 @property (nonatomic, strong) NSURL *serviceURL;
 @property (nonatomic, strong) NSURL *identityServiceURL;
 
+- (instancetype) initWithPublicKey: (NACLAsymmetricPublicKey *) aPublicKey
+                        serviceURL: (NSURL *) aServiceURL;
+
+- (instancetype) initWithPublicKey: (NACLAsymmetricPublicKey *) aPublicKey
+                        serviceURL: (NSURL *) aServiceURL
+                identityServiceURL: (NSURL *) aIdentityServiceURL;
 @end

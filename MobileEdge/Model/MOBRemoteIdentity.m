@@ -15,4 +15,23 @@
 
 @implementation MOBRemoteIdentity
 
+
+- (instancetype) initWithPublicKey: (NACLAsymmetricPublicKey *) aPublicKey
+                        serviceURL: (NSURL *) aServiceURL
+{
+    self = [super initWithPublicKey:aPublicKey];
+    self.serviceURL = aServiceURL;
+    return self;
+}
+
+- (instancetype) initWithPublicKey: (NACLAsymmetricPublicKey *) aPublicKey
+                        serviceURL: (NSURL *) aServiceURL
+                identityServiceURL: (NSURL *) aIdentityServiceURL
+{
+    self = [super initWithPublicKey:aPublicKey];
+    self.serviceURL = aServiceURL;
+    self.identityServiceURL = aIdentityServiceURL;
+    return self;
+}
+
 @end

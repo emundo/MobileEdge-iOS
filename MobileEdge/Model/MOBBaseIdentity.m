@@ -15,4 +15,10 @@
 
 @implementation MOBBaseIdentity
 
+- (instancetype) initWithPublicKey: (NACLAsymmetricPublicKey *) aPublicKey
+{
+    self.identityKey = aPublicKey;
+    return self;
+}
+
 @end
