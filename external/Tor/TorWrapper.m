@@ -7,6 +7,8 @@
 //
 
 #import "TorWrapper.h"
+#import "TorController.h"
+#import "MOBCore.h"
 #import "MOBAppDelegate.h"
 
 @implementation TorWrapper
@@ -23,15 +25,19 @@
 }
 
 -(void)main {
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    MOBAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     NSString *tmpDir = NSTemporaryDirectory();
+    NSURL *docURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
+                                                            inDomains:NSUserDomainMask] lastObject];
+    NSURL *torrcURL = [docURL URLByAppendingPathComponent:@"torrc"];
     
     //NSString *base_torrc = [[NSBundle mainBundle] pathForResource:@"torrc" ofType:nil];
-    NSString *base_torrc = [[[appDelegate applicationDocumentsDirectory] URLByAppendingPathComponent:@"torrc"] relativePath];
+    //NSString *base_torrc = [[[appDelegate applicationDocumentsDirectory] URLByAppendingPathComponent:@"torrc"] relativePath];
+    NSString *base_torrc = [torrcURL relativePath];
     NSString *geoip = [[NSBundle mainBundle] pathForResource:@"geoip" ofType:nil];
     
-    NSString *controlPortStr = [NSString stringWithFormat:@"%ld", (unsigned long)appDelegate.tor.torControlPort];
-    NSString *socksPortStr = [NSString stringWithFormat:@"%ld", (unsigned long)appDelegate.tor.torSocksPort];
+    NSString *controlPortStr = [NSString stringWithFormat:@"%ld", (unsigned long)appDelegate.mobileEdgeCore.tor.torControlPort];
+    NSString *socksPortStr = [NSString stringWithFormat:@"%ld", (unsigned long)appDelegate.mobileEdgeCore.tor.torSocksPort];
     
     //NSLog(@"%@ / %@", controlPortStr, socksPortStr);
     
