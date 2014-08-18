@@ -78,12 +78,6 @@
 #define COCOAPODS_VERSION_MINOR_FXKeychain 5
 #define COCOAPODS_VERSION_PATCH_FXKeychain 1
 
-// NAChloride
-#define COCOAPODS_POD_AVAILABLE_NAChloride
-#define COCOAPODS_VERSION_MAJOR_NAChloride 1
-#define COCOAPODS_VERSION_MINOR_NAChloride 0
-#define COCOAPODS_VERSION_PATCH_NAChloride 8
-
 // Objection
 #define COCOAPODS_POD_AVAILABLE_Objection
 #define COCOAPODS_VERSION_MAJOR_Objection 1
@@ -113,10 +107,4 @@
 #define COCOAPODS_VERSION_MAJOR_SodiumObjc 1
 #define COCOAPODS_VERSION_MINOR_SodiumObjc 1
 #define COCOAPODS_VERSION_PATCH_SodiumObjc 0
-
-// libsodium
-#define COCOAPODS_POD_AVAILABLE_libsodium
-#define COCOAPODS_VERSION_MAJOR_libsodium 0
-#define COCOAPODS_VERSION_MINOR_libsodium 6
-#define COCOAPODS_VERSION_PATCH_libsodium 1
 

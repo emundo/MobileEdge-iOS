@@ -5,7 +5,7 @@ target "MobileEdge" do
 
 pod "EncryptedCoreData",    :git => "https://github.com/project-imas/encrypted-core-data.git"
 pod "AFNetworking",         "~> 2.0"
-pod "NAChloride",           "~> 1.0.8"
+#pod "NAChloride",           "~> 1.0.8"
 pod "CocoaLumberjack",      "~> 1.9.2"
 pod "Objection",            "~> 1.4"
 pod "FXKeychain",           "~> 1.5.1"
