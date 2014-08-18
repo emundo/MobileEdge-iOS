@@ -64,4 +64,16 @@
 {
     
 }
+
+#pragma mark -
+#pragma mark Session management
+
+- (void) addSession: (MOBAxolotlSession *) aSession
+             forBob: (MOBIdentity *) aBobIdentity
+{
+    if (!self.sessions) {
+        self.sessions = [NSMutableDictionary dictionary];
+    }
+    [self.sessions setObject:aSession forKey:aBobIdentity];
+}
 @end
