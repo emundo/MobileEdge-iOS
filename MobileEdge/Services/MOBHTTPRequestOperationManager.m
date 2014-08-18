@@ -12,8 +12,27 @@
  */
 
 #import "MOBHTTPRequestOperationManager.h"
+#import "MOBRemoteIdentity.h"
+
+@interface MOBHTTPRequestOperationManager ()
+
+@property (nonatomic,strong) NSMutableDictionary *remotes;
+
+@end
+
+
 
 @implementation MOBHTTPRequestOperationManager
+
+- (instancetype) initWithRemoteIdentity: (MOBRemoteIdentity *) aRemoteIdentity
+{
+    if (self = [super init])
+    {
+        self.shouldUseTor = YES;
+        [self addRemoteIdentity:aRemoteIdentity];
+    }
+    return self;
+}
 
 - (AFHTTPRequestOperation *) HTTPRequestOperationWithRequest: (NSURLRequest *) request
                                                      success: (void ( ^ ) ( AFHTTPRequestOperation *operation , id responseObject )) success
@@ -27,15 +46,26 @@
     return [super HTTPRequestOperationWithRequest:request success:success failure:failure];
 }
 
+
+- (void) addRemoteIdentity: (MOBRemoteIdentity *) aRemoteIdentity
+{
+    if (!self.remotes) {
+        self.remotes = [NSMutableDictionary dictionary];
+    }
+    [self.remotes setObject:aRemoteIdentity forKey: aRemoteIdentity.serviceURL];
+}
+
 - (void) setShouldUseTor: (BOOL) aShouldUseTor
 {
     if (aShouldUseTor)
     {
         //TODO register class
+        _shouldUseTor = YES;
     }
     else
     {
         //TODO unregister class
+        _shouldUseTor = NO;
     }
 }
 

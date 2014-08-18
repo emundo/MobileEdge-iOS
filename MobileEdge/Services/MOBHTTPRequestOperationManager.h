@@ -13,8 +13,12 @@
 
 #import "AFHTTPRequestOperationManager.h"
 
+@class MOBRemoteIdentity;
+
 @interface MOBHTTPRequestOperationManager : AFHTTPRequestOperationManager
 
 @property (nonatomic,assign) BOOL shouldUseTor;
+
+- (void) addRemoteIdentity: (MOBRemoteIdentity *) aRemoteIdentity;
 
 @end
