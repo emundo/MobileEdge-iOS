@@ -17,7 +17,7 @@
 
 @interface MOBIdentity : MOBBaseIdentity
 
-@property (nonatomic, strong, readonly) NACLAsymmetricPrivateKey *privateIdentityKey;
+@property (nonatomic, strong, readonly) NACLAsymmetricKeyPair *identityKeyPair;
 @property (nonatomic, strong) NSString *ttl;
 @property (nonatomic, strong) NSString *nonce;
 @property (nonatomic, strong) NSString *mac;

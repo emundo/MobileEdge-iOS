@@ -19,7 +19,7 @@
 {
     if (self = [super initWithPublicKey:aKeyPair.publicKey])
     {
-        _privateIdentityKey = aKeyPair.privateKey;
+        _identityKeyPair = aKeyPair;
     }
     return self;
 }
