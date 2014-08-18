@@ -15,4 +15,15 @@
 
 @implementation MOBAxolotlSession
 
+- (instancetype) initWithMyIdentityKeyPair: (NACLAsymmetricKeyPair *) aKeyPair
+                          theirIdentityKey: (NACLAsymmetricPublicKey *) aTheirKey
+{
+    if (self = [super init])
+    {
+        _myIdentityKey = aKeyPair;
+        _theirIdentityKey = aTheirKey;
+    }
+    return self;
+}
+
 @end
