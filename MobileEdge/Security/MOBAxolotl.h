@@ -15,6 +15,9 @@
 
 @class MOBRemoteIdentity, MOBIdentity;
 
+typedef void (^KeyExchangeFinalizeBlock) (NSData *keyExchangeMessageIn);
+typedef void (^KeyExchangeSendBlock) (NSData * keyExchangeMessage, KeyExchangeFinalizeBlock finalizeBlock);
+
 @interface MOBAxolotl : NSObject
 
 - (instancetype) initWithIdentity: (MOBIdentity *) identity;
@@ -44,7 +47,8 @@
  * @param TODO
  */
 - (void) performKeyExchangeWithBob: (MOBRemoteIdentity *) aBob
-    andSendKeyExchangeMessageUsing: (void (^) (NSString * keyExchangeMessage)) sendContinuation;
+    andSendKeyExchangeMessageUsing: (KeyExchangeSendBlock) sendContinuation;
+    //andSendKeyExchangeMessageUsing: (void (^) (NSData * keyExchangeMessage)) sendContinuation;
 /*                    withSuccessBlock: (BOOL (^) (void)) successContinuation
                     withFailureBlock: (void (^) (void)) failureContinuation;*/
 @end

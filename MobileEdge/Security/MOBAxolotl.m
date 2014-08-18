@@ -15,6 +15,7 @@
 #import "MOBAxolotlSession.h"
 #import "MOBIdentity.h"
 #import "MOBRemoteIdentity.h"
+#import "MOBCore.h"
 
 #pragma mark -
 #pragma mark Class Extension
@@ -39,6 +40,8 @@
     if (self = [super init])
     {
         self.identity = aIdentity;
+#warning unfinished
+        //TODO: check whether a state for this identity exists in keychain!
     }
     return self;
 }
@@ -49,7 +52,7 @@
 - (NSString *) encryptMessage: (NSString *) aMessage
                   forReceiver: (MOBRemoteIdentity *) aReceiver
 {
-#pragma warning stub
+#warning stub
     return nil;
 }
 
@@ -58,16 +61,42 @@
 - (NSString *) decryptMessage: (NSString *) aEncryptedMessage
                    fromSender: (MOBRemoteIdentity *) aSender
 {
-#pragma warning stub
+#warning stub
     return nil;
 }
 
 #pragma mark -
 #pragma mark Key exchange
 - (void) performKeyExchangeWithBob: (MOBRemoteIdentity *) aBob
-    andSendKeyExchangeMessageUsing: (void (^) (NSString * keyExchangeMessage)) sendContinuation
+    andSendKeyExchangeMessageUsing: (KeyExchangeSendBlock) sendContinuation
 {
+    MOBAxolotlSession *newSession = [[MOBAxolotlSession alloc] initWithMyIdentityKeyPair:self.identity.identityKeyPair
+                                                                        theirIdentityKey:aBob.identityKey];
+    NACLAsymmetricKeyPair *myEphemeralKeyPair = [NACLAsymmetricKeyPair keyPair];
+    NSMutableDictionary *keyExchangeMessageOut = [NSMutableDictionary dictionary];
     
+    [keyExchangeMessageOut setObject:[self.identity.identityKey.data description]
+                              forKey:@"id"];
+    [keyExchangeMessageOut setObject:[myEphemeralKeyPair.publicKey.data description]
+                              forKey:@"eph0"];
+    //[keyExchangeMessageOut setObject:[self.identity.identityKey.data base64EncodedDataWithOptions: 0] forKey:@"id"];
+    //[keyExchangeMessageOut setObject:[myEphemeralKeyPair.publicKey.data base64EncodedDataWithOptions:0] forKey:@"eph0"];
+    KeyExchangeFinalizeBlock finalizeBlock;
+    finalizeBlock = ^(NSData *theirKeyExchangeMessage)
+    {
+        NSDictionary *keyExchangeMessageIn = [NSJSONSerialization JSONObjectWithData:theirKeyExchangeMessage
+                                                                             options:0
+                                                                               error:nil]; // TODO: error
+        
+    };
+    if ([NSJSONSerialization isValidJSONObject:keyExchangeMessageOut])
+    {
+        sendContinuation([NSJSONSerialization dataWithJSONObject:keyExchangeMessageOut options:0 error:nil], finalizeBlock);   //TODO: error
+    }
+    else
+    {
+        DDLogError(@"Could not generate a valid JSON key exchange message.");
+    }
 }
 
 #pragma mark -
