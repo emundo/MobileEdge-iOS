@@ -17,8 +17,10 @@
 
 -(instancetype) initWithKeyPair: (NACLAsymmetricKeyPair *) aKeyPair
 {
-    self = [super initWithPublicKey:aKeyPair.publicKey];
-    _privateIdentityKey = aKeyPair.privateKey;
+    if (self = [super initWithPublicKey:aKeyPair.publicKey])
+    {
+        _privateIdentityKey = aKeyPair.privateKey;
+    }
     return self;
 }
 
