@@ -19,8 +19,10 @@
 - (instancetype) initWithPublicKey: (NACLAsymmetricPublicKey *) aPublicKey
                         serviceURL: (NSURL *) aServiceURL
 {
-    self = [super initWithPublicKey:aPublicKey];
-    self.serviceURL = aServiceURL;
+    if (self = [super initWithPublicKey:aPublicKey])
+    {
+        self.serviceURL = aServiceURL;
+    }
     return self;
 }
 
