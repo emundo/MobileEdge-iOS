@@ -24,4 +24,8 @@
     return self;
 }
 
+/*
+ * No support for NSCopying!
+ */
+
 @end

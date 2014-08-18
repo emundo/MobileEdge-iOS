@@ -26,4 +26,11 @@
     return self;
 }
 
+- (id) copyWithZone:(NSZone *)zone
+{
+    MOBRemoteIdentity *copy = [super copyWithZone:zone];
+    copy.serviceURL = [self.serviceURL copy];
+    return copy;
+}
+
 @end

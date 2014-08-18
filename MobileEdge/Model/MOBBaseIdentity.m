@@ -24,4 +24,9 @@
     return self;
 }
 
+- (id) copyWithZone:(NSZone *)zone
+{
+    return [[MOBBaseIdentity alloc] initWithPublicKey: self.identityKey];
+}
+
 @end
