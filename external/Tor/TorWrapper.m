@@ -7,7 +7,7 @@
 //
 
 #import "TorWrapper.h"
-#import "AppDelegate.h"
+#import "MOBAppDelegate.h"
 
 @implementation TorWrapper
 

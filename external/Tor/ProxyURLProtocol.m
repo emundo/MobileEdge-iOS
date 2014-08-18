@@ -8,7 +8,9 @@
 
 #import "ProxyURLProtocol.h"
 #import <Foundation/NSURLProtocol.h>
-#import "AppDelegate.h"
+#import "MOBAppDelegate.h"
+#import "MOBCore.h"
+#import "MOBTorSettings.h"
 #import "NSData+CocoaDevUsersAdditions.h"
 
 
@@ -183,8 +185,8 @@
     }
     _data.length = 0;
     
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    NSMutableDictionary *settings = appDelegate.getSettings;
+    MOBAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    NSMutableDictionary *settings = appDelegate.mobileEdgeCore.torSettings.settings;
 
     /* If this incoming request is HTML or Javascript (based on content-type header),
      * flag it for processing later. (We'll prepend some JS to try to rewrite navigator.useragent,
@@ -436,6 +438,61 @@
 	 _data = nil;
 }
 
+- (NSString *)javascriptInjection {
+    NSMutableString *str = [[NSMutableString alloc] init];
+    MOBAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+
+    Byte uaspoof = [[appDelegate.mobileEdgeCore.torSettings.settings valueForKey:@"uaspoof"] integerValue];
+    if (uaspoof == UA_SPOOF_SAFARI_MAC) {
+        [str appendString:@"var __originalNavigator = navigator;"];
+        [str appendString:@"navigator = new Object();"];
+        [str appendString:@"navigator.__proto__ = __originalNavigator;"];
+        [str appendString:@"navigator.__defineGetter__('appCodeName',function(){return 'Mozilla';});"];
+        [str appendString:@"navigator.__defineGetter__('appName',function(){return 'Netscape';});"];
+        [str appendString:@"navigator.__defineGetter__('appVersion',function(){return '5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/537.75.14';});"];
+        [str appendString:@"navigator.__defineGetter__('platform',function(){return 'MacIntel';});"];
+        [str appendString:@"navigator.__defineGetter__('userAgent',function(){return 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/537.75.14';});"];
+    } else if (uaspoof == UA_SPOOF_WIN7_TORBROWSER) {
+        [str appendString:@"var __originalNavigator = navigator;"];
+        [str appendString:@"navigator = new Object();"];
+        [str appendString:@"navigator.__proto__ = __originalNavigator;"];
+        [str appendString:@"navigator.__defineGetter__('appCodeName',function(){return 'Mozilla';});"];
+        [str appendString:@"navigator.__defineGetter__('appName',function(){return 'Netscape';});"];
+        [str appendString:@"navigator.__defineGetter__('appVersion',function(){return '5.0 (Windows)';});"];
+        [str appendString:@"navigator.__defineGetter__('platform',function(){return 'Win32';});"];
+        [str appendString:@"navigator.__defineGetter__('language',function(){return 'en-US';});"];
+        [str appendString:@"navigator.__defineGetter__('userAgent',function(){return 'Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Firefox/24.0';});"];
+    } else if (uaspoof == UA_SPOOF_IPHONE) {
+        [str appendString:@"var __originalNavigator = navigator;"];
+        [str appendString:@"navigator = new Object();"];
+        [str appendString:@"navigator.__proto__ = __originalNavigator;"];
+        [str appendString:@"navigator.__defineGetter__('appCodeName',function(){return 'Mozilla';});"];
+        [str appendString:@"navigator.__defineGetter__('appName',function(){return 'Netscape';});"];
+        [str appendString:@"navigator.__defineGetter__('appVersion',function(){return '5.0 (iPhone; CPU iPhone OS 7_1_1 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D201 Safari/9537.53';});"];
+        [str appendString:@"navigator.__defineGetter__('platform',function(){return 'iPhone';});"];
+        [str appendString:@"navigator.__defineGetter__('userAgent',function(){return 'Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_1 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D201 Safari/9537.53';});"];
+    } else if (uaspoof == UA_SPOOF_IPAD) {
+        [str appendString:@"var __originalNavigator = navigator;"];
+        [str appendString:@"navigator = new Object();"];
+        [str appendString:@"navigator.__proto__ = __originalNavigator;"];
+        [str appendString:@"navigator.__defineGetter__('appCodeName',function(){return 'Mozilla';});"];
+        [str appendString:@"navigator.__defineGetter__('appName',function(){return 'Netscape';});"];
+        [str appendString:@"navigator.__defineGetter__('appVersion',function(){return '5.0 (iPad; CPU OS 7_1_1 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D201 Safari/9537.53';});"];
+        [str appendString:@"navigator.__defineGetter__('platform',function(){return 'iPad';});"];
+        [str appendString:@"navigator.__defineGetter__('userAgent',function(){return 'Mozilla/5.0 (iPad; CPU OS 7_1_1 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D201 Safari/9537.53';});"];
+    }
+
+    Byte activeContent = [[appDelegate.mobileEdgeCore.torSettings.settings valueForKey:@"javascript"] integerValue];
+    if (activeContent != CONTENTPOLICY_PERMISSIVE) {
+        [str appendString:@"function Worker(){};"];
+        [str appendString:@"function WebSocket(){};"];
+        [str appendString:@"function sessionStorage(){};"];
+        [str appendString:@"function localStorage(){};"];
+        [str appendString:@"function globalStorage(){};"];
+        [str appendString:@"function openDatabase(){};"];
+    }
+    return str;
+}
 
 
 - (NSData *)htmlDataWithJavascriptInjection:incomingData {
@@ -447,11 +504,10 @@
      * script executes on-page. Currently allows rewriting `navigator.Useragent` but will eventually be
      * used to truly ensure that sockets & other dangerous JS-based dynamic content are blocked.
      */
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     NSMutableData *newData = [[NSMutableData alloc] init];
 
     // Prepend a DOCTYPE (to force into standards mode) and throw in any javascript overrides
-    [newData appendData:[[NSString stringWithFormat:@"<!DOCTYPE html><script>%@</script>", appDelegate.javascriptInjection] dataUsingEncoding:NSUTF8StringEncoding]];
+    [newData appendData:[[NSString stringWithFormat:@"<!DOCTYPE html><script>%@</script>", [self javascriptInjection]] dataUsingEncoding:NSUTF8StringEncoding]];
     [newData appendData:incomingData];
     return newData;
 }
@@ -465,10 +521,9 @@
      * script executes on-page. Currently allows rewriting `navigator.Useragent` but will eventually be
      * used to truly ensure that sockets & other dangerous JS-based dynamic content are blocked.
      */
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     NSMutableData *newData = [[NSMutableData alloc] init];
 
-    [newData appendData:[[NSString stringWithFormat:@"%@\n", appDelegate.javascriptInjection] dataUsingEncoding:NSUTF8StringEncoding]];
+    [newData appendData:[[NSString stringWithFormat:@"%@\n", [self javascriptInjection]] dataUsingEncoding:NSUTF8StringEncoding]];
     [newData appendData:incomingData];
     return newData;
 }

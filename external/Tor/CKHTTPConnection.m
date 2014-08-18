@@ -14,7 +14,10 @@
 //
 
 #import "CKHTTPConnection.h"
-#import "AppDelegate.h"
+#import "MOBAppDelegate.h"
+#import "MOBCore.h"
+#import "MOBTorSettings.h"
+#import "TorController.h"
 
 
 // There is no public API for creating an NSHTTPURLResponse. The only way to create one then, is to
@@ -131,13 +134,14 @@
     
     CFReadStreamSetProperty((__bridge CFReadStreamRef)(_HTTPStream), kCFStreamPropertyHTTPAttemptPersistentConnection, kCFBooleanTrue);
 
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    MOBAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
 
     // Ignore SSL errors for domains if user has explicitly said to "continue anyway"
     // (for self-signed certs)
     NSURL *URL = [_HTTPStream propertyForKey:(NSString *)kCFStreamPropertyHTTPFinalURL];
     if ([URL.absoluteString rangeOfString:@"https://"].location == 0) {
         Boolean ignoreSSLErrors = NO;
+        /* RA: COMMENTING OUT FOR NOW (FIXME) move the whitelist to tor settings
         for (NSString *whitelistHost in appDelegate.sslWhitelistedDomains) {
             if ([whitelistHost isEqualToString:URL.host]) {
                 #ifdef DEBUG
@@ -147,6 +151,7 @@
                 break;
             }
         }
+        */
         if (ignoreSSLErrors) {
             CFMutableDictionaryRef sslOption = CFDictionaryCreateMutable(kCFAllocatorDefault, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
             CFDictionarySetValue(sslOption, kCFStreamSSLValidatesCertificateChain, kCFBooleanFalse);
@@ -157,7 +162,7 @@
     // Use tor proxy server
     NSString *hostKey = (NSString *)kCFStreamPropertySOCKSProxyHost;
     NSString *portKey = (NSString *)kCFStreamPropertySOCKSProxyPort;
-    int proxyPortNumber = appDelegate.tor.torSocksPort;
+    int proxyPortNumber = appDelegate.mobileEdgeCore.tor.torSocksPort;
 
     NSMutableDictionary *proxyToUse = [NSMutableDictionary
                                        dictionaryWithObjectsAndKeys:@"127.0.0.1",hostKey,
@@ -336,8 +341,8 @@
                                                          kCFHTTPVersion1_1);
     //[NSMakeCollectable(result) autorelease];
     
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    NSMutableDictionary *settings = appDelegate.getSettings;
+    MOBAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    NSMutableDictionary *settings = appDelegate.mobileEdgeCore.torSettings.settings;
 
     Byte spoofUserAgent = [[settings valueForKey:@"uaspoof"] integerValue];
 
@@ -353,7 +358,7 @@
             #endif
             CFHTTPMessageSetHeaderFieldValue(result,
                                              (__bridge CFStringRef)aHTTPHeaderField,
-                                             (__bridge CFStringRef)appDelegate.customUserAgent);
+                                             (__bridge CFStringRef)appDelegate.mobileEdgeCore.torSettings.customUserAgent);
             continue;
         }
         CFHTTPMessageSetHeaderFieldValue(result,

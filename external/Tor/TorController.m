@@ -8,7 +8,7 @@
 
 #import "TorController.h"
 #import "NSData+Conversion.h"
-#import "AppDelegate.h"
+#import "MOBAppDelegate.h"
 #import "Reachability.h"
 
 @implementation TorController
@@ -266,12 +266,12 @@
         }
     } else if ([msgIn rangeOfString:@"-status/bootstrap-phase="].location != NSNotFound) {
         // Response to "getinfo status/bootstrap-phase"
-        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        MOBAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
         
         if ([msgIn rangeOfString:@"BOOTSTRAP PROGRESS=100"].location != NSNotFound) {
             _connectionStatus = CONN_STATUS_CONNECTED;
         }
-        
+        /* RA: COMMENTING OUT FOR NOW! (FIXME)
         WebViewController *wvc = appDelegate.appWebView;
         if (!didFirstConnect) {
             if ([msgIn rangeOfString:@"BOOTSTRAP PROGRESS=100"].location != NSNotFound) {
@@ -303,6 +303,7 @@
                                                                      repeats:NO];
             }
         }
+        */
     } else if ([msgIn rangeOfString:@"+orconn-status="].location != NSNotFound) {
         [_torStatusTimeoutTimer invalidate];
         

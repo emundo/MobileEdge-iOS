@@ -13,6 +13,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class MOBTorSettings, TorController;
+
 @interface MOBCore : NSObject
+
+@property (nonatomic, strong) MOBTorSettings *torSettings;
+@property (nonatomic, strong) TorController *tor;
 
 @end

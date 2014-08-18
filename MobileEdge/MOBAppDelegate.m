@@ -8,6 +8,7 @@
 
 #import "MOBAppDelegate.h"
 #import "EncryptedStore.h"
+#import "MOBCore.h"
 
 @implementation MOBAppDelegate
 

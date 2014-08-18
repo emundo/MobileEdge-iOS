@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#include "or/or.h"
+#import "or/or.h"
+//#include "../../dependencies/include/or/or.h"
 #include "or/main.h"
 
 @interface TorWrapper : NSThread
