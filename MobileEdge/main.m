@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 
 #import "MOBAppDelegate.h"
+#import "../external/Tor/ProxyURLProtocol.h"
 
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
+        [NSURLProtocol registerClass:[ProxyURLProtocol class]];
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([MOBAppDelegate class]));
     }
 }
