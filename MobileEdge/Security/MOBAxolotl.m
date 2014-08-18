@@ -13,6 +13,8 @@
 
 #import "MOBAxolotl.h"
 #import "MOBAxolotlSession.h"
+#import "MOBIdentity.h"
+#import "MOBRemoteIdentity.h"
 
 #pragma mark -
 #pragma mark Class Extension
@@ -34,7 +36,10 @@
 
 - (instancetype) initWithIdentity: (MOBIdentity *) aIdentity
 {
-    self.identity = aIdentity;
+    if (self = [super init])
+    {
+        self.identity = aIdentity;
+    }
     return self;
 }
 
@@ -42,7 +47,7 @@
 #pragma mark -
 #pragma mark Encryption
 - (NSString *) encryptMessage: (NSString *) aMessage
-                  forReceiver: (MOBIdentity *) aReceiver
+                  forReceiver: (MOBRemoteIdentity *) aReceiver
 {
 #pragma warning stub
     return nil;
@@ -51,7 +56,7 @@
 #pragma mark -
 #pragma mark Decryption
 - (NSString *) decryptMessage: (NSString *) aEncryptedMessage
-                   fromSender: (MOBIdentity *) aSender
+                   fromSender: (MOBRemoteIdentity *) aSender
 {
 #pragma warning stub
     return nil;
@@ -59,7 +64,7 @@
 
 #pragma mark -
 #pragma mark Key exchange
-- (void) performKeyExchangeWithBob: (MOBIdentity *) aBob
+- (void) performKeyExchangeWithBob: (MOBRemoteIdentity *) aBob
     andSendKeyExchangeMessageUsing: (void (^) (NSString * keyExchangeMessage)) sendContinuation
 {
     
@@ -69,7 +74,7 @@
 #pragma mark Session management
 
 - (void) addSession: (MOBAxolotlSession *) aSession
-             forBob: (MOBIdentity *) aBobIdentity
+             forBob: (MOBRemoteIdentity *) aBobIdentity
 {
     if (!self.sessions) {
         self.sessions = [NSMutableDictionary dictionary];

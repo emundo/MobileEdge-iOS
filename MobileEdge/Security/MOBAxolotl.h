@@ -12,7 +12,8 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "MOBIdentity.h"
+
+@class MOBRemoteIdentity, MOBIdentity;
 
 @interface MOBAxolotl : NSObject
 
@@ -25,7 +26,7 @@
  * @return the encrypted message or nil if encryption failed
  */
 - (NSString *) encryptMessage: (NSString *) aMessage
-                  forReceiver: (MOBIdentity *) aReceiver;
+                  forReceiver: (MOBRemoteIdentity *) aReceiver;
 
 /**
  * @discussion Decrypt a given message from a given sender
@@ -34,7 +35,7 @@
  * @return the cleartext message if successful or nil if decryption failed
  */
 - (NSString *) decryptMessage: (NSString *) aEncryptedMessage
-                  fromSender: (MOBIdentity *) aSender;
+                  fromSender: (MOBRemoteIdentity *) aSender;
 
 /**
  * @discussion Perform an Axolotl key agreement with a given peer. 
@@ -42,7 +43,7 @@
  * @param aBob - Bob's identity
  * @param TODO
  */
-- (void) performKeyExchangeWithBob: (MOBIdentity *) aBob
+- (void) performKeyExchangeWithBob: (MOBRemoteIdentity *) aBob
     andSendKeyExchangeMessageUsing: (void (^) (NSString * keyExchangeMessage)) sendContinuation;
 /*                    withSuccessBlock: (BOOL (^) (void)) successContinuation
                     withFailureBlock: (void (^) (void)) failureContinuation;*/
