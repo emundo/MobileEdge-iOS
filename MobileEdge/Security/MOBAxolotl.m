@@ -16,6 +16,7 @@
 #import "MOBIdentity.h"
 #import "MOBRemoteIdentity.h"
 #import "MOBCore.h"
+#import "NACLKey+ScalarMult.h"
 
 #pragma mark -
 #pragma mark Class Extension
@@ -75,18 +76,29 @@
     NACLAsymmetricKeyPair *myEphemeralKeyPair = [NACLAsymmetricKeyPair keyPair];
     NSMutableDictionary *keyExchangeMessageOut = [NSMutableDictionary dictionary];
     
-    [keyExchangeMessageOut setObject:[self.identity.identityKey.data description]
-                              forKey:@"id"];
-    [keyExchangeMessageOut setObject:[myEphemeralKeyPair.publicKey.data description]
-                              forKey:@"eph0"];
-    //[keyExchangeMessageOut setObject:[self.identity.identityKey.data base64EncodedDataWithOptions: 0] forKey:@"id"];
-    //[keyExchangeMessageOut setObject:[myEphemeralKeyPair.publicKey.data base64EncodedDataWithOptions:0] forKey:@"eph0"];
+    //[keyExchangeMessageOut setObject:[self.identity.identityKey.data description] forKey:@"id"];
+    //[keyExchangeMessageOut setObject:[myEphemeralKeyPair.publicKey.data description] forKey:@"eph0"];
+    [keyExchangeMessageOut setObject:[self.identity.identityKey.data base64EncodedStringWithOptions: 0] forKey:@"id"];
+    [keyExchangeMessageOut setObject:[myEphemeralKeyPair.publicKey.data base64EncodedStringWithOptions:0] forKey:@"eph0"];
     KeyExchangeFinalizeBlock finalizeBlock;
     finalizeBlock = ^(NSData *theirKeyExchangeMessage)
     {
         NSDictionary *keyExchangeMessageIn = [NSJSONSerialization JSONObjectWithData:theirKeyExchangeMessage
                                                                              options:0
                                                                                error:nil]; // TODO: error
+        NACLKey *theirId =[NACLKey keyWithData: [[NSData alloc] initWithBase64EncodedString: keyExchangeMessageIn[@"id"]
+                                                                                    options:0]];
+        NACLKey *theirEph0 =[NACLKey keyWithData: [[NSData alloc] initWithBase64EncodedString: keyExchangeMessageIn[@"eph0"]
+                                                                                      options:0]];
+        NACLKey *theirEph1 =[NACLKey keyWithData: [[NSData alloc] initWithBase64EncodedString: keyExchangeMessageIn[@"eph1"]
+                                                                                      options:0]];
+        NACLKey *part1 = [self.identity.identityKeyPair.privateKey multWithKey:theirEph0];
+        NACLKey *part2 = [myEphemeralKeyPair.privateKey multWithKey: theirId];
+        NACLKey *part3 = [myEphemeralKeyPair.privateKey multWithKey: theirEph0];
+        NSMutableData *masterSecret = [NSMutableData dataWithCapacity:part1.keyLength + part2.keyLength + part3.keyLength];
+        [masterSecret appendData:part1.data];
+        [masterSecret appendData:part2.data];
+        [masterSecret appendData:part3.data];
         
     };
     if ([NSJSONSerialization isValidJSONObject:keyExchangeMessageOut])
