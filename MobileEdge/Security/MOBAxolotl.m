@@ -19,7 +19,7 @@
 #import "NACLKey+ScalarMult.h"
 #import <HKDFKit.h>
 #import <SodiumObjc.h>
-#import <SodiumObjc/NACLKey.h>
+#import <sodium/crypto_hash.h>
 
 #pragma mark -
 #pragma mark Class Extension
@@ -98,11 +98,18 @@
         NACLKey *part1 = [self.identity.identityKeyPair.privateKey multWithKey:theirEph0];
         NACLKey *part2 = [myEphemeralKeyPair.privateKey multWithKey: theirId];
         NACLKey *part3 = [myEphemeralKeyPair.privateKey multWithKey: theirEph0];
+        
         NSMutableData *masterSecret = [NSMutableData dataWithCapacity:[NACLKey keyLength] * 3];
         [masterSecret appendData:part1.data];
         [masterSecret appendData:part2.data];
         [masterSecret appendData:part3.data];
         
+        NSMutableData *inputKeyMaterial = [NSMutableData dataWithCapacity: (512 / 8)];
+        crypto_hash(inputKeyMaterial.mutableBytes, masterSecret.bytes, [NACLKey keyLength] * 3);
+        
+        NSData *info = [@"MobileEdge" dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *salt = [@"salty" dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *derivedKeyMaterial = [HKDFKit deriveKey:masterSecret info:info salt:salt outputSize:5*32];
     };
     if ([NSJSONSerialization isValidJSONObject:keyExchangeMessageOut])
     {
