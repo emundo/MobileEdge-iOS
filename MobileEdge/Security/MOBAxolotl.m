@@ -17,6 +17,9 @@
 #import "MOBRemoteIdentity.h"
 #import "MOBCore.h"
 #import "NACLKey+ScalarMult.h"
+#import <HKDFKit.h>
+#import <SodiumObjc.h>
+#import <SodiumObjc/NACLKey.h>
 
 #pragma mark -
 #pragma mark Class Extension
@@ -95,7 +98,7 @@
         NACLKey *part1 = [self.identity.identityKeyPair.privateKey multWithKey:theirEph0];
         NACLKey *part2 = [myEphemeralKeyPair.privateKey multWithKey: theirId];
         NACLKey *part3 = [myEphemeralKeyPair.privateKey multWithKey: theirEph0];
-        NSMutableData *masterSecret = [NSMutableData dataWithCapacity:part1.keyLength + part2.keyLength + part3.keyLength];
+        NSMutableData *masterSecret = [NSMutableData dataWithCapacity:[NACLKey keyLength] * 3];
         [masterSecret appendData:part1.data];
         [masterSecret appendData:part2.data];
         [masterSecret appendData:part3.data];
