@@ -15,6 +15,16 @@
 
 @implementation MOBIdentity
 
+-(instancetype) init
+{
+    NACLAsymmetricKeyPair *newKeyPair = [NACLAsymmetricKeyPair keyPair];
+    if (self = [super initWithPublicKey:newKeyPair.publicKey])
+    {
+        _identityKeyPair = newKeyPair;
+    }
+    return self;
+}
+
 -(instancetype) initWithKeyPair: (NACLAsymmetricKeyPair *) aKeyPair
 {
     if (self = [super initWithPublicKey:aKeyPair.publicKey])
