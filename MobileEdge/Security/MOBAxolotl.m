@@ -20,6 +20,7 @@
 #import <HKDFKit.h>
 #import <SodiumObjc.h>
 #import <sodium/crypto_hash.h>
+#import <FXKeychain.h>
 
 #pragma mark -
 #pragma mark Class Extension
@@ -27,10 +28,11 @@
 @interface MOBAxolotl ()
 
 @property (nonatomic,strong) MOBIdentity *identity;
+@property (nonatomic,strong) FXKeychain *keychain;
 @property (nonatomic,strong) NSMutableDictionary *sessions;
 
 - (void) addSession: (MOBAxolotlSession *) aSession
-             forBob: (MOBIdentity *) aBobIdentity;
+             forBob: (MOBRemoteIdentity *) aBobIdentity;
 
 @end
 
@@ -44,8 +46,10 @@
     if (self = [super init])
     {
         self.identity = aIdentity;
-#warning unfinished
-        //TODO: check whether a state for this identity exists in keychain!
+        self.keychain = [[FXKeychain alloc] initWithService:@"MobileEdgeAxolotl"
+                                                accessGroup:@"MobileEdgeAxolotl"
+                                              accessibility:FXKeychainAccessibleAfterFirstUnlock];
+        self.sessions = self.keychain[self.identity.identityKey];
     }
     return self;
 }
@@ -72,10 +76,8 @@
 #pragma mark -
 #pragma mark Key exchange
 - (void) performKeyExchangeWithBob: (MOBRemoteIdentity *) aBob
-    andSendKeyExchangeMessageUsing: (KeyExchangeSendBlock) sendContinuation
+    andSendKeyExchangeMessageUsing: (KeyExchangeSendBlock) aSendKeyExchangeBlock
 {
-    MOBAxolotlSession *newSession = [[MOBAxolotlSession alloc] initWithMyIdentityKeyPair:self.identity.identityKeyPair
-                                                                        theirIdentityKey:aBob.identityKey];
     NACLAsymmetricKeyPair *myEphemeralKeyPair = [NACLAsymmetricKeyPair keyPair];
     NSMutableDictionary *keyExchangeMessageOut = [NSMutableDictionary dictionary];
     
@@ -86,34 +88,20 @@
     KeyExchangeFinalizeBlock finalizeBlock;
     finalizeBlock = ^(NSData *theirKeyExchangeMessage)
     {
+        MOBAxolotlSession *newSession = [[MOBAxolotlSession alloc] initWithMyIdentityKeyPair:self.identity.identityKeyPair
+                                                                            theirIdentityKey:aBob.identityKey];
         NSDictionary *keyExchangeMessageIn = [NSJSONSerialization JSONObjectWithData:theirKeyExchangeMessage
                                                                              options:0
                                                                                error:nil]; // TODO: error
-        NACLKey *theirId =[NACLKey keyWithData: [[NSData alloc] initWithBase64EncodedString: keyExchangeMessageIn[@"id"]
-                                                                                    options:0]];
-        NACLKey *theirEph0 =[NACLKey keyWithData: [[NSData alloc] initWithBase64EncodedString: keyExchangeMessageIn[@"eph0"]
-                                                                                      options:0]];
-        NACLKey *theirEph1 =[NACLKey keyWithData: [[NSData alloc] initWithBase64EncodedString: keyExchangeMessageIn[@"eph1"]
-                                                                                      options:0]];
-        NACLKey *part1 = [self.identity.identityKeyPair.privateKey multWithKey:theirEph0];
-        NACLKey *part2 = [myEphemeralKeyPair.privateKey multWithKey: theirId];
-        NACLKey *part3 = [myEphemeralKeyPair.privateKey multWithKey: theirEph0];
-        
-        NSMutableData *masterSecret = [NSMutableData dataWithCapacity:[NACLKey keyLength] * 3];
-        [masterSecret appendData:part1.data];
-        [masterSecret appendData:part2.data];
-        [masterSecret appendData:part3.data];
-        
-        NSMutableData *inputKeyMaterial = [NSMutableData dataWithCapacity: (512 / 8)];
-        crypto_hash(inputKeyMaterial.mutableBytes, masterSecret.bytes, [NACLKey keyLength] * 3);
-        
-        NSData *info = [@"MobileEdge" dataUsingEncoding:NSUTF8StringEncoding];
-        NSData *salt = [@"salty" dataUsingEncoding:NSUTF8StringEncoding];
-        NSData *derivedKeyMaterial = [HKDFKit deriveKey:masterSecret info:info salt:salt outputSize:5*32];
+        [newSession finishKeyAgreementWithKeyExchangeMessage: keyExchangeMessageIn
+                                          myEphemeralKeyPair: myEphemeralKeyPair];
+        [self addSession:newSession forBob:aBob];
+        [self.keychain setObject:self.sessions
+                          forKey:self.identity.identityKey];
     };
     if ([NSJSONSerialization isValidJSONObject:keyExchangeMessageOut])
     {
-        sendContinuation([NSJSONSerialization dataWithJSONObject:keyExchangeMessageOut options:0 error:nil], finalizeBlock);   //TODO: error
+        aSendKeyExchangeBlock([NSJSONSerialization dataWithJSONObject:keyExchangeMessageOut options:0 error:nil], finalizeBlock);   //TODO: error
     }
     else
     {

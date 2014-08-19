@@ -17,7 +17,7 @@
 
 @interface MOBAxolotlSession : NSObject <NSCoding>
 
-@property (nonatomic, strong, readonly) NACLAsymmetricKeyPair *myIdentityKey;  //FIXME: type should later be NACLAsymmetricKeyPair
+@property (nonatomic, strong, readonly) NACLAsymmetricKeyPair *myIdentityKeyPair;  //FIXME: type should later be NACLAsymmetricKeyPair
 @property (nonatomic, strong, readonly) NACLAsymmetricPublicKey *theirIdentityKey;  //FIXME: type should later be NACLAsymmetricPublicKey
 @property (nonatomic, strong, readonly) NSData *rootKey;
 
@@ -29,7 +29,7 @@
 @property (nonatomic, strong, readonly) NSData *receiverChainKey;
 @property (nonatomic, strong, readonly) NSData *receiverHeaderKey;
 @property (nonatomic, strong, readonly) NSData *receiverNextHeaderKey;
-@property (nonatomic, strong, readonly) NACLAsymmetricKeyPair *receiverDiffieHellmanKey; //FIXME: type
+@property (nonatomic, strong, readonly) NACLAsymmetricPublicKey *receiverDiffieHellmanKey; //FIXME: type
 
 @property (nonatomic, assign, readonly) NSUInteger messagesReceivedCount;
 @property (nonatomic, assign, readonly) NSUInteger messagesSentCount;
@@ -40,5 +40,10 @@
 
 - (instancetype) initWithMyIdentityKeyPair: (NACLAsymmetricKeyPair *) aKeyPair
                           theirIdentityKey: (NACLAsymmetricPublicKey *) aTheirKey;
+
+- (void) addDerivedKeyMaterial: (NSData *) derivedKeyMaterial;
+
+- (void) finishKeyAgreementWithKeyExchangeMessage: (NSDictionary *) keyExchangeMessageIn
+                               myEphemeralKeyPair: (NACLAsymmetricKeyPair *) myEphemeralKeyPair;
 
 @end
