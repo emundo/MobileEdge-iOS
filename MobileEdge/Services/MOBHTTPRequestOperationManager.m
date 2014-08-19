@@ -15,6 +15,7 @@
 #import "MOBRemoteIdentity.h"
 #import "MOBIdentity.h"
 #import "MOBAxolotl.h"
+#import "MOBCore.h"
 
 @interface MOBHTTPRequestOperationManager ()
 
@@ -83,6 +84,25 @@
     {
         MOBAxolotl *axolotl;
         axolotl = [[MOBAxolotl alloc] initWithIdentity: self.myIdentity];
+        KeyExchangeSendBlock sendBlock;
+        sendBlock = ^(NSData *keyExchangeMessageOut, KeyExchangeFinalizeBlock finalizeBlock)
+        {
+            //TODO request serialization using json?
+            [super POST: request.URL.absoluteString
+             parameters:keyExchangeMessageOut
+                success:^(AFHTTPRequestOperation *operation, id responseObject)
+                {
+                    finalizeBlock(responseObject);
+                }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                {
+                    DDLogError(@"No key exchange possible with %@ (Error:%@)", request.URL, error);
+                }];
+        };
+        // encrypt the HTTP request (or transparently perform key agreement)
+        [axolotl performKeyExchangeWithBob:remoteIdentity
+            andSendKeyExchangeMessageUsing:sendBlock];
+        NSData *encryptedData = [axolotl encryptData:request.HTTPBody forReceiver:remoteIdentity];
     }
     //TODO perform protocol cleaning
     return [super HTTPRequestOperationWithRequest:request success:success failure:failure];

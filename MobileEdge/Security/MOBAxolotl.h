@@ -47,7 +47,7 @@ typedef void (^KeyExchangeSendBlock) (NSData * keyExchangeMessage, KeyExchangeFi
  * @param TODO
  */
 - (void) performKeyExchangeWithBob: (MOBRemoteIdentity *) aBob
-    andSendKeyExchangeMessageUsing: (KeyExchangeSendBlock) sendContinuation;
+    andSendKeyExchangeMessageUsing: (KeyExchangeSendBlock) aSendKeyExchangeBlock;
     //andSendKeyExchangeMessageUsing: (void (^) (NSData * keyExchangeMessage)) sendContinuation;
 /*                    withSuccessBlock: (BOOL (^) (void)) successContinuation
                     withFailureBlock: (void (^) (void)) failureContinuation;*/
