@@ -12,14 +12,18 @@
  */
 
 #import "NACLKey+ScalarMult.h"
+#import <SodiumObjc.h>
 #import <sodium/crypto_scalarmult.h>
+#import "MOBCore.h"
 
 @implementation NACLKey (ScalarMult)
 
 - (instancetype) multWithKey: (NACLKey *) aKey
 {
+    DDLogVerbose(@"%lu == %lu  == %lu ?", crypto_scalarmult_bytes(),
+                 crypto_scalarmult_scalarbytes(), (unsigned long)[NACLKey keyLength]);
     NSMutableData *data = [NSMutableData dataWithLength:32];
-    void *target = data.mutableBytes;
+    unsigned char *target = data.mutableBytes;
     crypto_scalarmult(target, self.data.bytes, aKey.data.bytes);
     NACLKey *result = [[NACLKey alloc] initWithData:data];
     return result;
