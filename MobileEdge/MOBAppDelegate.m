@@ -18,7 +18,8 @@
     //NSPersistentStoreCoordinator *coordinator = [EncryptedStore makeStore:[self managedObjectModel]
                                                                  //passcode:@"SuperSafeMobileEdgePasscode;)"];
     // Override point for customization after application launch.
-    NSLog(@"%@", [[NACLAsymmetricKeyPair keyPair].privateKey.data base64EncodedStringWithOptions:0]);
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    DDLogVerbose(@"%@", [[NACLAsymmetricKeyPair keyPair].privateKey.data base64EncodedStringWithOptions:0]);
     return YES;
 }
 							
