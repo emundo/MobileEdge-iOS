@@ -9,6 +9,7 @@
 #import "MOBAppDelegate.h"
 #import "EncryptedStore.h"
 #import "MOBCore.h"
+#import <SodiumObjc.h>
 
 @implementation MOBAppDelegate
 
@@ -17,6 +18,7 @@
     //NSPersistentStoreCoordinator *coordinator = [EncryptedStore makeStore:[self managedObjectModel]
                                                                  //passcode:@"SuperSafeMobileEdgePasscode;)"];
     // Override point for customization after application launch.
+    NSLog(@"%@", [[NACLAsymmetricKeyPair keyPair].privateKey.data base64EncodedStringWithOptions:0]);
     return YES;
 }
 							
