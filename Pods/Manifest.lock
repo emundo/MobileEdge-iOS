@@ -28,6 +28,7 @@ PODS:
   - EncryptedCoreData (2.0):
     - SQLCipher (~> 3.1.0)
   - FXKeychain (1.5.1)
+  - HKDFKit (0.0.3)
   - Objection (1.4)
   - SodiumObjc (1.1)
   - SQLCipher (3.1.0):
@@ -41,6 +42,7 @@ DEPENDENCIES:
   - CocoaLumberjack (~> 1.9.2)
   - EncryptedCoreData (from `https://github.com/project-imas/encrypted-core-data.git`)
   - FXKeychain (~> 1.5.1)
+  - HKDFKit (~> 0.0.3)
   - Objection (~> 1.4)
   - SodiumObjc (from `https://github.com/r-arias/SodiumObjc.git`)
 
@@ -55,6 +57,7 @@ SPEC CHECKSUMS:
   CocoaLumberjack: 205769c032b5fef85b92472046bcc8b7e7c8a817
   EncryptedCoreData: da635f9ec2413601ba5cbed71d29d75d91c79e95
   FXKeychain: beb642a4218ba783507af08865eda05e9b26a612
+  HKDFKit: 5998cf1bbb611e7ecc6bd3eaaef8c7a7da7be949
   Objection: 8176a996209cdcd23490c57d6e807a25faa8d54d
   SodiumObjc: 69c90c435fe0d6d91bdb0ac5e5deb8fe0b93502c
   SQLCipher: 981110217eb93c2779c34fb59e646a1c1da918d8

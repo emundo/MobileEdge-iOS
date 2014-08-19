@@ -9,6 +9,7 @@ pod "AFNetworking",         "~> 2.0"
 pod "CocoaLumberjack",      "~> 1.9.2"
 pod "Objection",            "~> 1.4"
 pod "FXKeychain",           "~> 1.5.1"
+pod "HKDFKit",              "~> 0.0.3"
 pod "SodiumObjc",           :git => "https://github.com/r-arias/SodiumObjc.git"
 
 end
