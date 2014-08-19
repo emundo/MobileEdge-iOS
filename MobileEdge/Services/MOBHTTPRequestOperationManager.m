@@ -13,6 +13,8 @@
 
 #import "MOBHTTPRequestOperationManager.h"
 #import "MOBRemoteIdentity.h"
+#import "MOBIdentity.h"
+#import "MOBAxolotl.h"
 
 @interface MOBHTTPRequestOperationManager ()
 
@@ -24,11 +26,33 @@
 
 @implementation MOBHTTPRequestOperationManager
 
-- (instancetype) initWithRemoteIdentity: (MOBRemoteIdentity *) aRemoteIdentity
+- (instancetype) init
 {
     if (self = [super init])
     {
         self.shouldUseTor = YES;
+        self.myIdentity = [[MOBIdentity alloc] init];
+    }
+    return self;
+}
+
+- (instancetype) initWithIdentity: (MOBIdentity *) aMyIdentity;
+{
+    if (self = [super init])
+    {
+        self.shouldUseTor = YES;
+        self.myIdentity = aMyIdentity;
+    }
+    return self;
+}
+
+- (instancetype) initWithIdentity: (MOBIdentity *) aMyIdentity
+                    remoteIdentity: (MOBRemoteIdentity *) aRemoteIdentity
+{
+    if (self = [super init])
+    {
+        self.shouldUseTor = YES;
+        self.myIdentity = aMyIdentity;
         [self addRemoteIdentity:aRemoteIdentity];
     }
     return self;
@@ -39,9 +63,14 @@
                                                      failure: (void ( ^ ) ( AFHTTPRequestOperation *operation , NSError *error )) failure
 {
     //TODO perform key exchanges/encryption if necessary and possible
-    // options to achieve this:
-    // * check whether the target domain/IP supports MobileEdge by keeping a list of domains
-    // *
+    // We keep a dictionary of URLs and can check, whether a request URL is part of that list.
+    // If it is, we call the axolotl subsystem
+    MOBRemoteIdentity *remoteIdentity;
+    if ((remoteIdentity = self.remotes[request.URL.absoluteString]))
+    {
+        MOBAxolotl *axolotl;
+        axolotl = [[MOBAxolotl alloc] initWithIdentity: self.myIdentity];
+    }
     //TODO perform protocol cleaning
     return [super HTTPRequestOperationWithRequest:request success:success failure:failure];
 }
@@ -52,7 +81,7 @@
     if (!self.remotes) {
         self.remotes = [NSMutableDictionary dictionary];
     }
-    [self.remotes setObject:aRemoteIdentity forKey: aRemoteIdentity.serviceURL];
+    [self.remotes setObject:aRemoteIdentity forKey: aRemoteIdentity.serviceURL.absoluteString];
 }
 
 - (void) setShouldUseTor: (BOOL) aShouldUseTor

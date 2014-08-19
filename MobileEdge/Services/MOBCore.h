@@ -15,7 +15,12 @@
 #import <DDLog.h>
 #import <DDTTYLogger.h>
 
+
+#ifdef DEBUG
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+#else
+static const int ddLogLevel = LOG_LEVEL_WARN;
+#endif
 
 @class MOBTorSettings, TorController;
 

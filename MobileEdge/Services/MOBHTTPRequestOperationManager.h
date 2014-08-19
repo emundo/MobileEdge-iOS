@@ -13,11 +13,17 @@
 
 #import "AFHTTPRequestOperationManager.h"
 
-@class MOBRemoteIdentity;
+@class MOBIdentity, MOBRemoteIdentity;
 
 @interface MOBHTTPRequestOperationManager : AFHTTPRequestOperationManager
 
+@property (nonatomic,strong) MOBIdentity *myIdentity;
 @property (nonatomic,assign) BOOL shouldUseTor;
+
+- (instancetype) initWithIdentity: (MOBIdentity *) aMyIdentity;
+
+- (instancetype) initWithIdentity: (MOBIdentity *) aMyIdentity
+                   remoteIdentity: (MOBRemoteIdentity *) aRemoteIdentity;
 
 - (void) addRemoteIdentity: (MOBRemoteIdentity *) aRemoteIdentity;
 
