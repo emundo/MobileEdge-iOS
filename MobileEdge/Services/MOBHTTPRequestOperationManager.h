@@ -20,10 +20,15 @@
 @property (nonatomic,strong) MOBIdentity *myIdentity;
 @property (nonatomic,assign) BOOL shouldUseTor;
 
+
 - (instancetype) initWithIdentity: (MOBIdentity *) aMyIdentity;
 
 - (instancetype) initWithIdentity: (MOBIdentity *) aMyIdentity
                    remoteIdentity: (MOBRemoteIdentity *) aRemoteIdentity;
+
+- (instancetype) init;
+
+- (instancetype) initWithRemoteIdentity: (MOBRemoteIdentity *) aRemoteIdentity;
 
 - (void) addRemoteIdentity: (MOBRemoteIdentity *) aRemoteIdentity;
 

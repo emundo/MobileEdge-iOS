@@ -26,6 +26,9 @@
 
 @implementation MOBHTTPRequestOperationManager
 
+#pragma mark -
+#pragma mark Initializers
+
 - (instancetype) init
 {
     if (self = [super init])
@@ -49,14 +52,24 @@
 - (instancetype) initWithIdentity: (MOBIdentity *) aMyIdentity
                     remoteIdentity: (MOBRemoteIdentity *) aRemoteIdentity
 {
-    if (self = [super init])
+    if (self = [self initWithIdentity:aMyIdentity])
     {
-        self.shouldUseTor = YES;
-        self.myIdentity = aMyIdentity;
         [self addRemoteIdentity:aRemoteIdentity];
     }
     return self;
 }
+
+- (instancetype) initWithRemoteIdentity: (MOBRemoteIdentity *) aRemoteIdentity
+{
+    if (self = [self init])
+    {
+        [self addRemoteIdentity:aRemoteIdentity];
+    }
+    return self;
+}
+
+#pragma mark -
+#pragma mark Overrides for inherited methods
 
 - (AFHTTPRequestOperation *) HTTPRequestOperationWithRequest: (NSURLRequest *) request
                                                      success: (void ( ^ ) ( AFHTTPRequestOperation *operation , id responseObject )) success
@@ -75,6 +88,8 @@
     return [super HTTPRequestOperationWithRequest:request success:success failure:failure];
 }
 
+#pragma mark -
+#pragma mark Settings
 
 - (void) addRemoteIdentity: (MOBRemoteIdentity *) aRemoteIdentity
 {
