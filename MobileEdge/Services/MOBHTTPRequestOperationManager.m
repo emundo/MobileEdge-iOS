@@ -76,6 +76,7 @@
                                                      success: (void ( ^ ) ( AFHTTPRequestOperation *operation , id responseObject )) success
                                                      failure: (void ( ^ ) ( AFHTTPRequestOperation *operation , NSError *error )) failure
 {
+    //TODO perform protocol cleaning
     //TODO perform key exchanges/encryption if necessary and possible
     // We keep a dictionary of URLs and can check, whether a request URL is part of that list.
     // If it is, we call the axolotl subsystem
@@ -84,28 +85,77 @@
     {
         MOBAxolotl *axolotl;
         axolotl = [[MOBAxolotl alloc] initWithIdentity: self.myIdentity];
+        
+        __block AFHTTPRequestOperation *keyExchangeRequestOperation;
         KeyExchangeSendBlock sendBlock;
         sendBlock = ^(NSData *keyExchangeMessageOut, KeyExchangeFinalizeBlock finalizeBlock)
         {
             //TODO request serialization using json?
-            [super POST: request.URL.absoluteString
-             parameters:keyExchangeMessageOut
-                success:^(AFHTTPRequestOperation *operation, id responseObject)
-                {
-                    finalizeBlock(responseObject);
-                }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error)
-                {
-                    DDLogError(@"No key exchange possible with %@ (Error:%@)", request.URL, error);
-                }];
+            NSMutableURLRequest *keyExchangeRequest = [NSMutableURLRequest requestWithURL:request.URL];
+            [keyExchangeRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            [keyExchangeRequest setHTTPMethod:@"POST"];
+            [keyExchangeRequest setHTTPBody: keyExchangeMessageOut];
+            keyExchangeRequestOperation =
+                [super HTTPRequestOperationWithRequest:keyExchangeRequest
+                    success:^(AFHTTPRequestOperation *operation, id responseObject)
+                    {
+                        finalizeBlock(responseObject);
+                        NSData *encryptedData = [axolotl encryptData:request.HTTPBody forRecipient: remoteIdentity];
+                        NSMutableURLRequest *newRequest = [request mutableCopy]; //[NSMutableURLRequest requestWithURL:request.URL];
+                        [newRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+                        [newRequest setHTTPMethod:@"POST"];
+                        [newRequest setHTTPBody: encryptedData];
+                        
+                        AFHTTPRequestOperation *encryptedRequest = [super HTTPRequestOperationWithRequest:newRequest success:success failure:failure];
+                        [encryptedRequest start];
+                    }
+                    failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                    {
+                        DDLogError(@"No key exchange possible with %@ (Error:%@)", request.URL, error);
+                        // actually call the failure block passed to us!
+                        // Not doing so and defaulting back to unencrypted data opens up security vulnerabilites!
+                        //[super HTTPRequestOperationWithRequest:request success:success failure:failure];
+                        failure(keyExchangeRequestOperation, [NSError errorWithDomain:@"MOBKeyExchangeFailure" code:-1 userInfo:nil]);
+                    }];
+            //[super POST: request.URL.absoluteString
+              //                             parameters:keyExchangeMessageOut
+            // TODO: register for changes to this operation
+            [keyExchangeRequestOperation addObserver: self
+                                          forKeyPath: @"responseSerializer"
+                                             options: (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                                             context: NULL];
+            //TODO: further implement method!
         };
-        // encrypt the HTTP request (or transparently perform key agreement)
         [axolotl performKeyExchangeWithBob:remoteIdentity
             andSendKeyExchangeMessageUsing:sendBlock];
-        NSData *encryptedData = [axolotl encryptData:request.HTTPBody forReceiver:remoteIdentity];
+        return keyExchangeRequestOperation;
     }
-    //TODO perform protocol cleaning
-    return [super HTTPRequestOperationWithRequest:request success:success failure:failure];
+    else
+    {
+        return [super HTTPRequestOperationWithRequest:request success:success failure:failure];
+    }
+}
+
+- (void)observeValueForKeyPath: (NSString *) keyPath
+                      ofObject: (id) object
+                        change: (NSDictionary *) change
+                       context: (void *) context
+{
+    if ([keyPath isEqual:@"responseSerializer"]) {
+         change[NSKeyValueChangeNewKey]; //TODO do something with it
+        
+    }
+    
+    /*
+     Be sure to call the superclass's implementation *if it implements it*.
+     NSObject does not implement the method.
+     */
+    /*
+     [super observeValueForKeyPath:keyPath
+                         ofObject:object
+                           change:change
+                          context:context];
+     */
 }
 
 #pragma mark -
