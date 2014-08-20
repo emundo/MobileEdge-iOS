@@ -58,7 +58,7 @@
 #pragma mark -
 #pragma mark Encryption
 - (NSString *) encryptMessage: (NSString *) aMessage
-                  forReceiver: (MOBRemoteIdentity *) aReceiver
+                  forRecipient: (MOBRemoteIdentity *) aReceiver
 {
 #warning stub
     return nil;
