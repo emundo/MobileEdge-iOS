@@ -12,7 +12,16 @@
  */
 
 #import "NSDictionary+Axolotl.h"
+#import "MOBAxolotl.h"
 
 @implementation NSDictionary (Axolotl)
+
+- (NSData *) decryptedDataFromSender: (MOBRemoteIdentity *) aRemoteIdentity
+                         withAxolotl: (MOBAxolotl *) aAxolotl
+{
+    return [aAxolotl decryptBody: self[@"body"]
+                        withHead: self[@"head"]
+                       withNonce: self[@"nonce"]];
+}
 
 @end
