@@ -73,7 +73,7 @@
 
 #pragma mark -
 #pragma mark Decryption
-- (NSString *) decryptMessage: (NSString *) aEncryptedMessage
+- (NSString *) decryptMessage: (NSDictionary *) aEncryptedMessage
                    fromSender: (MOBRemoteIdentity *) aSender
 {
 #warning stub

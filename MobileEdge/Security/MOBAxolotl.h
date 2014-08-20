@@ -46,7 +46,7 @@ typedef void (^KeyExchangeSendBlock) (NSData * keyExchangeMessage, KeyExchangeFi
  * @param aSender - the sender of the message
  * @return the cleartext message if successful or nil if decryption failed
  */
-- (NSString *) decryptMessage: (NSString *) aEncryptedMessage
+- (NSString *) decryptMessage: (NSDictionary *) aEncryptedMessage
                    fromSender: (MOBRemoteIdentity *) aSender;
 
 /**
