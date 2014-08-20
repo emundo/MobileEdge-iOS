@@ -64,10 +64,24 @@
     return nil;
 }
 
+- (NSData *) encryptData: (NSData *) aData
+            forRecipient: (MOBRemoteIdentity *) aRecipient
+{
+#warning stub
+    return nil;
+}
+
 #pragma mark -
 #pragma mark Decryption
 - (NSString *) decryptMessage: (NSString *) aEncryptedMessage
                    fromSender: (MOBRemoteIdentity *) aSender
+{
+#warning stub
+    return nil;
+}
+
+- (NSData *) decryptData: (NSData *) aEncryptedData
+              fromSender: (MOBRemoteIdentity *) aSender
 {
 #warning stub
     return nil;

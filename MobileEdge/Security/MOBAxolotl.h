@@ -23,13 +23,22 @@ typedef void (^KeyExchangeSendBlock) (NSData * keyExchangeMessage, KeyExchangeFi
 - (instancetype) initWithIdentity: (MOBIdentity *) identity;
 
 /**
- * @discussion Encrypt a given message for a given receiver.
+ * @discussion Encrypt a given message for a given recipient.
  * @param aMessage - the message to encrypt
- * @param aReceiver - the receiver of the message
+ * @param aRecipient - the receiver of the message
  * @return the encrypted message or nil if encryption failed
  */
 - (NSString *) encryptMessage: (NSString *) aMessage
-                  forReceiver: (MOBRemoteIdentity *) aReceiver;
+                 forRecipient: (MOBRemoteIdentity *) aRecipient;
+
+/**
+ * @discussion Encrypt given data for a given recipient.
+ * @param aData - the data to encrypt
+ * @param aRecipient - the recipient
+ * @return the encrypted data
+ */
+- (NSData *) encryptData: (NSData *) aData
+            forRecipient: (MOBRemoteIdentity *) aRecipient;
 
 /**
  * @discussion Decrypt a given message from a given sender
@@ -38,7 +47,16 @@ typedef void (^KeyExchangeSendBlock) (NSData * keyExchangeMessage, KeyExchangeFi
  * @return the cleartext message if successful or nil if decryption failed
  */
 - (NSString *) decryptMessage: (NSString *) aEncryptedMessage
-                  fromSender: (MOBRemoteIdentity *) aSender;
+                   fromSender: (MOBRemoteIdentity *) aSender;
+
+/**
+ * @discussion Decrypt given data from a given sender
+ * @param aEncryptedData - the encrypted data
+ * @param aSender - the sender of the data
+ * @return the cleartext data if successful or nil if decryption failed
+ */
+- (NSData *) decryptData: (NSData *) aEncryptedData
+              fromSender: (MOBRemoteIdentity *) aSender;
 
 /**
  * @discussion Perform an Axolotl key agreement with a given peer. 
