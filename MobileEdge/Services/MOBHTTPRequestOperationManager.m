@@ -71,6 +71,8 @@
 
 #pragma mark -
 #pragma mark Overrides for inherited methods
+typedef void (^RequestOperationOnSuccessBlock) ( AFHTTPRequestOperation *operation, id responseObject );
+typedef void (^RequestOperationOnFailureBlock) ( AFHTTPRequestOperation *operation, NSError *error );
 
 - (AFHTTPRequestOperation *) HTTPRequestOperationWithRequest: (NSURLRequest *) request
                                                      success: (void ( ^ ) ( AFHTTPRequestOperation *operation , id responseObject )) success
@@ -90,33 +92,58 @@
         KeyExchangeSendBlock sendBlock;
         sendBlock = ^(NSData *keyExchangeMessageOut, KeyExchangeFinalizeBlock finalizeBlock)
         {
+            RequestOperationOnSuccessBlock onSuccessfulKeyExchange;
+            RequestOperationOnFailureBlock onFailedKeyExchange;
+            
+            RequestOperationOnSuccessBlock onSuccessfulEncryptedRequest;
+            RequestOperationOnFailureBlock onFailedEncryptedRequest;
+            onSuccessfulEncryptedRequest = ^(AFHTTPRequestOperation *operation, id responseObject)
+            {
+                NSMutableDictionary *decryptedResponseObject = [NSMutableDictionary dictionary];
+                // When the encryption was successful and the server responds in a expected way,
+                // the structure of the response should look as follows:
+                // { "nonce" : ..., "head" : ..., "body": ... }
+                [axolotl decryptMessage: (NSDictionary*) responseObject
+                             fromSender:remoteIdentity];
+                success(operation, decryptedResponseObject);
+            };
+            onFailedEncryptedRequest = ^(AFHTTPRequestOperation *operation, NSError *error)
+            {
+                
+            };
+            onSuccessfulKeyExchange = ^(AFHTTPRequestOperation *operation, id responseObject)
+            {
+                // When the key exchange was successful and the server responds in a expected way,
+                // the structure of the response should look as follows:
+                // { "message" : { "id" : ..., "eph0" : ..., "eph1" : ... } }
+                finalizeBlock(responseObject[@"message"]);
+                NSData *encryptedData = [axolotl encryptData:request.HTTPBody forRecipient: remoteIdentity];
+                NSMutableURLRequest *newRequest = [request mutableCopy]; //[NSMutableURLRequest requestWithURL:request.URL];
+                [newRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+                [newRequest setHTTPMethod:@"POST"];
+                [newRequest setHTTPBody: encryptedData];
+                
+                AFHTTPRequestOperation *encryptedRequest = [super HTTPRequestOperationWithRequest:newRequest success:success failure:failure];
+                [encryptedRequest start];
+            };
+            onFailedKeyExchange = ^(AFHTTPRequestOperation *operation, NSError *error)
+            {
+                DDLogError(@"No key exchange possible with %@ (Error:%@)", request.URL, error);
+                // actually call the failure block passed to us!
+                // Not doing so and defaulting back to unencrypted data opens up security vulnerabilites!
+                //[super HTTPRequestOperationWithRequest:request success:success failure:failure];
+                failure(keyExchangeRequestOperation, [NSError errorWithDomain:@"MOBKeyExchangeFailure" code:-1 userInfo:nil]);
+            };
+            
             //TODO request serialization using json?
             NSMutableURLRequest *keyExchangeRequest = [NSMutableURLRequest requestWithURL:request.URL];
             [keyExchangeRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
             [keyExchangeRequest setHTTPMethod:@"POST"];
             [keyExchangeRequest setHTTPBody: keyExchangeMessageOut];
             keyExchangeRequestOperation =
-                [super HTTPRequestOperationWithRequest:keyExchangeRequest
-                    success:^(AFHTTPRequestOperation *operation, id responseObject)
-                    {
-                        finalizeBlock(responseObject);
-                        NSData *encryptedData = [axolotl encryptData:request.HTTPBody forRecipient: remoteIdentity];
-                        NSMutableURLRequest *newRequest = [request mutableCopy]; //[NSMutableURLRequest requestWithURL:request.URL];
-                        [newRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-                        [newRequest setHTTPMethod:@"POST"];
-                        [newRequest setHTTPBody: encryptedData];
-                        
-                        AFHTTPRequestOperation *encryptedRequest = [super HTTPRequestOperationWithRequest:newRequest success:success failure:failure];
-                        [encryptedRequest start];
-                    }
-                    failure:^(AFHTTPRequestOperation *operation, NSError *error)
-                    {
-                        DDLogError(@"No key exchange possible with %@ (Error:%@)", request.URL, error);
-                        // actually call the failure block passed to us!
-                        // Not doing so and defaulting back to unencrypted data opens up security vulnerabilites!
-                        //[super HTTPRequestOperationWithRequest:request success:success failure:failure];
-                        failure(keyExchangeRequestOperation, [NSError errorWithDomain:@"MOBKeyExchangeFailure" code:-1 userInfo:nil]);
-                    }];
+                [super HTTPRequestOperationWithRequest: keyExchangeRequest
+                                               success: onSuccessfulKeyExchange
+                                               failure: onFailedKeyExchange];
             //[super POST: request.URL.absoluteString
               //                             parameters:keyExchangeMessageOut
             // TODO: register for changes to this operation
@@ -142,7 +169,10 @@
                        context: (void *) context
 {
     if ([keyPath isEqual:@"responseSerializer"]) {
-         change[NSKeyValueChangeNewKey]; //TODO do something with it
+        AFHTTPRequestOperation *operation = object;
+        
+        change[NSKeyValueChangeNewKey]; //TODO do something with it
+        change[NSKeyValueChangeOldKey]; //TODO do something with it
         
     }
     
