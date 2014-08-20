@@ -36,6 +36,7 @@
 		23BAE27B19A20AF900D3CDD8 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE26F19A20AF900D3CDD8 /* libssl.a */; };
 		23BAE27C19A20AF900D3CDD8 /* libtor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE27019A20AF900D3CDD8 /* libtor.a */; };
 		23BAE27F19A241A000D3CDD8 /* NACLKey+ScalarMult.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE27E19A241A000D3CDD8 /* NACLKey+ScalarMult.m */; };
+		23BAE28219A4990A00D3CDD8 /* NSDictionary+Axolotl.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE28119A4990A00D3CDD8 /* NSDictionary+Axolotl.m */; };
 		23CDB7F619990EC20007C3C5 /* MOBKeyExchangeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CDB7F519990EC20007C3C5 /* MOBKeyExchangeMessage.m */; };
 		23CDB7F91999FEFE0007C3C5 /* MOBAxolotlSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CDB7F81999FEFE0007C3C5 /* MOBAxolotlSession.m */; };
 		23CDB7FC199A0E830007C3C5 /* MOBIDToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CDB7FB199A0E830007C3C5 /* MOBIDToken.m */; };
@@ -126,6 +127,8 @@
 		23BAE27019A20AF900D3CDD8 /* libtor.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtor.a; path = dependencies/lib/libtor.a; sourceTree = "<group>"; };
 		23BAE27D19A241A000D3CDD8 /* NACLKey+ScalarMult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NACLKey+ScalarMult.h"; sourceTree = "<group>"; };
 		23BAE27E19A241A000D3CDD8 /* NACLKey+ScalarMult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NACLKey+ScalarMult.m"; sourceTree = "<group>"; };
+		23BAE28019A4990A00D3CDD8 /* NSDictionary+Axolotl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Axolotl.h"; sourceTree = "<group>"; };
+		23BAE28119A4990A00D3CDD8 /* NSDictionary+Axolotl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Axolotl.m"; sourceTree = "<group>"; };
 		23CDB7F419990EC20007C3C5 /* MOBKeyExchangeMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBKeyExchangeMessage.h; sourceTree = "<group>"; };
 		23CDB7F519990EC20007C3C5 /* MOBKeyExchangeMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBKeyExchangeMessage.m; sourceTree = "<group>"; };
 		23CDB7F71999FEFE0007C3C5 /* MOBAxolotlSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBAxolotlSession.h; path = Model/MOBAxolotlSession.h; sourceTree = "<group>"; };
@@ -276,6 +279,8 @@
 				23BAE23619A1E19D00D3CDD8 /* MOBTorSettings.m */,
 				23BAE27D19A241A000D3CDD8 /* NACLKey+ScalarMult.h */,
 				23BAE27E19A241A000D3CDD8 /* NACLKey+ScalarMult.m */,
+				23BAE28019A4990A00D3CDD8 /* NSDictionary+Axolotl.h */,
+				23BAE28119A4990A00D3CDD8 /* NSDictionary+Axolotl.m */,
 			);
 			path = Security;
 			sourceTree = "<group>";
@@ -610,6 +615,7 @@
 				23FD77B2198A904400E3CD76 /* MOBViewController.m in Sources */,
 				23BAE22F19A1DC7300D3CDD8 /* CKHTTPConnection.m in Sources */,
 				23F37DFF1998A34F0074E62D /* MOBTorInterface.m in Sources */,
+				23BAE28219A4990A00D3CDD8 /* NSDictionary+Axolotl.m in Sources */,
 				23F37DE11993700A0074E62D /* AMADataAccessCoreData.m in Sources */,
 				23BAE24119A1EA2B00D3CDD8 /* tor_main.c in Sources */,
 				23F37DD819936F970074E62D /* MOBAxolotl.m in Sources */,
