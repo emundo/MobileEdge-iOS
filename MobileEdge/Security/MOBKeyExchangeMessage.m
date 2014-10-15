@@ -18,8 +18,11 @@
 - (instancetype) initWithAlicesIdentityKey: (NSData *) aIdentityKey
                              ephemeralKey0: (NSData *) aEphemeralKey0
 {
-    _identityKey = aIdentityKey;
-    _ephemeralKey0 = aEphemeralKey0;
+    if (self = [super init])
+    {
+        _identityKey = aIdentityKey;
+        _ephemeralKey0 = aEphemeralKey0;
+    }
     return self;
 }
 
@@ -27,9 +30,12 @@
                            ephemeralKey0: (NSData *) aEphemeralKey0
                            ephemeralKey1: (NSData *) aEphemeralKey1
 {
-    _identityKey = aIdentityKey;
-    _ephemeralKey0 = aEphemeralKey0;
-    _ephemeralKey1 = aEphemeralKey1;
+    if (self = [super init])
+    {
+        _identityKey = aIdentityKey;
+        _ephemeralKey0 = aEphemeralKey0;
+        _ephemeralKey1 = aEphemeralKey1;
+    }
     return self;
 }
 

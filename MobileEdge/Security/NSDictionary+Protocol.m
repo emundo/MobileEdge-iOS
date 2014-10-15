@@ -11,15 +11,16 @@
  * Created by Raphael Arias on 8/20/14.
  */
 
-#import "NSDictionary+Axolotl.h"
+#import "NSDictionary+Protocol.h"
 #import "MOBAxolotl.h"
+#import "MOBProtocol.h"
 
-@implementation NSDictionary (Axolotl)
+@implementation NSDictionary (Protocol)
 
 - (NSData *) decryptedDataFromSender: (MOBRemoteIdentity *) aRemoteIdentity
-                         withAxolotl: (MOBAxolotl *) aAxolotl
+                         withProtocol: (id <MOBProtocol>) aProtocol
 {
-    return [aAxolotl decryptBody: self[@"body"]
+    return [aProtocol decryptBody: self[@"body"]
                         withHead: self[@"head"]
                        withNonce: self[@"nonce"]];
 }

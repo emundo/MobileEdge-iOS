@@ -20,6 +20,7 @@
 #import <HKDFKit.h>
 #import <SodiumObjc.h>
 #import <sodium/crypto_hash.h>
+#import <sodium/crypto_auth_hmacsha256.h>
 #import <FXKeychain.h>
 
 #pragma mark -
@@ -67,6 +68,14 @@
 - (NSData *) encryptData: (NSData *) aData
             forRecipient: (MOBRemoteIdentity *) aRecipient
 {
+    MOBAxolotlSession *session;
+    if (!(session = self.sessions[aRecipient])) {
+        // TODO: fail! we dont have a session for the given remote!
+    }
+    
+    NSMutableData *messageKey = [NSMutableData dataWithLength: (256/8)];
+    crypto_auth_hmacsha256(messageKey.mutableBytes, (unsigned char *) "0", 1, session.senderChainKey.bytes);
+    
 #warning stub
     return nil;
 }
@@ -85,6 +94,18 @@
 {
 #warning stub
     return nil;
+}
+
+
+- (NSData *) decryptBody: (NSString *) aBody
+                withHead: (NSString *) aHead
+               withNonce: (NSString *) aNonce
+{
+    NSData *head = 	[[NSData alloc] initWithBase64EncodedString: aHead options: 0];
+    NSMutableData *decryptedHeader = [NSMutableData dataWithLength: head.length];
+#warning unfinished
+    NSMutableData *decrypted = [NSMutableData dataWithLength:0];
+    return decrypted;
 }
 
 #pragma mark -
@@ -106,7 +127,7 @@
                                                                             theirIdentityKey:aBob.identityKey];
         NSDictionary *keyExchangeMessageIn = [NSJSONSerialization JSONObjectWithData:theirKeyExchangeMessage
                                                                              options:0
-                                                                               error:nil]; // TODO: error
+                                                                               error:nil]; // TODO: error / conversion might already have been handled!
         [newSession finishKeyAgreementWithKeyExchangeMessage: keyExchangeMessageIn
                                           myEphemeralKeyPair: myEphemeralKeyPair];
         [self addSession:newSession forBob:aBob];
@@ -115,7 +136,8 @@
     };
     if ([NSJSONSerialization isValidJSONObject:keyExchangeMessageOut])
     {
-        aSendKeyExchangeBlock([NSJSONSerialization dataWithJSONObject:keyExchangeMessageOut options:0 error:nil], finalizeBlock);   //TODO: error
+        //aSendKeyExchangeBlock([NSJSONSerialization dataWithJSONObject:keyExchangeMessageOut options:0 error:nil], finalizeBlock);   //TODO: error
+        aSendKeyExchangeBlock(keyExchangeMessageOut, finalizeBlock);
     }
     else
     {

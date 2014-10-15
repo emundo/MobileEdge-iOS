@@ -12,12 +12,13 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "MOBProtocol.h"
 
-@class MOBRemoteIdentity, MOBAxolotl;
+@class MOBRemoteIdentity;
 
-@interface NSDictionary (Axolotl)
+@interface NSDictionary (Protocol)
 
 - (NSData *) decryptedDataFromSender: (MOBRemoteIdentity *) aRemoteIdentity
-                         withAxolotl: (MOBAxolotl *) aAxolotl;
+                        withProtocol: (id <MOBProtocol>) aProtocol;
 
 @end

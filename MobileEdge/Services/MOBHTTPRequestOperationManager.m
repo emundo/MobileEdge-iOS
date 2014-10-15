@@ -16,7 +16,7 @@
 #import "MOBIdentity.h"
 #import "MOBAxolotl.h"
 #import "MOBCore.h"
-#import "NSDictionary+Axolotl.h"
+#import "NSDictionary+Protocol.h"
 
 @interface MOBHTTPRequestOperationManager ()
 
@@ -87,12 +87,13 @@ typedef void (^RequestOperationOnFailureBlock) ( AFHTTPRequestOperation *operati
     MOBRemoteIdentity *remoteIdentity;
     if ((remoteIdentity = self.remotes[request.URL.absoluteString]))
     {
-        MOBAxolotl *axolotl;
+        id <MOBProtocol> axolotl;
         axolotl = [[MOBAxolotl alloc] initWithIdentity: self.myIdentity];
         
         __block AFHTTPRequestOperation *keyExchangeRequestOperation;
         KeyExchangeSendBlock sendBlock;
-        sendBlock = ^(NSData *keyExchangeMessageOut, KeyExchangeFinalizeBlock finalizeBlock)
+        //sendBlock = ^(NSData *keyExchangeMessageOut, KeyExchangeFinalizeBlock finalizeBlock)
+        sendBlock = ^(NSDictionary *keyExchangeMessageOut, KeyExchangeFinalizeBlock finalizeBlock)
         {
             RequestOperationOnSuccessBlock onSuccessfulKeyExchange;
             RequestOperationOnFailureBlock onFailedKeyExchange;
@@ -107,7 +108,7 @@ typedef void (^RequestOperationOnFailureBlock) ( AFHTTPRequestOperation *operati
                 // { "nonce" : ..., "head" : ..., "body": ... }
                 NSDictionary *encryptedMessage = responseObject;
                 NSData *decryptedData = [encryptedMessage decryptedDataFromSender: remoteIdentity
-                                                                      withAxolotl: axolotl]; //[axolotl decryptMessage: responseObject
+                                                                      withProtocol: axolotl]; //[axolotl decryptMessage: responseObject
                                                 //fromSender: remoteIdentity];
                 // TODO: use client's responseSerializer if any!
                 
@@ -148,10 +149,13 @@ typedef void (^RequestOperationOnFailureBlock) ( AFHTTPRequestOperation *operati
             };
             
             //TODO request serialization using json?
+            NSData *keyExchangeDataOut = [NSJSONSerialization dataWithJSONObject: keyExchangeMessageOut
+                                                                         options: 0
+                                                                           error: nil]; //TODO real error handling
             NSMutableURLRequest *keyExchangeRequest = [NSMutableURLRequest requestWithURL:request.URL];
-            [keyExchangeRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-            [keyExchangeRequest setHTTPMethod:@"POST"];
-            [keyExchangeRequest setHTTPBody: keyExchangeMessageOut];
+            [keyExchangeRequest setValue: @"application/json" forHTTPHeaderField: @"Content-Type"];
+            [keyExchangeRequest setHTTPMethod: @"POST"];
+            [keyExchangeRequest setHTTPBody: keyExchangeDataOut];
             keyExchangeRequestOperation =
                 [super HTTPRequestOperationWithRequest: keyExchangeRequest
                                                success: onSuccessfulKeyExchange
