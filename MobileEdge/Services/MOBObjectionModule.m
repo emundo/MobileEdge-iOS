@@ -63,7 +63,7 @@ const static int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     NSURL *docURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
                                                             inDomains:NSUserDomainMask] lastObject];
-    NSURL *storeURL = [docURL URLByAppendingPathComponent:@"Quirin.sqlite"];
+    NSURL *storeURL = [docURL URLByAppendingPathComponent:@"MobileEdge.sqlite"];
     
     
     NSError *error = nil;
