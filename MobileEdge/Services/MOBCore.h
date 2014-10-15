@@ -14,6 +14,10 @@
 #import <Foundation/Foundation.h>
 #import <DDLog.h>
 #import <DDTTYLogger.h>
+#import "MOBIdentity.h"
+#import "MOBRemoteIdentity.h"
+#import "MOBAxolotl.h"
+#import "MOBHTTPRequestOperationManager.h"
 
 
 #ifdef DEBUG
