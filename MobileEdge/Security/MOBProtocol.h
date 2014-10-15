@@ -36,9 +36,9 @@ typedef void (^KeyExchangeSendBlock) (NSDictionary * keyExchangeMessage, KeyExch
  * @discussion Encrypt given data for a given recipient.
  * @param aData - the data to encrypt
  * @param aRecipient - the recipient
- * @return the encrypted data
+ * @return the encrypted data as a dictionary to be used in a JSON object.
  */
-- (NSData *) encryptData: (NSData *) aData
+- (NSDictionary *) encryptData: (NSData *) aData
             forRecipient: (MOBRemoteIdentity *) aRecipient;
 
 /**

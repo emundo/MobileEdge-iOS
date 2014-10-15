@@ -13,7 +13,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class NACLAsymmetricKeyPair, NACLAsymmetricPublicKey;
+@class NACLAsymmetricKeyPair, NACLAsymmetricPublicKey, NACLSymmetricPrivateKey;
 
 @interface MOBAxolotlSession : NSObject <NSCoding>
 
@@ -22,7 +22,7 @@
 @property (nonatomic, strong, readonly) NSData *rootKey;
 
 @property (nonatomic, strong, readonly) NSData *senderChainKey;
-@property (nonatomic, strong, readonly) NSData *senderHeaderKey;
+@property (nonatomic, strong, readonly) NACLSymmetricPrivateKey *senderHeaderKey;
 @property (nonatomic, strong, readonly) NSData *senderNextHeaderKey;
 @property (nonatomic, strong, readonly) NACLAsymmetricKeyPair *senderDiffieHellmanKey; //FIXME: type
 

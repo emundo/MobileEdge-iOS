@@ -65,7 +65,7 @@
     return nil;
 }
 
-- (NSData *) encryptData: (NSData *) aData
+- (NSDictionary *) encryptData: (NSData *) aData
             forRecipient: (MOBRemoteIdentity *) aRecipient
 {
     MOBAxolotlSession *session;
@@ -73,11 +73,39 @@
         // TODO: fail! we dont have a session for the given remote!
     }
     
-    NSMutableData *messageKey = [NSMutableData dataWithLength: (256/8)];
-    crypto_auth_hmacsha256(messageKey.mutableBytes, (unsigned char *) "0", 1, session.senderChainKey.bytes);
+    //TODO: ratchet the key material
+    // Derive a new message key from chain key":
+    NSMutableData *messageKeyData = [NSMutableData dataWithLength: (256/8)];
+    crypto_auth_hmacsha256(messageKeyData.mutableBytes, (unsigned char *) "0", 1, session.senderChainKey.bytes);
+    NACLSymmetricPrivateKey *messageKey = [NACLSymmetricPrivateKey keyWithData: messageKeyData];
     
+    // generate nonces:
+    NACLNonce *nonce1 = [NACLNonce nonce];
+    NACLNonce *nonce2 = [NACLNonce nonce];
+    
+    // encrypt Axolotl body:
+    NSData *encryptedBody = [aData encryptedDataUsingPrivateKey: messageKey
+                                                          nonce: nonce1
+                                                          error: nil]; // TODO: error handling
+    
+    // encrypt Axolotl header:
+    NSArray *header = [NSArray arrayWithObjects:
+                       [NSNumber numberWithUnsignedInteger: session.messagesSentCount],
+                       [NSNumber numberWithUnsignedInteger: session.messagesSentUnderPreviousRatchetCount],
+                       [session.senderDiffieHellmanKey.publicKey.data base64EncodedStringWithOptions: 0],
+                       [nonce1.data base64EncodedStringWithOptions: 0], nil];
+    NSData *headerData = [NSJSONSerialization dataWithJSONObject: header
+                                                         options: 0
+                                                           error: nil]; // TODO: error handling
+    NSData *encryptedHeader = [headerData encryptedDataUsingPrivateKey: session.senderHeaderKey
+                                                                 nonce: nonce2
+                                                                 error: nil]; // TODO: error handling
+    // pack message:
+    NSDictionary *message = @{ @"nonce" : [nonce2.data base64EncodedStringWithOptions: 0],
+                               @"head" : [headerData base64EncodedStringWithOptions: 0],
+                               @"body" : [encryptedBody base64EncodedStringWithOptions: 0] };
 #warning stub
-    return nil;
+    return message;
 }
 
 #pragma mark -
