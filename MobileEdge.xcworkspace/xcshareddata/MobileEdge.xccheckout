@@ -10,29 +10,29 @@
 	<string>MobileEdge</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>430272DF-A683-40CF-BEF5-52C2AE771F37</key>
+		<key>36E113C8C739D39155DDA8B4CA3C7623B67CD1C7</key>
 		<string>ssh://gerrit.emundo.eu:29418/emundo/muc/mobile-edge/ios</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>MobileEdge.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>430272DF-A683-40CF-BEF5-52C2AE771F37</key>
+		<key>36E113C8C739D39155DDA8B4CA3C7623B67CD1C7</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://gerrit.emundo.eu:29418/emundo/muc/mobile-edge/ios</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>430272DF-A683-40CF-BEF5-52C2AE771F37</string>
+	<string>36E113C8C739D39155DDA8B4CA3C7623B67CD1C7</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>430272DF-A683-40CF-BEF5-52C2AE771F37</string>
+			<string>36E113C8C739D39155DDA8B4CA3C7623B67CD1C7</string>
 			<key>IDESourceControlWCCName</key>
 			<string>MobileEdge</string>
 		</dict>

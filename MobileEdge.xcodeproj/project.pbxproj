@@ -36,7 +36,7 @@
 		23BAE27B19A20AF900D3CDD8 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE26F19A20AF900D3CDD8 /* libssl.a */; };
 		23BAE27C19A20AF900D3CDD8 /* libtor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE27019A20AF900D3CDD8 /* libtor.a */; };
 		23BAE27F19A241A000D3CDD8 /* NACLKey+ScalarMult.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE27E19A241A000D3CDD8 /* NACLKey+ScalarMult.m */; };
-		23BAE28219A4990A00D3CDD8 /* NSDictionary+Axolotl.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE28119A4990A00D3CDD8 /* NSDictionary+Axolotl.m */; };
+		23BAE28219A4990A00D3CDD8 /* NSDictionary+Protocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE28119A4990A00D3CDD8 /* NSDictionary+Protocol.m */; };
 		23CDB7F619990EC20007C3C5 /* MOBKeyExchangeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CDB7F519990EC20007C3C5 /* MOBKeyExchangeMessage.m */; };
 		23CDB7F91999FEFE0007C3C5 /* MOBAxolotlSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CDB7F81999FEFE0007C3C5 /* MOBAxolotlSession.m */; };
 		23CDB7FC199A0E830007C3C5 /* MOBIDToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CDB7FB199A0E830007C3C5 /* MOBIDToken.m */; };
@@ -127,8 +127,8 @@
 		23BAE27019A20AF900D3CDD8 /* libtor.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtor.a; path = dependencies/lib/libtor.a; sourceTree = "<group>"; };
 		23BAE27D19A241A000D3CDD8 /* NACLKey+ScalarMult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NACLKey+ScalarMult.h"; sourceTree = "<group>"; };
 		23BAE27E19A241A000D3CDD8 /* NACLKey+ScalarMult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NACLKey+ScalarMult.m"; sourceTree = "<group>"; };
-		23BAE28019A4990A00D3CDD8 /* NSDictionary+Axolotl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Axolotl.h"; sourceTree = "<group>"; };
-		23BAE28119A4990A00D3CDD8 /* NSDictionary+Axolotl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Axolotl.m"; sourceTree = "<group>"; };
+		23BAE28019A4990A00D3CDD8 /* NSDictionary+Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Protocol.h"; sourceTree = "<group>"; };
+		23BAE28119A4990A00D3CDD8 /* NSDictionary+Protocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Protocol.m"; sourceTree = "<group>"; };
 		23CDB7F419990EC20007C3C5 /* MOBKeyExchangeMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBKeyExchangeMessage.h; sourceTree = "<group>"; };
 		23CDB7F519990EC20007C3C5 /* MOBKeyExchangeMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBKeyExchangeMessage.m; sourceTree = "<group>"; };
 		23CDB7F71999FEFE0007C3C5 /* MOBAxolotlSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBAxolotlSession.h; path = Model/MOBAxolotlSession.h; sourceTree = "<group>"; };
@@ -153,6 +153,7 @@
 		23F37DFB1998A1420074E62D /* MOBObjectionModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBObjectionModule.m; sourceTree = "<group>"; };
 		23F37DFD1998A34F0074E62D /* MOBTorInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBTorInterface.h; sourceTree = "<group>"; };
 		23F37DFE1998A34F0074E62D /* MOBTorInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBTorInterface.m; sourceTree = "<group>"; };
+		23F70C2919EE56A8000C6656 /* MOBProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBProtocol.h; sourceTree = "<group>"; };
 		23FD671C198A64C400D1A344 /* MobileEdge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileEdge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23FD6722198A64C400D1A344 /* MobileEdge-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MobileEdge-Info.plist"; sourceTree = "<group>"; };
 		23FD6724198A64C400D1A344 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -180,13 +181,14 @@
 		23FD77AB198A904400E3CD76 /* MOBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBViewController.h; path = ViewControllers/MOBViewController.h; sourceTree = "<group>"; };
 		23FD77AC198A904400E3CD76 /* MOBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBViewController.m; path = ViewControllers/MOBViewController.m; sourceTree = "<group>"; };
 		25B6D2F63A7D4E3AA5DE0C24 /* libPods-MobileEdge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MobileEdge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6DF0F3B55D004BD2ADD223BE /* Pods-MobileEdge.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileEdge.xcconfig"; path = "Pods/Pods-MobileEdge.xcconfig"; sourceTree = "<group>"; };
 		8142F5781988CEDC0088B18B /* MOBviewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MOBviewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8142F57B1988CEDC0088B18B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8142F57D1988CEDC0088B18B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		8142F57F1988CEDC0088B18B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8142F5991988CEDC0088B18B /* MOBviewTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MOBviewTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8142F59A1988CEDC0088B18B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		A70CE4E402B1B3F6FEA03C5C /* Pods-MobileEdge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileEdge.release.xcconfig"; path = "Pods/Target Support Files/Pods-MobileEdge/Pods-MobileEdge.release.xcconfig"; sourceTree = "<group>"; };
+		C4E4ECE17FFAE5F9590A71E4 /* Pods-MobileEdge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileEdge.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MobileEdge/Pods-MobileEdge.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,8 +281,9 @@
 				23BAE23619A1E19D00D3CDD8 /* MOBTorSettings.m */,
 				23BAE27D19A241A000D3CDD8 /* NACLKey+ScalarMult.h */,
 				23BAE27E19A241A000D3CDD8 /* NACLKey+ScalarMult.m */,
-				23BAE28019A4990A00D3CDD8 /* NSDictionary+Axolotl.h */,
-				23BAE28119A4990A00D3CDD8 /* NSDictionary+Axolotl.m */,
+				23BAE28019A4990A00D3CDD8 /* NSDictionary+Protocol.h */,
+				23BAE28119A4990A00D3CDD8 /* NSDictionary+Protocol.m */,
+				23F70C2919EE56A8000C6656 /* MOBProtocol.h */,
 			);
 			path = Security;
 			sourceTree = "<group>";
@@ -419,7 +422,7 @@
 				23FD6744198A64C500D1A344 /* MobileEdgeTests */,
 				8142F57A1988CEDC0088B18B /* Frameworks */,
 				8142F5791988CEDC0088B18B /* Products */,
-				6DF0F3B55D004BD2ADD223BE /* Pods-MobileEdge.xcconfig */,
+				C7CCEE5DEFAD0ABF584FDAF5 /* Pods */,
 			);
 			sourceTree = "<group>";
 			usesTabs = 0;
@@ -454,6 +457,15 @@
 				25B6D2F63A7D4E3AA5DE0C24 /* libPods-MobileEdge.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C7CCEE5DEFAD0ABF584FDAF5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C4E4ECE17FFAE5F9590A71E4 /* Pods-MobileEdge.debug.xcconfig */,
+				A70CE4E402B1B3F6FEA03C5C /* Pods-MobileEdge.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -587,7 +599,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-MobileEdge-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MobileEdge/Pods-MobileEdge-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -615,7 +627,7 @@
 				23FD77B2198A904400E3CD76 /* MOBViewController.m in Sources */,
 				23BAE22F19A1DC7300D3CDD8 /* CKHTTPConnection.m in Sources */,
 				23F37DFF1998A34F0074E62D /* MOBTorInterface.m in Sources */,
-				23BAE28219A4990A00D3CDD8 /* NSDictionary+Axolotl.m in Sources */,
+				23BAE28219A4990A00D3CDD8 /* NSDictionary+Protocol.m in Sources */,
 				23F37DE11993700A0074E62D /* AMADataAccessCoreData.m in Sources */,
 				23BAE24119A1EA2B00D3CDD8 /* tor_main.c in Sources */,
 				23F37DD819936F970074E62D /* MOBAxolotl.m in Sources */,
@@ -695,7 +707,7 @@
 /* Begin XCBuildConfiguration section */
 		23FD674D198A64C500D1A344 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6DF0F3B55D004BD2ADD223BE /* Pods-MobileEdge.xcconfig */;
+			baseConfigurationReference = C4E4ECE17FFAE5F9590A71E4 /* Pods-MobileEdge.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -755,21 +767,6 @@
 					"\"$(PODS_ROOT)/SodiumObjc/lib/ios\"",
 					"$(PROJECT_DIR)/dependencies/lib",
 				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lsodium-ios",
-					"-framework",
-					CoreData,
-					"-framework",
-					CoreGraphics,
-					"-framework",
-					MobileCoreServices,
-					"-framework",
-					Security,
-					"-framework",
-					SystemConfiguration,
-					"-all_load",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -778,7 +775,7 @@
 		};
 		23FD674E198A64C500D1A344 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6DF0F3B55D004BD2ADD223BE /* Pods-MobileEdge.xcconfig */;
+			baseConfigurationReference = A70CE4E402B1B3F6FEA03C5C /* Pods-MobileEdge.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -833,21 +830,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(PODS_ROOT)/SodiumObjc/lib/ios\"",
 					"$(PROJECT_DIR)/dependencies/lib",
-				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lsodium-ios",
-					"-framework",
-					CoreData,
-					"-framework",
-					CoreGraphics,
-					"-framework",
-					MobileCoreServices,
-					"-framework",
-					Security,
-					"-framework",
-					SystemConfiguration,
-					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -919,6 +901,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					_AFNETWORKING_ALLOW_INVALID_SSL_CERTIFICATES_,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -930,6 +913,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -962,6 +946,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};

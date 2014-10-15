@@ -1,0 +1,1 @@
+../../../SodiumObjc/SodiumObjc/NACLSigningPublicKey.h

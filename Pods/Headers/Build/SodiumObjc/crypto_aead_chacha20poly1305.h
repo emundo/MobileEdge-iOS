@@ -1,0 +1,1 @@
+../../../SodiumObjc/lib/ios/include/sodium/crypto_aead_chacha20poly1305.h
