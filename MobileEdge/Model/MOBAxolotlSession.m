@@ -16,6 +16,7 @@
 #import <HKDFKit.h>
 #import <SodiumObjc.h>
 #import <sodium/crypto_hash.h>
+#import <sodium.h>
 
 @implementation MOBAxolotlSession
 
@@ -37,9 +38,12 @@
 - (void) addDerivedKeyMaterial: (NSData *) derivedKeyMaterial
 {
     _rootKey = [derivedKeyMaterial subdataWithRange:NSMakeRange(0, 32)];
-    _receiverHeaderKey = [derivedKeyMaterial subdataWithRange:NSMakeRange(32*1, 32)];
-    _senderNextHeaderKey = [derivedKeyMaterial subdataWithRange:NSMakeRange(32*2, 32)];
-    _receiverNextHeaderKey = [derivedKeyMaterial subdataWithRange:NSMakeRange(32*3, 32)];
+    _receiverHeaderKey = [NACLSymmetricPrivateKey keyWithData:
+                          [derivedKeyMaterial subdataWithRange:NSMakeRange(32*1, 32)]];
+    _senderNextHeaderKey = [NACLSymmetricPrivateKey keyWithData:
+                            [derivedKeyMaterial subdataWithRange:NSMakeRange(32*2, 32)]];
+    _receiverNextHeaderKey = [NACLSymmetricPrivateKey keyWithData:
+                              [derivedKeyMaterial subdataWithRange:NSMakeRange(32*3, 32)]];
     _receiverChainKey = [derivedKeyMaterial subdataWithRange:NSMakeRange(32*4, 32)];
 }
 
@@ -66,15 +70,45 @@
     
     NSData *info = [@"MobileEdge" dataUsingEncoding:NSUTF8StringEncoding];
     NSData *salt = [@"salty" dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *derivedKeyMaterial = [HKDFKit deriveKey:masterSecret info:info salt:salt outputSize:5*32];
-    [self addDerivedKeyMaterial:derivedKeyMaterial];
+    NSData *derivedKeyMaterial = [HKDFKit deriveKey: masterSecret info: info salt: salt outputSize: 5*32];
+    [self addDerivedKeyMaterial: derivedKeyMaterial];
     _receiverDiffieHellmanKey = theirEph1;
     DDLogVerbose(@"Finished key agreement. Session: %@", self);
 }
 
+- (void) advanceStateAfterSending
+{
+    _messagesSentCount += 1;
+    NSMutableData *newChainKey = [NSMutableData dataWithLength: self.senderChainKey.length];
+    crypto_auth_hmacsha256(newChainKey.mutableBytes, (unsigned char *) "1", 1, self.senderChainKey.bytes);
+    _senderChainKey = newChainKey;
+}
+- (void) ratchetStateBeforeSending
+{
+    _senderDiffieHellmanKey = [NACLAsymmetricKeyPair keyPair];
+    _senderHeaderKey = _senderNextHeaderKey;
+    NSData *diffieHellman = [self.senderDiffieHellmanKey.privateKey multWithKey: self.receiverDiffieHellmanKey].data;
+    NSMutableData *inputKeyMaterial = [NSMutableData dataWithCapacity: (512 / 8)];
+    crypto_auth_hmacsha256(inputKeyMaterial.mutableBytes,
+                           diffieHellman.bytes,
+                           [diffieHellman length],
+                           self.rootKey.bytes);
+    NSData *info = [@"MobileEdge Ratchet" dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *salt = [@"salty" dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *derivedKeyMaterial = [HKDFKit deriveKey: inputKeyMaterial info: info salt: salt outputSize: 3*32];
+    _rootKey = [derivedKeyMaterial subdataWithRange: NSMakeRange(0, 32)];
+    _senderNextHeaderKey = [NACLSymmetricPrivateKey keyWithData:
+                            [derivedKeyMaterial subdataWithRange:NSMakeRange(1*32, 32)]];
+    _senderChainKey = [derivedKeyMaterial subdataWithRange:NSMakeRange(2*32, 32)];
+    
+    _messagesSentUnderPreviousRatchetCount = _messagesSentCount;
+    _messagesSentCount = 0;
+    _ratchetFlag = NO;
+}
+
 - (NSString *) description
 {
-    return [NSString stringWithFormat:@"[AxolotlSession]\nidKeyPair:%@\ntheirIdKey:%@\nrootKey:%@",
+    return [NSString stringWithFormat: @"[AxolotlSession]\nidKeyPair:%@\ntheirIdKey:%@\nrootKey:%@",
                         self.myIdentityKeyPair, self.theirIdentityKey, self.rootKey];
 }
 

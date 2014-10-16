@@ -73,7 +73,9 @@
         // TODO: fail! we dont have a session for the given remote!
     }
     
-    //TODO: ratchet the key material
+    // ratchet the key material:
+    [session ratchetStateBeforeSending];
+    
     // Derive a new message key from chain key":
     NSMutableData *messageKeyData = [NSMutableData dataWithLength: (256/8)];
     crypto_auth_hmacsha256(messageKeyData.mutableBytes, (unsigned char *) "0", 1, session.senderChainKey.bytes);
@@ -102,18 +104,133 @@
                                                                  error: nil]; // TODO: error handling
     // pack message:
     NSDictionary *message = @{ @"nonce" : [nonce2.data base64EncodedStringWithOptions: 0],
-                               @"head" : [headerData base64EncodedStringWithOptions: 0],
+                               @"head" : [encryptedHeader base64EncodedStringWithOptions: 0],
                                @"body" : [encryptedBody base64EncodedStringWithOptions: 0] };
-#warning stub
+    
+    // advance session state:
+    [session advanceStateAfterSending];
+    
     return message;
+}
+
+- (NSArray *) decryptAndParseHeader: (NSString *) aBase64Header
+                            withKey: (NACLSymmetricPrivateKey *) aHeaderKey
+                           andNonce: (NSString *) aBase64Nonce
+{
+    NSData *headerData = [[NSData alloc] initWithBase64EncodedString: aBase64Header
+                                                             options: 0];
+    NACLNonce *nonce = [NACLNonce nonceWithData: [[NSData alloc] initWithBase64EncodedString: aBase64Nonce
+                                                                                     options: 0]];
+    NSData *decryptedHeader;
+    if (!(decryptedHeader = [headerData decryptedDataUsingPrivateKey: aHeaderKey
+                                                           nonce: nonce
+                                                           error: nil]))
+    { // Decryption of the header failed.
+        return nil;
+    }
+
+    id parsedHeaderObject = [NSJSONSerialization JSONObjectWithData: decryptedHeader // TODO: check if valid
+                                                            options: 0
+                                                              error: nil];
+    if ([parsedHeaderObject isKindOfClass: [NSArray class]])
+    {
+        return parsedHeaderObject;
+    }
+    
+    return nil;
+}
+
+- (NSData *) attemptDecryptionWithSkippedKeys: (NSMutableDictionary *) aSkippedKeys
+                                   forMessage: (NSDictionary *) aEncryptedMessage
+{
+    __block NSData *decryptedMessageBody;
+    
+    void (^iterator) (id key, id obj, BOOL *stop);
+    iterator = ^(id aHeaderKey, id aMessageKeys, BOOL *stop)
+    {
+        // attempt decryption of header:
+
+        NSMutableSet *messageKeys = aMessageKeys;
+        NSArray *parsedHeader = [self decryptAndParseHeader: aEncryptedMessage[@"head"]
+                                                    withKey: aHeaderKey
+                                                   andNonce: aEncryptedMessage[@"nonce"]];
+        if (!parsedHeader) {
+            return;
+        }
+        NACLNonce *innerNonce = [NACLNonce nonceWithData:
+                                 [[NSData alloc] initWithBase64EncodedString: parsedHeader[3]
+                                                                     options: 0]];
+        NSData *messageBodyData = [[NSData alloc] initWithBase64EncodedString: aEncryptedMessage[@"body"]
+                                                                      options: 0];
+        for (NACLSymmetricPrivateKey *messageKey in messageKeys) {
+            // attempt decryption:
+            if ((decryptedMessageBody = [messageBodyData decryptedDataUsingPrivateKey: messageKey
+                                                                                nonce: innerNonce
+                                                                                error: nil]))
+            { // Decryption successful.
+                *stop = YES;
+                // delete message key from array:
+                [messageKeys removeObject: messageKey];
+                if (0 == messageKeys.count)
+                { // header key can be removed as well:
+                    [aSkippedKeys removeObjectForKey: aHeaderKey];
+                }
+                return;
+            }
+
+        }
+    };
+    
+    [aSkippedKeys enumerateKeysAndObjectsUsingBlock: iterator];
+    return decryptedMessageBody;
+}
+
+- (NSData *) attemptDecryptionWithCurrentSessionState: (MOBAxolotlSession *) aSession
+                                           forMessage: (NSDictionary *) aEncryptedMessage
+{
+#warning stub
+    // TODO: attempt to decrypt header with receiverHeaderKey:
+    NSArray *parsedHeader = [self decryptAndParseHeader: aEncryptedMessage[@"head"]
+                                                withKey: aSession.receiverHeaderKey
+                                               andNonce: aEncryptedMessage[@"nonce"]];
+    if (!parsedHeader) {
+        return nil;
+    }
+    
+    // TODO: derive message keys according to messagesSentCounter:
+    
+    // TODO: save unused message keys
+    // TODO: attempt to decrypt message body
+    return nil;
 }
 
 #pragma mark -
 #pragma mark Decryption
-- (NSString *) decryptMessage: (NSDictionary *) aEncryptedMessage
-                   fromSender: (MOBRemoteIdentity *) aSender
+- (NSData *) decryptMessage: (NSDictionary *) aEncryptedMessage
+                 fromSender: (MOBRemoteIdentity *) aSender
 {
 #warning stub
+    MOBAxolotlSession *session;
+    if (!(session = self.sessions[aSender])) {
+        // TODO: fail! we dont have a session for the given remote!
+    }
+    
+    NSData *decryptedMessage;
+    
+    // TODO: try decrypting with skipped header and message keys:
+    if ((decryptedMessage = [self attemptDecryptionWithSkippedKeys: session.skippedHeaderAndMessageKeys
+                                                        forMessage: aEncryptedMessage]))
+    { // Decryption successful.
+        return decryptedMessage;
+    }
+    // TODO: try decrypting with current header key:
+    //if ((decryptedMessage = [self attemptDecryptionWithCurrentKey: nil //TODO!
+    //                                                   forMessage: aEncryptedMessage]))
+    //{ // Decryption successful.
+    //    return decryptedMessage;
+    //}
+
+    // TODO: derive keys (advancing state) until we find a matching one:
     return nil;
 }
 

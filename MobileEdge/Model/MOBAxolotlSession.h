@@ -23,12 +23,12 @@
 
 @property (nonatomic, strong, readonly) NSData *senderChainKey;
 @property (nonatomic, strong, readonly) NACLSymmetricPrivateKey *senderHeaderKey;
-@property (nonatomic, strong, readonly) NSData *senderNextHeaderKey;
+@property (nonatomic, strong, readonly) NACLSymmetricPrivateKey *senderNextHeaderKey;
 @property (nonatomic, strong, readonly) NACLAsymmetricKeyPair *senderDiffieHellmanKey; //FIXME: type
 
 @property (nonatomic, strong, readonly) NSData *receiverChainKey;
-@property (nonatomic, strong, readonly) NSData *receiverHeaderKey;
-@property (nonatomic, strong, readonly) NSData *receiverNextHeaderKey;
+@property (nonatomic, strong, readonly) NACLSymmetricPrivateKey *receiverHeaderKey;
+@property (nonatomic, strong, readonly) NACLSymmetricPrivateKey *receiverNextHeaderKey;
 @property (nonatomic, strong, readonly) NACLAsymmetricPublicKey *receiverDiffieHellmanKey; //FIXME: type
 
 @property (nonatomic, assign, readonly) NSUInteger messagesReceivedCount;
@@ -36,6 +36,10 @@
 @property (nonatomic, assign, readonly) NSUInteger messagesSentUnderPreviousRatchetCount;
 
 @property (nonatomic, assign, readonly) BOOL ratchetFlag;
+
+/**
+ * A dictionary containing for each skipped header key, an NSMutableSet with all skipped message keys.
+ */
 @property (nonatomic, strong, readonly) NSMutableDictionary *skippedHeaderAndMessageKeys;
 
 - (instancetype) initWithMyIdentityKeyPair: (NACLAsymmetricKeyPair *) aKeyPair
@@ -45,5 +49,9 @@
 
 - (void) finishKeyAgreementWithKeyExchangeMessage: (NSDictionary *) keyExchangeMessageIn
                                myEphemeralKeyPair: (NACLAsymmetricKeyPair *) myEphemeralKeyPair;
+
+- (void) advanceStateAfterSending;
+
+- (void) ratchetStateBeforeSending;
 
 @end
