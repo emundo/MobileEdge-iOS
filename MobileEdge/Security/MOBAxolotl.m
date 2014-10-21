@@ -13,6 +13,7 @@
 
 #import "MOBAxolotl.h"
 #import "MOBAxolotlSession.h"
+#import "MOBAxolotlChainKey.h"
 #import "MOBIdentity.h"
 #import "MOBRemoteIdentity.h"
 #import "MOBCore.h"
@@ -77,9 +78,12 @@
     [session ratchetStateBeforeSending];
     
     // Derive a new message key from chain key":
+    /*
     NSMutableData *messageKeyData = [NSMutableData dataWithLength: (256/8)];
     crypto_auth_hmacsha256(messageKeyData.mutableBytes, (unsigned char *) "0", 1, session.senderChainKey.bytes);
-    NACLSymmetricPrivateKey *messageKey = [NACLSymmetricPrivateKey keyWithData: messageKeyData];
+    NACLSymmetricPrivateKey *messageKey = [NACLSymmetricPrivateKey keyWithData: messageKeyData];*/
+    
+    NACLSymmetricPrivateKey *messageKey = [session.receiverChainKey nextMessageKey];
     
     // generate nonces:
     NACLNonce *nonce1 = [NACLNonce nonce];
@@ -198,7 +202,18 @@
     }
     
     // TODO: derive message keys according to messagesSentCounter:
+    NSUInteger currentMessageCount = aSession.messagesReceivedCount;
+    NSUInteger messageNumber = [((NSNumber *) parsedHeader[0]) unsignedIntegerValue];
+    NSMutableArray *stagingArea = [NSMutableArray arrayWithCapacity: messageNumber - currentMessageCount + 1];
     
+    for (NSUInteger i = currentMessageCount; i < messageNumber; i++) {
+        /*
+        NSMutableData *messageKeyData = [NSMutableData dataWithLength: [NACLSymmetricPrivateKey keyLength]];
+        crypto_auth_hmacsha256(messageKeyData.mutableBytes, (unsigned char *) "0", 1, aSession.receiverChainKey.bytes);
+        NACLSymmetricPrivateKey *messageKey = [NACLSymmetricPrivateKey keyWithData: messageKeyData]; */
+        NACLSymmetricPrivateKey *messageKey = [aSession.receiverChainKey nextMessageKey];
+        [stagingArea addObject: messageKey];
+    }
     // TODO: save unused message keys
     // TODO: attempt to decrypt message body
     return nil;

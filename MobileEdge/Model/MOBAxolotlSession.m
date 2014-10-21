@@ -12,6 +12,7 @@
  */
 #import "MOBCore.h"
 #import "MOBAxolotlSession.h"
+#import "MOBAxolotlChainKey.h"
 #import "NACLKey+ScalarMult.h"
 #import <HKDFKit.h>
 #import <SodiumObjc.h>
@@ -44,7 +45,8 @@
                             [derivedKeyMaterial subdataWithRange:NSMakeRange(32*2, 32)]];
     _receiverNextHeaderKey = [NACLSymmetricPrivateKey keyWithData:
                               [derivedKeyMaterial subdataWithRange:NSMakeRange(32*3, 32)]];
-    _receiverChainKey = [derivedKeyMaterial subdataWithRange:NSMakeRange(32*4, 32)];
+    _receiverChainKey = [[MOBAxolotlChainKey alloc] initWithKeyData:
+                         [derivedKeyMaterial subdataWithRange:NSMakeRange(32*4, 32)]];
 }
 
 - (void) finishKeyAgreementWithKeyExchangeMessage: (NSDictionary *) keyExchangeMessageIn
@@ -79,9 +81,12 @@
 - (void) advanceStateAfterSending
 {
     _messagesSentCount += 1;
+    // deriving a new  chain key can be omitted, as deriving the new message key took care of that
+    /*
     NSMutableData *newChainKey = [NSMutableData dataWithLength: self.senderChainKey.length];
     crypto_auth_hmacsha256(newChainKey.mutableBytes, (unsigned char *) "1", 1, self.senderChainKey.bytes);
     _senderChainKey = newChainKey;
+    */
 }
 - (void) ratchetStateBeforeSending
 {
@@ -99,7 +104,8 @@
     _rootKey = [derivedKeyMaterial subdataWithRange: NSMakeRange(0, 32)];
     _senderNextHeaderKey = [NACLSymmetricPrivateKey keyWithData:
                             [derivedKeyMaterial subdataWithRange:NSMakeRange(1*32, 32)]];
-    _senderChainKey = [derivedKeyMaterial subdataWithRange:NSMakeRange(2*32, 32)];
+    _senderChainKey = [[MOBAxolotlChainKey alloc] initWithKeyData:
+                       [derivedKeyMaterial subdataWithRange:NSMakeRange(2*32, 32)]];
     
     _messagesSentUnderPreviousRatchetCount = _messagesSentCount;
     _messagesSentCount = 0;
