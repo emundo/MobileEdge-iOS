@@ -22,11 +22,10 @@
 ###########################################################################
 # Choose your tor version and your currently-installed iOS SDK version:
 #
-#VERSION="0.2.4.22"
-VERSION="0.2.4.23"
-#VERSION="0.2.5.2-alpha"
-USERSDKVERSION="7.1"
-MINIOSVERSION="6.0"
+#VERSION="0.2.4.23"
+VERSION="0.2.5.9-rc"
+USERSDKVERSION="8.1"
+MINIOSVERSION="6.1"
 VERIFYGPG=true
 
 ###########################################################################
@@ -37,7 +36,7 @@ VERIFYGPG=true
 
 # No need to change this since xcode build will only compile in the
 # necessary bits from the libraries we create
-ARCHS="i386 x86_64 armv7 armv7s arm64"
+ARCHS="i386 x86_64 armv7 arm64"
 
 DEVELOPER=`xcode-select -print-path`
 #DEVELOPER="/Applications/Xcode.app/Contents/Developer"
@@ -88,7 +87,7 @@ set -e
 if [ ! -e "${SRCDIR}/tor-${VERSION}.tar.gz" ]; then
 	echo "Downloading tor-${VERSION}.tar.gz"
 	#curl -O https://archive.torproject.org/tor-package-archive/tor-${VERSION}.tar.gz
-	curl -O https://www.torproject.org/dist/tor-${VERSION}.tar.gz
+	curl -O https://dist.torproject.org/tor-${VERSION}.tar.gz
 fi
 echo "Using tor-${VERSION}.tar.gz"
 
@@ -97,7 +96,7 @@ echo "Using tor-${VERSION}.tar.gz"
 # up to you to set up `gpg` and add keys to your keychain
 if $VERIFYGPG; then
 	if [ ! -e "${SRCDIR}/tor-${VERSION}.tar.gz.asc" ]; then
-		curl -O https://www.torproject.org/dist/tor-${VERSION}.tar.gz.asc
+		curl -O https://dist.torproject.org/tor-${VERSION}.tar.gz.asc
 	fi
 	echo "Using tor-${VERSION}.tar.gz.asc"
 	if out=$(gpg --status-fd 1 --verify "tor-${VERSION}.tar.gz.asc" "tor-${VERSION}.tar.gz" 2>/dev/null) &&
@@ -118,11 +117,17 @@ cd "${SRCDIR}/tor-${VERSION}"
 ####
 # Patch to remove the "DisableDebuggerAttachment" ptrace() calls
 # that are not allowed in App Store apps
+#   cp build/src/tor-0.2.5.8-rc/src/common/compat.c{,.orig}
+#   make the edit (see diff)
+#   diff -U5 build/src/tor-0.2.5.8-rc/src/common/compat.c{.orig,} > build-patches/tor-ptrace.diff
 patch -p3 < ../../../build-patches/tor-ptrace.diff
 
 # Patch to remove "_NSGetEnviron()" call not allowed in App Store
 # apps (even fails to compile under iPhoneSDK due to that function
 # being undefined)
+#   cp build/src/tor-0.2.5.8-rc/src/common/compat.c{.orig,} # after above patch
+#   make the edit (see diff)
+#   diff -U5 build/src/tor-0.2.5.8-rc/src/common/compat.c{.orig,} > build-patches/tor-nsenviron.diff
 patch -p3 < ../../../build-patches/tor-nsenviron.diff
 
 #####
@@ -168,10 +173,10 @@ for ARCH in ${ARCHS}
 do
 	if [ "${ARCH}" == "i386" ] || [ "${ARCH}" == "x86_64" ]; then
 		PLATFORM="iPhoneSimulator"
-		 EXTRA_CONFIG=""
+		EXTRA_CONFIG=""
 	else
 		PLATFORM="iPhoneOS"
-		EXTRA_CONFIG="--host=arm-apple-darwin13 --target=arm-apple-darwin13 --disable-gcc-hardening --disable-linker-hardening"
+		EXTRA_CONFIG="--disable-tool-name-check --host=arm-apple-darwin14 --target=arm-apple-darwin14 --disable-gcc-hardening --disable-linker-hardening"
 	fi
 
 	mkdir -p "${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk"
@@ -219,12 +224,8 @@ do
 	mkdir -p "${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/include/tools/"
 	cp micro-revision.i "${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/include/"
 	cp orconfig.h "${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/include/"
-	cp src/ext/ht.h "${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/include/"
-	set +e # dont bail on error
-	# for Tor 0.2.5.X
-	cp src/ext/tor_queue.h "${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/include/"
-	set -e # back to regular "bail out on error" mode
 	find src/common -name "*.h" -exec cp {} "${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/include/common/" \;
+	find src/ext -name "*.h" -exec cp {} "${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/include/" \;
 	find src/or -name "*.h" -exec cp {} "${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/include/or/" \;
 	find src/or -name "*.i" -exec cp {} "${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/include/or/" \;
 	find src/tools -name "*.h" -exec cp {} "${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/include/tools/" \;
