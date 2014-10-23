@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		234DB24C19F94B37006CD605 /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = 234DB24B19F94B37006CD605 /* server.cer */; };
 		23AF8C3D1998E63B00DB4B2B /* AMErrorHandlerUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8C3A1998E63B00DB4B2B /* AMErrorHandlerUI.m */; };
 		23AF8C3E1998E63B00DB4B2B /* AMErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8C3C1998E63B00DB4B2B /* AMErrorManager.m */; };
 		23AF8C3F1998F7C700DB4B2B /* MOBIDDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77A4198A904400E3CD76 /* MOBIDDetailViewController.m */; };
@@ -83,6 +84,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		234DB24B19F94B37006CD605 /* server.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = server.cer; sourceTree = SOURCE_ROOT; };
 		23AF8C381998E63B00DB4B2B /* AMErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMErrorHandler.h; sourceTree = "<group>"; };
 		23AF8C391998E63B00DB4B2B /* AMErrorHandlerUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMErrorHandlerUI.h; sourceTree = "<group>"; };
 		23AF8C3A1998E63B00DB4B2B /* AMErrorHandlerUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMErrorHandlerUI.m; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 		23FD6721198A64C400D1A344 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				234DB24B19F94B37006CD605 /* server.cer */,
 				23FD6722198A64C400D1A344 /* MobileEdge-Info.plist */,
 				23FD6723198A64C400D1A344 /* InfoPlist.strings */,
 				23FD6726198A64C400D1A344 /* main.m */,
@@ -567,6 +570,7 @@
 				23FD6739198A64C400D1A344 /* Images.xcassets in Resources */,
 				23FD672E198A64C400D1A344 /* Main_iPhone.storyboard in Resources */,
 				23FD6725198A64C400D1A344 /* InfoPlist.strings in Resources */,
+				234DB24C19F94B37006CD605 /* server.cer in Resources */,
 				23BAE24319A1EA2B00D3CDD8 /* torrc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
