@@ -37,6 +37,7 @@
 		23BAE27C19A20AF900D3CDD8 /* libtor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE27019A20AF900D3CDD8 /* libtor.a */; };
 		23BAE27F19A241A000D3CDD8 /* NACLKey+ScalarMult.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE27E19A241A000D3CDD8 /* NACLKey+ScalarMult.m */; };
 		23BAE28219A4990A00D3CDD8 /* NSDictionary+Protocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE28119A4990A00D3CDD8 /* NSDictionary+Protocol.m */; };
+		23C23DFB19F79F3500FEC89C /* MOBAxolotlSkippedKeyRing.m in Sources */ = {isa = PBXBuildFile; fileRef = 23C23DFA19F79F3500FEC89C /* MOBAxolotlSkippedKeyRing.m */; };
 		23CDB7F619990EC20007C3C5 /* MOBKeyExchangeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CDB7F519990EC20007C3C5 /* MOBKeyExchangeMessage.m */; };
 		23CDB7F91999FEFE0007C3C5 /* MOBAxolotlSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CDB7F81999FEFE0007C3C5 /* MOBAxolotlSession.m */; };
 		23CDB7FC199A0E830007C3C5 /* MOBIDToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CDB7FB199A0E830007C3C5 /* MOBIDToken.m */; };
@@ -130,6 +131,8 @@
 		23BAE27E19A241A000D3CDD8 /* NACLKey+ScalarMult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NACLKey+ScalarMult.m"; sourceTree = "<group>"; };
 		23BAE28019A4990A00D3CDD8 /* NSDictionary+Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Protocol.h"; sourceTree = "<group>"; };
 		23BAE28119A4990A00D3CDD8 /* NSDictionary+Protocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Protocol.m"; sourceTree = "<group>"; };
+		23C23DF919F79F3500FEC89C /* MOBAxolotlSkippedKeyRing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBAxolotlSkippedKeyRing.h; path = Model/MOBAxolotlSkippedKeyRing.h; sourceTree = "<group>"; };
+		23C23DFA19F79F3500FEC89C /* MOBAxolotlSkippedKeyRing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBAxolotlSkippedKeyRing.m; path = Model/MOBAxolotlSkippedKeyRing.m; sourceTree = "<group>"; };
 		23CDB7F419990EC20007C3C5 /* MOBKeyExchangeMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBKeyExchangeMessage.h; sourceTree = "<group>"; };
 		23CDB7F519990EC20007C3C5 /* MOBKeyExchangeMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBKeyExchangeMessage.m; sourceTree = "<group>"; };
 		23CDB7F71999FEFE0007C3C5 /* MOBAxolotlSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBAxolotlSession.h; path = Model/MOBAxolotlSession.h; sourceTree = "<group>"; };
@@ -397,6 +400,8 @@
 				23BAE219199BA4E200D3CDD8 /* MOBBaseIdentity.m */,
 				23BAE21B199BB56500D3CDD8 /* MOBRemoteIdentity.h */,
 				23BAE21C199BB56500D3CDD8 /* MOBRemoteIdentity.m */,
+				23C23DF919F79F3500FEC89C /* MOBAxolotlSkippedKeyRing.h */,
+				23C23DFA19F79F3500FEC89C /* MOBAxolotlSkippedKeyRing.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -648,6 +653,7 @@
 				23BAE24719A1F04500D3CDD8 /* ULINetSocket.m in Sources */,
 				23FD77AD198A904400E3CD76 /* MOBBonusSystemViewController.m in Sources */,
 				23FD77AF198A904400E3CD76 /* MOBIDTableViewController.m in Sources */,
+				23C23DFB19F79F3500FEC89C /* MOBAxolotlSkippedKeyRing.m in Sources */,
 				23FD77A0198A8FCA00E3CD76 /* MOBIdentity.m in Sources */,
 				23F37DE4199370560074E62D /* MOBIdentityManagement.m in Sources */,
 				23AF8C3F1998F7C700DB4B2B /* MOBIDDetailViewController.m in Sources */,

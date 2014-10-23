@@ -14,6 +14,7 @@
 #import "MOBAxolotl.h"
 #import "MOBAxolotlSession.h"
 #import "MOBAxolotlChainKey.h"
+#import "MOBAxolotlSkippedKeyRing.h"
 #import "MOBIdentity.h"
 #import "MOBRemoteIdentity.h"
 #import "MOBCore.h"
@@ -144,56 +145,111 @@
     return nil;
 }
 
-- (NSData *) attemptDecryptionWithSkippedKeys: (NSMutableDictionary *) aSkippedKeys
+- (NSData *) attemptDecryptionWithSkippedKeys: (NSMutableArray *) aSkippedKeys
                                    forMessage: (NSDictionary *) aEncryptedMessage
 {
-    __block NSData *decryptedMessageBody;
-    
-    void (^iterator) (id key, id obj, BOOL *stop);
-    iterator = ^(id aHeaderKey, id aMessageKeys, BOOL *stop)
+    //__block NSData *decryptedMessageBody;
+    //
+    //void (^iterator) (id key, id obj, BOOL *stop);
+    //iterator = ^(id aHeaderKey, id aMessageKeys, BOOL *stop)
+    //{
+    //    // attempt decryption of header:
+
+    //    NSMutableSet *messageKeys = aMessageKeys;
+    //    NSArray *parsedHeader = [self decryptAndParseHeader: aEncryptedMessage[@"head"]
+    //                                                withKey: aHeaderKey
+    //                                               andNonce: aEncryptedMessage[@"nonce"]];
+    //    if (!parsedHeader) {
+    //        return;
+    //    }
+    //    NACLNonce *innerNonce = [NACLNonce nonceWithData:
+    //                             [[NSData alloc] initWithBase64EncodedString: parsedHeader[3]
+    //                                                                 options: 0]];
+    //    NSData *messageBodyData = [[NSData alloc] initWithBase64EncodedString: aEncryptedMessage[@"body"]
+    //                                                                  options: 0];
+    //    for (NACLSymmetricPrivateKey *messageKey in messageKeys) {
+    //        // attempt decryption:
+    //        if ((decryptedMessageBody = [messageBodyData decryptedDataUsingPrivateKey: messageKey
+    //                                                                            nonce: innerNonce
+    //                                                                            error: nil]))
+    //        { // Decryption successful.
+    //            *stop = YES;
+    //            // delete message key from array:
+    //            [messageKeys removeObject: messageKey];
+    //            if (0 == messageKeys.count)
+    //            { // header key can be removed as well:
+    //                [aSkippedKeys removeObjectForKey: aHeaderKey];
+    //            }
+    //            return;
+    //        }
+
+    //    }
+    //};
+    //[aSkippedKeys enumerateKeysAndObjectsUsingBlock: iterator];
+    //return decryptedMessageBody;
+    NSData *decryptedMessageBody;
+    for (MOBAxolotlSkippedKeyRing *keyRing in aSkippedKeys)
     {
         // attempt decryption of header:
-
-        NSMutableSet *messageKeys = aMessageKeys;
         NSArray *parsedHeader = [self decryptAndParseHeader: aEncryptedMessage[@"head"]
-                                                    withKey: aHeaderKey
+                                                    withKey: keyRing.headerKey
                                                    andNonce: aEncryptedMessage[@"nonce"]];
         if (!parsedHeader) {
-            return;
+            continue;
         }
         NACLNonce *innerNonce = [NACLNonce nonceWithData:
                                  [[NSData alloc] initWithBase64EncodedString: parsedHeader[3]
                                                                      options: 0]];
         NSData *messageBodyData = [[NSData alloc] initWithBase64EncodedString: aEncryptedMessage[@"body"]
                                                                       options: 0];
-        for (NACLSymmetricPrivateKey *messageKey in messageKeys) {
+        for (NACLSymmetricPrivateKey *messageKey in keyRing.messageKeys) {
             // attempt decryption:
             if ((decryptedMessageBody = [messageBodyData decryptedDataUsingPrivateKey: messageKey
                                                                                 nonce: innerNonce
                                                                                 error: nil]))
             { // Decryption successful.
-                *stop = YES;
                 // delete message key from array:
-                [messageKeys removeObject: messageKey];
-                if (0 == messageKeys.count)
+                [keyRing.messageKeys removeObject: messageKey];
+                // TODO: could theree be performance gain when deleting by index rather than object?
+                if (0 == keyRing.messageKeys.count)
                 { // header key can be removed as well:
-                    [aSkippedKeys removeObjectForKey: aHeaderKey];
+                    [aSkippedKeys removeObject: keyRing];
                 }
-                return;
+                return decryptedMessageBody;
             }
-
         }
-    };
-    
-    [aSkippedKeys enumerateKeysAndObjectsUsingBlock: iterator];
-    return decryptedMessageBody;
+    }
+    return nil;
 }
 
-- (NSData *) attemptDecryptionWithCurrentSessionState: (MOBAxolotlSession *) aSession
-                                           forMessage: (NSDictionary *) aEncryptedMessage
+- (void) stageSkippedKeysInSession: (MOBAxolotlSession *) aSession
+              currentMessageNumber: (NSUInteger) aCurrentMessageNumber
+               futureMessageNumber: (NSUInteger) aFutureMessageNumber
+              usingSpecialChainKey: (MOBAxolotlChainKey *) aChainKey
 {
-#warning stub
-    // TODO: attempt to decrypt header with receiverHeaderKey:
+    MOBAxolotlChainKey *chainKey = (aChainKey) ? aChainKey : aSession.receiverChainKey;
+    // TODO: check what TS does here with chainkey.index > counter
+    if (aFutureMessageNumber - aCurrentMessageNumber > 500)
+    { // more than 500 skipped messages (same number TextSecure sets as limit)
+        // TODO: error/exception?
+    }
+    
+    NSMutableArray *messageKeys = [NSMutableArray arrayWithCapacity: aFutureMessageNumber - aCurrentMessageNumber];
+    NACLSymmetricPrivateKey *messageKey;
+    for (NSUInteger i = aCurrentMessageNumber; i < aFutureMessageNumber; i++) {
+        messageKey = [chainKey nextMessageKey];
+        [messageKeys addObject: messageKey];
+    }
+    [aSession stageMessageKeys: messageKeys forHeaderKey: aSession.receiverHeaderKey];
+    messageKey = [chainKey nextMessageKey];
+    aSession.currentMessageKey = messageKey;
+    aSession.purportedReceiverChainKey = chainKey;
+}
+
+- (NSData *) attemptDecryptionUsingCurrentHeaderKeyWithSessionState: (MOBAxolotlSession *) aSession
+                                                         forMessage: (NSDictionary *) aEncryptedMessage
+{
+    // attempt to decrypt header with receiverHeaderKey:
     NSArray *parsedHeader = [self decryptAndParseHeader: aEncryptedMessage[@"head"]
                                                 withKey: aSession.receiverHeaderKey
                                                andNonce: aEncryptedMessage[@"nonce"]];
@@ -204,18 +260,55 @@
     // TODO: derive message keys according to messagesSentCounter:
     NSUInteger currentMessageCount = aSession.messagesReceivedCount;
     NSUInteger messageNumber = [((NSNumber *) parsedHeader[0]) unsignedIntegerValue];
-    NSMutableArray *stagingArea = [NSMutableArray arrayWithCapacity: messageNumber - currentMessageCount + 1];
-    
+    NSMutableArray *messageKeys = [NSMutableArray arrayWithCapacity: messageNumber - currentMessageCount + 1];
+    NACLSymmetricPrivateKey *messageKey;
     for (NSUInteger i = currentMessageCount; i < messageNumber; i++) {
         /*
         NSMutableData *messageKeyData = [NSMutableData dataWithLength: [NACLSymmetricPrivateKey keyLength]];
         crypto_auth_hmacsha256(messageKeyData.mutableBytes, (unsigned char *) "0", 1, aSession.receiverChainKey.bytes);
         NACLSymmetricPrivateKey *messageKey = [NACLSymmetricPrivateKey keyWithData: messageKeyData]; */
-        NACLSymmetricPrivateKey *messageKey = [aSession.receiverChainKey nextMessageKey];
-        [stagingArea addObject: messageKey];
+        messageKey = [aSession.receiverChainKey nextMessageKey];
+        [messageKeys addObject: messageKey];
     }
-    // TODO: save unused message keys
+    [aSession stageMessageKeys: messageKeys forHeaderKey: aSession.receiverHeaderKey];
+    messageKey = [aSession.receiverChainKey nextMessageKey];
     // TODO: attempt to decrypt message body
+    NACLNonce *innerNonce = [NACLNonce nonceWithData:
+                                 [[NSData alloc] initWithBase64EncodedString: parsedHeader[3]
+                                                                     options: 0]];
+    NSData *messageBodyData = [[NSData alloc] initWithBase64EncodedString: aEncryptedMessage[@"body"]
+                                                                  options: 0];
+    NSData *decryptedMessage;
+    if (!(decryptedMessage = [messageBodyData decryptedDataUsingPrivateKey: messageKey
+                                                               nonce: innerNonce
+                                                               error: nil]))
+    { // Decryption failed. Do something here. TODO!
+        DDLogError(@"Error while decrypting with existing chain. Header key matches but message key does not.");
+        // Do we set an error object?
+        return nil;
+    }
+    
+    // [aSession.skippedHeaderAndMessageKeys setObject: aSession.stagingArea forKey: aSession.receiverHeaderKey];
+    // If we get here, it means we successfully decrypted the message and we can hand it back:
+    return decryptedMessage;
+}
+
+- (NSData *) attemptDecryptionUsingNextHeaderKeyWithSessionState: (MOBAxolotlSession *) aSession
+                                                      forMessage: (NSDictionary *) aEncryptedMessage
+{
+    NSArray *parsedHeader = [self decryptAndParseHeader: aEncryptedMessage[@"head"]
+                                                withKey: aSession.receiverNextHeaderKey
+                                               andNonce: aEncryptedMessage[@"nonce"]];
+    if (!parsedHeader)
+    {
+        return nil;
+    }
+    // TODO: stage a lot of skipped keys:
+    // TODO: derive new key material from ratchet keys in state and message:
+    // TODO: potentially stage more keys:
+    // TODO: set new values/keys in state:
+    // TODO: erase DH key pair:
+    // TODO: set ratchetFlag
     return nil;
 }
 
@@ -226,7 +319,8 @@
 {
 #warning stub
     MOBAxolotlSession *session;
-    if (!(session = self.sessions[aSender])) {
+    if (!(session = self.sessions[aSender]))
+    {
         // TODO: fail! we dont have a session for the given remote!
     }
     
@@ -239,13 +333,24 @@
         return decryptedMessage;
     }
     // TODO: try decrypting with current header key:
-    //if ((decryptedMessage = [self attemptDecryptionWithCurrentKey: nil //TODO!
-    //                                                   forMessage: aEncryptedMessage]))
-    //{ // Decryption successful.
-    //    return decryptedMessage;
+    if ((decryptedMessage = [self attemptDecryptionUsingCurrentHeaderKeyWithSessionState: session //TODO!
+                                                                              forMessage: aEncryptedMessage]))
+    { // Decryption successful.
+        return decryptedMessage;
+    }
+    // So far, decryption has not been successful. Advance the state and retry:
+    if (session.ratchetFlag)
+    { // TODO: set some error
+        return nil;
+    }
+    //if (!(decryptedHeader)) {
     //}
-
     // TODO: derive keys (advancing state) until we find a matching one:
+    // commit staged keys if not happened already:
+    [session commitKeysInStagingArea];
+    // TODO: increase number of received messages, update chain key
+    // TODO: return decrypted message, if any:
+    
     return nil;
 }
 

@@ -13,6 +13,7 @@
 #import "MOBCore.h"
 #import "MOBAxolotlSession.h"
 #import "MOBAxolotlChainKey.h"
+#import "MOBAxolotlSkippedKeyRing.h"
 #import "NACLKey+ScalarMult.h"
 #import <HKDFKit.h>
 #import <SodiumObjc.h>
@@ -110,6 +111,87 @@
     _messagesSentUnderPreviousRatchetCount = _messagesSentCount;
     _messagesSentCount = 0;
     _ratchetFlag = NO;
+}
+
+- (void) stageMessageKeys: (NSMutableArray *) aMessageKeys
+             forHeaderKey: (NACLSymmetricPrivateKey *) aReceiverHeaderKey
+{
+    if (!self.stagingArea)
+    { // lazily instantiate:
+        _stagingArea = [NSMutableDictionary dictionaryWithCapacity: 1];
+    }
+    [self.stagingArea setObject: aMessageKeys
+                         forKey: aReceiverHeaderKey];
+}
+
+- (void) commitKeysInStagingArea
+{
+    if (!self.stagingArea)
+    {
+        return;
+    }
+    if (!self.skippedHeaderAndMessageKeys)
+    { // lazily instantiate:
+        _skippedHeaderAndMessageKeys = [NSMutableArray arrayWithCapacity: 4];
+    }
+    // find out which header key is already included:
+    for (MOBAxolotlSkippedKeyRing *keyRing in self.skippedHeaderAndMessageKeys)
+    { // check if we have message keys for existing skippedKeyStores:
+        if (!self.stagingArea[keyRing.headerKey])
+        {
+            continue;
+        }
+        // if the header key is already present, append the message keys:
+        [keyRing.messageKeys addObjectsFromArray: self.stagingArea[keyRing.headerKey]];
+        [self.stagingArea removeObjectForKey: keyRing.headerKey];
+    }
+    // if the staging area is not empty by now, we need to get rid of the oldest key ring and
+    // add a new one:
+    /*
+     * We cannot be sure that only one header key + message keys are newly
+     * introduced to the skipped keys. It is possible that no keys were 
+     * skipped for the last two ratchets; and that skipped keys for both the 
+     * last and the new current header key have to be commited.
+     * So, to cover this case, we iterate over all the entries that are left:
+     */
+    // if ([self.stagingArea count] > 0)
+    void (^iterator) (id key, id obj, BOOL *stop);
+    iterator = ^(id aHeaderKey, id aMessageKeys, BOOL *stop)
+    {
+        NACLSymmetricPrivateKey *headerKey = aHeaderKey;
+        NSMutableArray *messageKeys = aMessageKeys;
+        MOBAxolotlSkippedKeyRing *newKeyRing =
+            [[MOBAxolotlSkippedKeyRing alloc] initWithMessageKeys: messageKeys
+                                                      forHeaderKey: headerKey];
+        [self.skippedHeaderAndMessageKeys removeObjectAtIndex: 0];
+        [self.skippedHeaderAndMessageKeys addObject: newKeyRing];
+        //NACLSymmetricPrivateKey *headerKey = [self.stagingArea allKeys][0];
+        //NSMutableArray *messageKeys = [self.stagingArea allValues][0];
+        //MOBAxolotlSkippedKeyStore *newKeyRing =
+        //    [[MOBAxolotlSkippedKeyStore alloc] initWithMessageKeys: messageKeys
+        //                                              forHeaderKey: headerKey];
+        //[self.skippedHeaderAndMessageKeys removeObjectAtIndex: 0];
+        //[self.skippedHeaderAndMessageKeys addObject: newKeyRing];
+    };
+    [self.stagingArea enumerateKeysAndObjectsUsingBlock: iterator];
+    
+}
+
+- (void) clearStagingArea
+{
+    [self.stagingArea removeAllObjects];
+}
+
+- (void) clearVolatileData
+{
+    [self clearStagingArea];
+    self.purportedReceiverChainKey = nil;
+    self.currentMessageKey = nil;
+}
+
+- (void) clearSession
+{
+#warning stub
 }
 
 - (NSString *) description

@@ -13,7 +13,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class NACLAsymmetricKeyPair, NACLAsymmetricPublicKey, NACLSymmetricPrivateKey, MOBAxolotlChainKey;
+@class NACLAsymmetricKeyPair, NACLAsymmetricPublicKey, NACLSymmetricPrivateKey, MOBAxolotlChainKey, MOBAxolotlSkippedKeyRing;
 
 @interface MOBAxolotlSession : NSObject <NSCoding>
 
@@ -38,9 +38,21 @@
 @property (nonatomic, assign, readonly) BOOL ratchetFlag;
 
 /**
- * A dictionary containing for each skipped header key, an NSMutableSet with all skipped message keys.
+ * A mutable array containing MOBAxolotlSkippedKeyStores for up to 4 different skipped header keys.
+ * Those contain a header key and messageKeys arrays for one specific headerKey. 
+ * If a new header key is to be added, the oldest keyStore is removed.
  */
-@property (nonatomic, strong, readonly) NSMutableDictionary *skippedHeaderAndMessageKeys;
+@property (nonatomic, strong, readonly) NSMutableArray *skippedHeaderAndMessageKeys;
+
+/**
+ * The staging area where @{ headerKey : @[ message keys ]} are kept until we commit them to
+ * the actual skippedKeys storage. 
+ */
+@property (nonatomic, retain, readonly) NSMutableDictionary *stagingArea;
+@property (nonatomic, retain) MOBAxolotlChainKey *purportedReceiverChainKey;
+@property (nonatomic, retain) NACLSymmetricPrivateKey *currentMessageKey;
+
+
 
 - (instancetype) initWithMyIdentityKeyPair: (NACLAsymmetricKeyPair *) aKeyPair
                           theirIdentityKey: (NACLAsymmetricPublicKey *) aTheirKey;
@@ -53,5 +65,16 @@
 - (void) advanceStateAfterSending;
 
 - (void) ratchetStateBeforeSending;
+
+- (void) stageMessageKeys: (NSMutableArray *) aMessageKeys
+             forHeaderKey: (NACLSymmetricPrivateKey *) aReceiverHeaderKey;
+
+- (void) commitKeysInStagingArea;
+
+- (void) clearSession;
+
+- (void) clearStagingArea;
+
+- (void) clearVolatileData;
 
 @end
