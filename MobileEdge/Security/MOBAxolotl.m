@@ -213,19 +213,11 @@
         return nil;
     }
     
-    //NSMutableArray *messageKeys = [NSMutableArray arrayWithCapacity: messageNumber - currentMessageCount + 1];
-    //NACLSymmetricPrivateKey *messageKey;
-    //for (NSUInteger i = currentMessageCount; i < messageNumber; i++) {
-    //    messageKey = [aSession.receiverChainKey nextMessageKey];
-    //    [messageKeys addObject: messageKey];
-    //}
-    //[aSession stageMessageKeys: messageKeys forHeaderKey: aSession.receiverHeaderKey];
-    //messageKey = [aSession.receiverChainKey nextMessageKey];
-    // message keys according to messagesSentCounter:
     [self stageSkippedKeysInSession: aSession
                currentMessageNumber: aSession.messagesReceivedCount
                 futureMessageNumber: [((NSNumber *) parsedHeader[0]) unsignedIntegerValue]
                usingSpecialChainKey: nil]; // passing nil just takes the one from the session.
+    
     NACLSymmetricPrivateKey *messageKey = aSession.currentMessageKey;
     
     // attempt to decrypt message body:
