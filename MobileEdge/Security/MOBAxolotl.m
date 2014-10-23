@@ -113,6 +113,9 @@
     return message;
 }
 
+#pragma mark -
+#pragma mark Decryption
+
 - (NSArray *) decryptAndParseHeader: (NSString *) aBase64Header
                             withKey: (NACLSymmetricPrivateKey *) aHeaderKey
                            andNonce: (NSString *) aBase64Nonce
@@ -166,7 +169,7 @@
             { // Decryption successful.
                 // delete message key from array:
                 [keyRing.messageKeys removeObject: messageKey];
-                // TODO: could theree be performance gain when deleting by index rather than object?
+                // TODO: could there be performance gain when deleting by index rather than object?
                 if (0 == keyRing.messageKeys.count)
                 { // header key can be removed as well:
                     [aSkippedKeys removeObject: keyRing];
@@ -315,8 +318,6 @@
     return decryptedMessageBody;
 }
 
-#pragma mark -
-#pragma mark Decryption
 - (NSData *) decryptMessage: (NSDictionary *) aEncryptedMessage
                  fromSender: (MOBRemoteIdentity *) aSender
 {
