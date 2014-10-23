@@ -79,11 +79,6 @@
     [session ratchetStateBeforeSending];
     
     // Derive a new message key from chain key":
-    /*
-    NSMutableData *messageKeyData = [NSMutableData dataWithLength: (256/8)];
-    crypto_auth_hmacsha256(messageKeyData.mutableBytes, (unsigned char *) "0", 1, session.senderChainKey.bytes);
-    NACLSymmetricPrivateKey *messageKey = [NACLSymmetricPrivateKey keyWithData: messageKeyData];*/
-    
     NACLSymmetricPrivateKey *messageKey = [session.receiverChainKey nextMessageKey];
     
     // generate nonces:
@@ -224,10 +219,6 @@
     NSMutableArray *messageKeys = [NSMutableArray arrayWithCapacity: messageNumber - currentMessageCount + 1];
     NACLSymmetricPrivateKey *messageKey;
     for (NSUInteger i = currentMessageCount; i < messageNumber; i++) {
-        /*
-        NSMutableData *messageKeyData = [NSMutableData dataWithLength: [NACLSymmetricPrivateKey keyLength]];
-        crypto_auth_hmacsha256(messageKeyData.mutableBytes, (unsigned char *) "0", 1, aSession.receiverChainKey.bytes);
-        NACLSymmetricPrivateKey *messageKey = [NACLSymmetricPrivateKey keyWithData: messageKeyData]; */
         messageKey = [aSession.receiverChainKey nextMessageKey];
         [messageKeys addObject: messageKey];
     }
@@ -342,8 +333,6 @@
     NACLAsymmetricKeyPair *myEphemeralKeyPair = [NACLAsymmetricKeyPair keyPair];
     NSMutableDictionary *keyExchangeMessageOut = [NSMutableDictionary dictionary];
     
-    //[keyExchangeMessageOut setObject:[self.identity.identityKey.data description] forKey:@"id"];
-    //[keyExchangeMessageOut setObject:[myEphemeralKeyPair.publicKey.data description] forKey:@"eph0"];
     [keyExchangeMessageOut setObject:[self.identity.identityKey.data base64EncodedStringWithOptions: 0] forKey:@"id"];
     [keyExchangeMessageOut setObject:[myEphemeralKeyPair.publicKey.data base64EncodedStringWithOptions:0] forKey:@"eph0"];
     KeyExchangeFinalizeBlock finalizeBlock;
