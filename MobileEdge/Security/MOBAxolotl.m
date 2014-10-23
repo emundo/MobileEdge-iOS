@@ -213,18 +213,22 @@
         return nil;
     }
     
-    // TODO: derive message keys according to messagesSentCounter:
-    NSUInteger currentMessageCount = aSession.messagesReceivedCount;
-    NSUInteger messageNumber = [((NSNumber *) parsedHeader[0]) unsignedIntegerValue];
-    NSMutableArray *messageKeys = [NSMutableArray arrayWithCapacity: messageNumber - currentMessageCount + 1];
-    NACLSymmetricPrivateKey *messageKey;
-    for (NSUInteger i = currentMessageCount; i < messageNumber; i++) {
-        messageKey = [aSession.receiverChainKey nextMessageKey];
-        [messageKeys addObject: messageKey];
-    }
-    [aSession stageMessageKeys: messageKeys forHeaderKey: aSession.receiverHeaderKey];
-    messageKey = [aSession.receiverChainKey nextMessageKey];
-    // TODO: attempt to decrypt message body
+    //NSMutableArray *messageKeys = [NSMutableArray arrayWithCapacity: messageNumber - currentMessageCount + 1];
+    //NACLSymmetricPrivateKey *messageKey;
+    //for (NSUInteger i = currentMessageCount; i < messageNumber; i++) {
+    //    messageKey = [aSession.receiverChainKey nextMessageKey];
+    //    [messageKeys addObject: messageKey];
+    //}
+    //[aSession stageMessageKeys: messageKeys forHeaderKey: aSession.receiverHeaderKey];
+    //messageKey = [aSession.receiverChainKey nextMessageKey];
+    // message keys according to messagesSentCounter:
+    [self stageSkippedKeysInSession: aSession
+               currentMessageNumber: aSession.messagesReceivedCount
+                futureMessageNumber: [((NSNumber *) parsedHeader[0]) unsignedIntegerValue]
+               usingSpecialChainKey: nil]; // passing nil just takes the one from the session.
+    NACLSymmetricPrivateKey *messageKey = aSession.currentMessageKey;
+    
+    // attempt to decrypt message body:
     NACLNonce *innerNonce = [NACLNonce nonceWithData:
                                  [[NSData alloc] initWithBase64EncodedString: parsedHeader[3]
                                                                      options: 0]];
@@ -240,7 +244,6 @@
         return nil;
     }
     
-    // [aSession.skippedHeaderAndMessageKeys setObject: aSession.stagingArea forKey: aSession.receiverHeaderKey];
     // If we get here, it means we successfully decrypted the message and we can hand it back:
     return decryptedMessage;
 }
