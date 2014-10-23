@@ -29,6 +29,20 @@
                ReferencedContainer = "container:MobileEdge.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "234DB25019F94DD8006CD605"
+               BuildableName = "MobileEdge Tests.xctest"
+               BlueprintName = "MobileEdge Tests"
+               ReferencedContainer = "container:MobileEdge.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -44,6 +58,16 @@
                BlueprintIdentifier = "23FD673D198A64C500D1A344"
                BuildableName = "MobileEdgeTests.xctest"
                BlueprintName = "MobileEdgeTests"
+               ReferencedContainer = "container:MobileEdge.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "234DB25019F94DD8006CD605"
+               BuildableName = "MobileEdge Tests.xctest"
+               BlueprintName = "MobileEdge Tests"
                ReferencedContainer = "container:MobileEdge.xcodeproj">
             </BuildableReference>
          </TestableReference>

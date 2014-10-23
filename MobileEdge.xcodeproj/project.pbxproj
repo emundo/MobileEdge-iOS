@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		234DB24C19F94B37006CD605 /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = 234DB24B19F94B37006CD605 /* server.cer */; };
+		234DB25619F94DD8006CD605 /* MobileEdge_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 234DB25519F94DD8006CD605 /* MobileEdge_Tests.m */; };
 		23AF8C3D1998E63B00DB4B2B /* AMErrorHandlerUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8C3A1998E63B00DB4B2B /* AMErrorHandlerUI.m */; };
 		23AF8C3E1998E63B00DB4B2B /* AMErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8C3C1998E63B00DB4B2B /* AMErrorManager.m */; };
 		23AF8C3F1998F7C700DB4B2B /* MOBIDDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77A4198A904400E3CD76 /* MOBIDDetailViewController.m */; };
@@ -60,11 +61,6 @@
 		23FD672B198A64C400D1A344 /* MOBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD672A198A64C400D1A344 /* MOBAppDelegate.m */; };
 		23FD672E198A64C400D1A344 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23FD672C198A64C400D1A344 /* Main_iPhone.storyboard */; };
 		23FD6739198A64C400D1A344 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23FD6738198A64C400D1A344 /* Images.xcassets */; };
-		23FD673F198A64C500D1A344 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8142F59A1988CEDC0088B18B /* XCTest.framework */; };
-		23FD6740198A64C500D1A344 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8142F57B1988CEDC0088B18B /* Foundation.framework */; };
-		23FD6741198A64C500D1A344 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8142F57F1988CEDC0088B18B /* UIKit.framework */; };
-		23FD6749198A64C500D1A344 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 23FD6747198A64C500D1A344 /* InfoPlist.strings */; };
-		23FD674B198A64C500D1A344 /* MobileEdgeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD674A198A64C500D1A344 /* MobileEdgeTests.m */; };
 		23FD77A0198A8FCA00E3CD76 /* MOBIdentity.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD779F198A8FCA00E3CD76 /* MOBIdentity.m */; };
 		23FD77AD198A904400E3CD76 /* MOBBonusSystemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77A2198A904400E3CD76 /* MOBBonusSystemViewController.m */; };
 		23FD77AF198A904400E3CD76 /* MOBIDTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77A6198A904400E3CD76 /* MOBIDTableViewController.m */; };
@@ -74,7 +70,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		23FD6742198A64C500D1A344 /* PBXContainerItemProxy */ = {
+		234DB25719F94DD8006CD605 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8142F5701988CEDC0088B18B /* Project object */;
 			proxyType = 1;
@@ -85,6 +81,9 @@
 
 /* Begin PBXFileReference section */
 		234DB24B19F94B37006CD605 /* server.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = server.cer; sourceTree = SOURCE_ROOT; };
+		234DB25119F94DD8006CD605 /* MobileEdge Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MobileEdge Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		234DB25419F94DD8006CD605 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		234DB25519F94DD8006CD605 /* MobileEdge_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MobileEdge_Tests.m; sourceTree = "<group>"; };
 		23AF8C381998E63B00DB4B2B /* AMErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMErrorHandler.h; sourceTree = "<group>"; };
 		23AF8C391998E63B00DB4B2B /* AMErrorHandlerUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMErrorHandlerUI.h; sourceTree = "<group>"; };
 		23AF8C3A1998E63B00DB4B2B /* AMErrorHandlerUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMErrorHandlerUI.m; sourceTree = "<group>"; };
@@ -172,10 +171,6 @@
 		23FD672D198A64C400D1A344 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		23FD6730198A64C400D1A344 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		23FD6738198A64C400D1A344 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		23FD673E198A64C500D1A344 /* MobileEdgeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MobileEdgeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		23FD6746198A64C500D1A344 /* MobileEdgeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MobileEdgeTests-Info.plist"; sourceTree = "<group>"; };
-		23FD6748198A64C500D1A344 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		23FD674A198A64C500D1A344 /* MobileEdgeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MobileEdgeTests.m; sourceTree = "<group>"; };
 		23FD779E198A8FCA00E3CD76 /* MOBIdentity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBIdentity.h; path = Model/MOBIdentity.h; sourceTree = "<group>"; };
 		23FD779F198A8FCA00E3CD76 /* MOBIdentity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBIdentity.m; path = Model/MOBIdentity.m; sourceTree = "<group>"; };
 		23FD77A1198A904400E3CD76 /* MOBBonusSystemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBBonusSystemViewController.h; path = ViewControllers/MOBBonusSystemViewController.h; sourceTree = "<group>"; };
@@ -200,6 +195,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		234DB24E19F94DD8006CD605 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		23FD6719198A64C400D1A344 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -220,19 +222,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		23FD673B198A64C500D1A344 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				23FD673F198A64C500D1A344 /* XCTest.framework in Frameworks */,
-				23FD6741198A64C500D1A344 /* UIKit.framework in Frameworks */,
-				23FD6740198A64C500D1A344 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		234DB25219F94DD8006CD605 /* MobileEdge Tests */ = {
+			isa = PBXGroup;
+			children = (
+				234DB25519F94DD8006CD605 /* MobileEdge_Tests.m */,
+				234DB25319F94DD8006CD605 /* Supporting Files */,
+			);
+			path = "MobileEdge Tests";
+			sourceTree = "<group>";
+		};
+		234DB25319F94DD8006CD605 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				234DB25419F94DD8006CD605 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		23AF8C371998E63B00DB4B2B /* ErrorHandler */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,24 +373,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		23FD6744198A64C500D1A344 /* MobileEdgeTests */ = {
-			isa = PBXGroup;
-			children = (
-				23FD674A198A64C500D1A344 /* MobileEdgeTests.m */,
-				23FD6745198A64C500D1A344 /* Supporting Files */,
-			);
-			path = MobileEdgeTests;
-			sourceTree = "<group>";
-		};
-		23FD6745198A64C500D1A344 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				23FD6746198A64C500D1A344 /* MobileEdgeTests-Info.plist */,
-				23FD6747198A64C500D1A344 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		23FD6764198A69DF00D1A344 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -432,7 +423,7 @@
 				23BAE22519A1DC7300D3CDD8 /* external */,
 				23FD6717198A639100D1A344 /* iPad */,
 				23FD6720198A64C400D1A344 /* MobileEdge */,
-				23FD6744198A64C500D1A344 /* MobileEdgeTests */,
+				234DB25219F94DD8006CD605 /* MobileEdge Tests */,
 				8142F57A1988CEDC0088B18B /* Frameworks */,
 				8142F5791988CEDC0088B18B /* Products */,
 				C7CCEE5DEFAD0ABF584FDAF5 /* Pods */,
@@ -446,7 +437,7 @@
 				8142F5781988CEDC0088B18B /* MOBviewTest.app */,
 				8142F5991988CEDC0088B18B /* MOBviewTestTests.xctest */,
 				23FD671C198A64C400D1A344 /* MobileEdge.app */,
-				23FD673E198A64C500D1A344 /* MobileEdgeTests.xctest */,
+				234DB25119F94DD8006CD605 /* MobileEdge Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -484,6 +475,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		234DB25019F94DD8006CD605 /* MobileEdge Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 234DB25919F94DD8006CD605 /* Build configuration list for PBXNativeTarget "MobileEdge Tests" */;
+			buildPhases = (
+				234DB24D19F94DD8006CD605 /* Sources */,
+				234DB24E19F94DD8006CD605 /* Frameworks */,
+				234DB24F19F94DD8006CD605 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				234DB25819F94DD8006CD605 /* PBXTargetDependency */,
+			);
+			name = "MobileEdge Tests";
+			productName = "MobileEdge Tests";
+			productReference = 234DB25119F94DD8006CD605 /* MobileEdge Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		23FD671B198A64C400D1A344 /* MobileEdge */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 23FD674C198A64C500D1A344 /* Build configuration list for PBXNativeTarget "MobileEdge" */;
@@ -503,24 +512,6 @@
 			productReference = 23FD671C198A64C400D1A344 /* MobileEdge.app */;
 			productType = "com.apple.product-type.application";
 		};
-		23FD673D198A64C500D1A344 /* MobileEdgeTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 23FD674F198A64C500D1A344 /* Build configuration list for PBXNativeTarget "MobileEdgeTests" */;
-			buildPhases = (
-				23FD673A198A64C500D1A344 /* Sources */,
-				23FD673B198A64C500D1A344 /* Frameworks */,
-				23FD673C198A64C500D1A344 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				23FD6743198A64C500D1A344 /* PBXTargetDependency */,
-			);
-			name = MobileEdgeTests;
-			productName = MobileEdgeTests;
-			productReference = 23FD673E198A64C500D1A344 /* MobileEdgeTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -531,15 +522,16 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = eMundo;
 				TargetAttributes = {
+					234DB25019F94DD8006CD605 = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = 23FD671B198A64C400D1A344;
+					};
 					23FD671B198A64C400D1A344 = {
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
 						};
-					};
-					23FD673D198A64C500D1A344 = {
-						TestTargetID = 8142F5771988CEDC0088B18B;
 					};
 				};
 			};
@@ -557,12 +549,19 @@
 			projectRoot = "";
 			targets = (
 				23FD671B198A64C400D1A344 /* MobileEdge */,
-				23FD673D198A64C500D1A344 /* MobileEdgeTests */,
+				234DB25019F94DD8006CD605 /* MobileEdge Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		234DB24F19F94DD8006CD605 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		23FD671A198A64C400D1A344 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -572,14 +571,6 @@
 				23FD6725198A64C400D1A344 /* InfoPlist.strings in Resources */,
 				234DB24C19F94B37006CD605 /* server.cer in Resources */,
 				23BAE24319A1EA2B00D3CDD8 /* torrc in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		23FD673C198A64C500D1A344 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				23FD6749198A64C500D1A344 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,6 +610,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		234DB24D19F94DD8006CD605 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				234DB25619F94DD8006CD605 /* MobileEdge_Tests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		23FD6718198A64C400D1A344 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -667,21 +666,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		23FD673A198A64C500D1A344 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				23FD674B198A64C500D1A344 /* MobileEdgeTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		23FD6743198A64C500D1A344 /* PBXTargetDependency */ = {
+		234DB25819F94DD8006CD605 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 23FD671B198A64C400D1A344 /* MobileEdge */;
-			targetProxy = 23FD6742198A64C500D1A344 /* PBXContainerItemProxy */;
+			targetProxy = 234DB25719F94DD8006CD605 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -710,17 +701,51 @@
 			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
 		};
-		23FD6747198A64C500D1A344 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				23FD6748198A64C500D1A344 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		234DB25A19F94DD8006CD605 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "MobileEdge Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MobileEdge.app/MobileEdge";
+			};
+			name = Debug;
+		};
+		234DB25B19F94DD8006CD605 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "MobileEdge Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MobileEdge.app/MobileEdge";
+			};
+			name = Release;
+		};
 		23FD674D198A64C500D1A344 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C4E4ECE17FFAE5F9590A71E4 /* Pods-MobileEdge.debug.xcconfig */;
@@ -853,46 +878,6 @@
 			};
 			name = Release;
 		};
-		23FD6750198A64C500D1A344 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MOBviewTest.app/MOBviewTest";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MobileEdge/MobileEdge-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "MobileEdgeTests/MobileEdgeTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		23FD6751198A64C500D1A344 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MOBviewTest.app/MOBviewTest";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MobileEdge/MobileEdge-Prefix.pch";
-				INFOPLIST_FILE = "MobileEdgeTests/MobileEdgeTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 		8142F5A81988CEDC0088B18B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -969,20 +954,19 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		234DB25919F94DD8006CD605 /* Build configuration list for PBXNativeTarget "MobileEdge Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				234DB25A19F94DD8006CD605 /* Debug */,
+				234DB25B19F94DD8006CD605 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		23FD674C198A64C500D1A344 /* Build configuration list for PBXNativeTarget "MobileEdge" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				23FD674D198A64C500D1A344 /* Debug */,
 				23FD674E198A64C500D1A344 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		23FD674F198A64C500D1A344 /* Build configuration list for PBXNativeTarget "MobileEdgeTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				23FD6750198A64C500D1A344 /* Debug */,
-				23FD6751198A64C500D1A344 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
