@@ -89,6 +89,29 @@
     _senderChainKey = newChainKey;
     */
 }
+
+- (void) advanceStateAfterReceiving
+{
+    _messagesReceivedCount += 1;
+    if (self.purportedReceiverChainKey)
+    {
+        _receiverChainKey = self.purportedReceiverChainKey;
+    }
+    [self commitKeysInStagingArea];
+}
+
+- (void) ratchetStateAfterReceivingRootKey: (NSData *) aRootKey
+                             nextHeaderKey: (NACLSymmetricPrivateKey *) aNextHeaderKey
+                          diffieHellmanKey: (NACLAsymmetricPublicKey *) aDiffieHellmanKey
+{
+    _rootKey = aRootKey;
+    _receiverHeaderKey = self.receiverNextHeaderKey;
+    _receiverNextHeaderKey = aNextHeaderKey;
+    _receiverDiffieHellmanKey = aDiffieHellmanKey;
+    _senderDiffieHellmanKey = nil; // delete?
+    _ratchetFlag = YES;
+}
+
 - (void) ratchetStateBeforeSending
 {
     _senderDiffieHellmanKey = [NACLAsymmetricKeyPair keyPair];

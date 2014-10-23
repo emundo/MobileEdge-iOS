@@ -62,9 +62,15 @@
 - (void) finishKeyAgreementWithKeyExchangeMessage: (NSDictionary *) keyExchangeMessageIn
                                myEphemeralKeyPair: (NACLAsymmetricKeyPair *) myEphemeralKeyPair;
 
+- (void) ratchetStateBeforeSending;
+
 - (void) advanceStateAfterSending;
 
-- (void) ratchetStateBeforeSending;
+- (void) ratchetStateAfterReceivingRootKey: (NSData *) aRootKey
+                             nextHeaderKey: (NACLSymmetricPrivateKey *) aNextHeaderKey
+                          diffieHellmanKey: (NACLAsymmetricPublicKey *) aDiffieHellmanKey;
+
+- (void) advanceStateAfterReceiving;
 
 - (void) stageMessageKeys: (NSMutableArray *) aMessageKeys
              forHeaderKey: (NACLSymmetricPrivateKey *) aReceiverHeaderKey;

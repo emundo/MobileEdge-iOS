@@ -181,9 +181,11 @@
 - (void) stageSkippedKeysInSession: (MOBAxolotlSession *) aSession
               currentMessageNumber: (NSUInteger) aCurrentMessageNumber
                futureMessageNumber: (NSUInteger) aFutureMessageNumber
+             usingSpecialHeaderKey: (NACLSymmetricPrivateKey *) aHeaderKey
               usingSpecialChainKey: (MOBAxolotlChainKey *) aChainKey
 {
     MOBAxolotlChainKey *chainKey = (aChainKey) ? aChainKey : aSession.receiverChainKey;
+    NACLSymmetricPrivateKey *headerKey = (aHeaderKey) ? aHeaderKey : aSession.receiverHeaderKey;
     // TODO: check what TS does here with chainkey.index > counter
     if (aFutureMessageNumber - aCurrentMessageNumber > 500)
     { // more than 500 skipped messages (same number TextSecure sets as limit)
@@ -196,7 +198,7 @@
         messageKey = [chainKey nextMessageKey];
         [messageKeys addObject: messageKey];
     }
-    [aSession stageMessageKeys: messageKeys forHeaderKey: aSession.receiverHeaderKey];
+    [aSession stageMessageKeys: messageKeys forHeaderKey: headerKey];
     messageKey = [chainKey nextMessageKey];
     aSession.currentMessageKey = messageKey;
     aSession.purportedReceiverChainKey = chainKey;
@@ -216,6 +218,7 @@
     [self stageSkippedKeysInSession: aSession
                currentMessageNumber: aSession.messagesReceivedCount
                 futureMessageNumber: [((NSNumber *) parsedHeader[0]) unsignedIntegerValue]
+              usingSpecialHeaderKey: nil
                usingSpecialChainKey: nil]; // passing nil just takes the one from the session.
     
     NACLSymmetricPrivateKey *messageKey = aSession.currentMessageKey;
@@ -240,6 +243,21 @@
     return decryptedMessage;
 }
 
+- (NSData *) deriveKeyDataWithRootKey: (NSData *) aRootKey
+                      ourEphemeral: (NACLAsymmetricPrivateKey *) aOurEphemeral
+                    theirEphemeral: (NACLAsymmetricPublicKey *) aTheirEphemeral
+{
+    NSData *diffieHellman = [aOurEphemeral multWithKey: aTheirEphemeral].data;
+    NSMutableData *inputKeyMaterial = [NSMutableData dataWithCapacity: (512 / 8)];
+    crypto_auth_hmacsha256(inputKeyMaterial.mutableBytes,
+                           diffieHellman.bytes,
+                           [diffieHellman length],
+                           aRootKey.bytes);
+    NSData *info = [@"MobileEdge Ratchet" dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *salt = [@"salty" dataUsingEncoding:NSUTF8StringEncoding];
+    return [HKDFKit deriveKey: inputKeyMaterial info: info salt: salt outputSize: 3*32];
+}
+
 - (NSData *) attemptDecryptionUsingNextHeaderKeyWithSessionState: (MOBAxolotlSession *) aSession
                                                       forMessage: (NSDictionary *) aEncryptedMessage
 {
@@ -250,13 +268,51 @@
     {
         return nil;
     }
-    // TODO: stage a lot of skipped keys:
-    // TODO: derive new key material from ratchet keys in state and message:
-    // TODO: potentially stage more keys:
-    // TODO: set new values/keys in state:
-    // TODO: erase DH key pair:
-    // TODO: set ratchetFlag
-    return nil;
+    // stage skipped keys for last ratchet:
+    [self stageSkippedKeysInSession: aSession
+               currentMessageNumber: aSession.messagesReceivedCount
+                futureMessageNumber: [((NSNumber *) parsedHeader[1]) unsignedIntegerValue]
+              usingSpecialHeaderKey: nil
+               usingSpecialChainKey: nil];
+    
+    NACLSymmetricPrivateKey *purportedHeaderKey = aSession.receiverNextHeaderKey;
+    
+    // derive new key material from ratchet keys in state and message:
+    NSData *derivedKeyMaterial = [self deriveKeyDataWithRootKey: aSession.rootKey
+                                                   ourEphemeral: aSession.senderDiffieHellmanKey.privateKey
+                                                 theirEphemeral: (NACLAsymmetricPublicKey *) parsedHeader[2]];
+    NSData *purportedRootKey = [derivedKeyMaterial subdataWithRange: NSMakeRange(0, 32)];
+    NACLSymmetricPrivateKey *purportedReceiverNextHeaderKey = [NACLSymmetricPrivateKey keyWithData:
+                                                               [derivedKeyMaterial subdataWithRange: NSMakeRange(1*32, 32)]];
+    MOBAxolotlChainKey *purportedReceiverChainKey = [[MOBAxolotlChainKey alloc] initWithKeyData:
+                                                     [derivedKeyMaterial subdataWithRange: NSMakeRange(2*32, 32)]];
+    // stage skipped keys for this ratchet:
+    [self stageSkippedKeysInSession: aSession
+               currentMessageNumber: 0
+                futureMessageNumber: [((NSNumber *) parsedHeader[0]) unsignedIntegerValue]
+              usingSpecialHeaderKey: purportedReceiverNextHeaderKey
+               usingSpecialChainKey: purportedReceiverChainKey];
+    
+    // Attempt decrypting message body:
+    NACLNonce *innerNonce = [NACLNonce nonceWithData:
+                                 [[NSData alloc] initWithBase64EncodedString: parsedHeader[3]
+                                                                     options: 0]];
+    NSData *messageBodyData = [[NSData alloc] initWithBase64EncodedString: aEncryptedMessage[@"body"]
+                                                                  options: 0];
+    NSData *decryptedMessageBody = [messageBodyData decryptedDataUsingPrivateKey: aSession.currentMessageKey
+                                                                           nonce: innerNonce
+                                                                           error: nil];
+    if (decryptedMessageBody)
+    { // Decryption failed (again).
+        return nil;
+    }
+    
+    // set new values/keys in state, erase DH key pair and set ratchet flag:
+    [aSession ratchetStateAfterReceivingRootKey: purportedRootKey
+                                  nextHeaderKey: purportedReceiverNextHeaderKey
+                               diffieHellmanKey: (NACLAsymmetricPublicKey *) parsedHeader[2]];
+    
+    return decryptedMessageBody;
 }
 
 #pragma mark -
@@ -264,41 +320,45 @@
 - (NSData *) decryptMessage: (NSDictionary *) aEncryptedMessage
                  fromSender: (MOBRemoteIdentity *) aSender
 {
-#warning stub
     MOBAxolotlSession *session;
     if (!(session = self.sessions[aSender]))
     {
         // TODO: fail! we dont have a session for the given remote!
+        return nil;
     }
     
     NSData *decryptedMessage;
     
-    // TODO: try decrypting with skipped header and message keys:
+    // try decrypting with skipped header and message keys:
     if ((decryptedMessage = [self attemptDecryptionWithSkippedKeys: session.skippedHeaderAndMessageKeys
                                                         forMessage: aEncryptedMessage]))
     { // Decryption successful.
         return decryptedMessage;
     }
-    // TODO: try decrypting with current header key:
+    // try decrypting with current header key:
     if ((decryptedMessage = [self attemptDecryptionUsingCurrentHeaderKeyWithSessionState: session //TODO!
                                                                               forMessage: aEncryptedMessage]))
     { // Decryption successful.
+        [session advanceStateAfterReceiving];
         return decryptedMessage;
     }
-    // So far, decryption has not been successful. Advance the state and retry:
+    
+    // So far, decryption has _not_ been successful. Advance the state and retry:
     if (session.ratchetFlag)
     { // TODO: set some error
         return nil;
     }
-    //if (!(decryptedHeader)) {
-    //}
-    // TODO: derive keys (advancing state) until we find a matching one:
-    // commit staged keys if not happened already:
-    [session commitKeysInStagingArea];
-    // TODO: increase number of received messages, update chain key
-    // TODO: return decrypted message, if any:
+    if (!(decryptedMessage = [self attemptDecryptionUsingNextHeaderKeyWithSessionState: session
+                                                                            forMessage: aEncryptedMessage]))
+    { // Last decryption attempt has failed. Cannot decrypt.
+        return nil;
+    }
+    // Decryption successful!
+    // increase number of received messages, update chain key, commit staged keys:
+    [session advanceStateAfterReceiving];
     
-    return nil;
+    // return decrypted message:
+    return decryptedMessage;
 }
 
 - (NSData *) decryptData: (NSData *) aEncryptedData
