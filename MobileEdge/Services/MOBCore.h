@@ -18,6 +18,7 @@
 #import "MOBRemoteIdentity.h"
 #import "MOBAxolotl.h"
 #import "MOBHTTPRequestOperationManager.h"
+#import "MOBAnonymizerSettings.h"
 
 
 #ifdef DEBUG
@@ -26,11 +27,11 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 static const int ddLogLevel = LOG_LEVEL_WARN;
 #endif
 
-@class MOBTorSettings, TorController;
+@class TorController;
 
 @interface MOBCore : NSObject
 
-@property (nonatomic, strong) MOBTorSettings *torSettings;
+@property (nonatomic, strong) id<MOBAnonymizerSettings> anonymizerSettings;
 @property (nonatomic, strong) TorController *tor;
 
 @end

@@ -290,7 +290,7 @@
     [self stageSkippedKeysInSession: aSession
                currentMessageNumber: 0
                 futureMessageNumber: [((NSNumber *) parsedHeader[0]) unsignedIntegerValue]
-              usingSpecialHeaderKey: purportedReceiverNextHeaderKey
+              usingSpecialHeaderKey: purportedHeaderKey //purportedReceiverNextHeaderKey
                usingSpecialChainKey: purportedReceiverChainKey];
     
     // Attempt decrypting message body:

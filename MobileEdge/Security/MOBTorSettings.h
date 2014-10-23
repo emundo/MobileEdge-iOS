@@ -12,7 +12,7 @@
  */
 
 #import <Foundation/Foundation.h>
-
+#import "MOBAnonymizerSettings.h"
 
 #define COOKIES_ALLOW_ALL 0
 #define COOKIES_BLOCK_THIRDPARTY 1
@@ -39,7 +39,7 @@
 #define X_DEVICE_IS_SIM 2
 
 
-@interface MOBTorSettings : NSObject
+@interface MOBTorSettings : NSObject <MOBAnonymizerSettings>
 
 // list for known domains w/self-signed certs
 @property (nonatomic, strong) NSMutableArray *sslWhitelistedDomains;

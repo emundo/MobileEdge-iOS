@@ -84,6 +84,7 @@
 		234DB25119F94DD8006CD605 /* MobileEdge Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MobileEdge Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		234DB25419F94DD8006CD605 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		234DB25519F94DD8006CD605 /* MobileEdge_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MobileEdge_Tests.m; sourceTree = "<group>"; };
+		234DB25C19F95CAE006CD605 /* MOBAnonymizerSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOBAnonymizerSettings.h; sourceTree = "<group>"; };
 		23AF8C381998E63B00DB4B2B /* AMErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMErrorHandler.h; sourceTree = "<group>"; };
 		23AF8C391998E63B00DB4B2B /* AMErrorHandlerUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMErrorHandlerUI.h; sourceTree = "<group>"; };
 		23AF8C3A1998E63B00DB4B2B /* AMErrorHandlerUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMErrorHandlerUI.m; sourceTree = "<group>"; };
@@ -301,6 +302,7 @@
 				23BAE28019A4990A00D3CDD8 /* NSDictionary+Protocol.h */,
 				23BAE28119A4990A00D3CDD8 /* NSDictionary+Protocol.m */,
 				23F70C2919EE56A8000C6656 /* MOBProtocol.h */,
+				234DB25C19F95CAE006CD605 /* MOBAnonymizerSettings.h */,
 			);
 			path = Security;
 			sourceTree = "<group>";
