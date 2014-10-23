@@ -165,13 +165,6 @@
                                                       forHeaderKey: headerKey];
         [self.skippedHeaderAndMessageKeys removeObjectAtIndex: 0];
         [self.skippedHeaderAndMessageKeys addObject: newKeyRing];
-        //NACLSymmetricPrivateKey *headerKey = [self.stagingArea allKeys][0];
-        //NSMutableArray *messageKeys = [self.stagingArea allValues][0];
-        //MOBAxolotlSkippedKeyStore *newKeyRing =
-        //    [[MOBAxolotlSkippedKeyStore alloc] initWithMessageKeys: messageKeys
-        //                                              forHeaderKey: headerKey];
-        //[self.skippedHeaderAndMessageKeys removeObjectAtIndex: 0];
-        //[self.skippedHeaderAndMessageKeys addObject: newKeyRing];
     };
     [self.stagingArea enumerateKeysAndObjectsUsingBlock: iterator];
     

@@ -148,45 +148,6 @@
 - (NSData *) attemptDecryptionWithSkippedKeys: (NSMutableArray *) aSkippedKeys
                                    forMessage: (NSDictionary *) aEncryptedMessage
 {
-    //__block NSData *decryptedMessageBody;
-    //
-    //void (^iterator) (id key, id obj, BOOL *stop);
-    //iterator = ^(id aHeaderKey, id aMessageKeys, BOOL *stop)
-    //{
-    //    // attempt decryption of header:
-
-    //    NSMutableSet *messageKeys = aMessageKeys;
-    //    NSArray *parsedHeader = [self decryptAndParseHeader: aEncryptedMessage[@"head"]
-    //                                                withKey: aHeaderKey
-    //                                               andNonce: aEncryptedMessage[@"nonce"]];
-    //    if (!parsedHeader) {
-    //        return;
-    //    }
-    //    NACLNonce *innerNonce = [NACLNonce nonceWithData:
-    //                             [[NSData alloc] initWithBase64EncodedString: parsedHeader[3]
-    //                                                                 options: 0]];
-    //    NSData *messageBodyData = [[NSData alloc] initWithBase64EncodedString: aEncryptedMessage[@"body"]
-    //                                                                  options: 0];
-    //    for (NACLSymmetricPrivateKey *messageKey in messageKeys) {
-    //        // attempt decryption:
-    //        if ((decryptedMessageBody = [messageBodyData decryptedDataUsingPrivateKey: messageKey
-    //                                                                            nonce: innerNonce
-    //                                                                            error: nil]))
-    //        { // Decryption successful.
-    //            *stop = YES;
-    //            // delete message key from array:
-    //            [messageKeys removeObject: messageKey];
-    //            if (0 == messageKeys.count)
-    //            { // header key can be removed as well:
-    //                [aSkippedKeys removeObjectForKey: aHeaderKey];
-    //            }
-    //            return;
-    //        }
-
-    //    }
-    //};
-    //[aSkippedKeys enumerateKeysAndObjectsUsingBlock: iterator];
-    //return decryptedMessageBody;
     NSData *decryptedMessageBody;
     for (MOBAxolotlSkippedKeyRing *keyRing in aSkippedKeys)
     {
