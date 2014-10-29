@@ -71,7 +71,7 @@
             forRecipient: (MOBRemoteIdentity *) aRecipient
 {
     MOBAxolotlSession *session;
-    if (!(session = self.sessions[aRecipient])) {
+    if (!(session = self.sessions[aRecipient.base64])) {
         // TODO: fail! we dont have a session for the given remote!
     }
     
@@ -103,7 +103,8 @@
                                                                  nonce: nonce2
                                                                  error: nil]; // TODO: error handling
     // pack message:
-    NSDictionary *message = @{ @"nonce" : [nonce2.data base64EncodedStringWithOptions: 0],
+    NSDictionary *message = @{ @"v" : @"0.1",
+                               @"nonce" : [nonce2.data base64EncodedStringWithOptions: 0],
                                @"head" : [encryptedHeader base64EncodedStringWithOptions: 0],
                                @"body" : [encryptedBody base64EncodedStringWithOptions: 0] };
     
@@ -322,7 +323,7 @@
                  fromSender: (MOBRemoteIdentity *) aSender
 {
     MOBAxolotlSession *session;
-    if (!(session = self.sessions[aSender]))
+    if (!(session = self.sessions[aSender.base64]))
     {
         // TODO: fail! we dont have a session for the given remote!
         return nil;
@@ -390,25 +391,66 @@
     NSMutableDictionary *keyExchangeMessageOut = [NSMutableDictionary dictionary];
     
     [keyExchangeMessageOut setObject:[self.identity.identityKey.data base64EncodedStringWithOptions: 0] forKey:@"id"];
-    [keyExchangeMessageOut setObject:[myEphemeralKeyPair.publicKey.data base64EncodedStringWithOptions:0] forKey:@"eph0"];
+    [keyExchangeMessageOut setObject:[myEphemeralKeyPair.publicKey.data base64EncodedStringWithOptions: 0] forKey:@"eph0"];
     KeyExchangeFinalizeBlock finalizeBlock;
     finalizeBlock = ^(NSData *theirKeyExchangeMessage)
     {
         MOBAxolotlSession *newSession = [[MOBAxolotlSession alloc] initWithMyIdentityKeyPair:self.identity.identityKeyPair
                                                                             theirIdentityKey:aBob.identityKey];
-        NSDictionary *keyExchangeMessageIn = [NSJSONSerialization JSONObjectWithData:theirKeyExchangeMessage
-                                                                             options:0
-                                                                               error:nil]; // TODO: error / conversion might already have been handled!
+        NSDictionary *keyExchangeMessageIn = [NSJSONSerialization JSONObjectWithData: theirKeyExchangeMessage
+                                                                             options: 0
+                                                                               error: nil]; // TODO: error / conversion might already have been handled!
         [newSession finishKeyAgreementWithKeyExchangeMessage: keyExchangeMessageIn
                                           myEphemeralKeyPair: myEphemeralKeyPair];
         [self addSession:newSession forBob:aBob];
-        [self.keychain setObject:self.sessions
-                          forKey:self.identity.identityKey];
+        //[self.keychain setObject:self.sessions
+        //                  forKey:self.identity.identityKey];
     };
     if ([NSJSONSerialization isValidJSONObject:keyExchangeMessageOut])
     {
         //aSendKeyExchangeBlock([NSJSONSerialization dataWithJSONObject:keyExchangeMessageOut options:0 error:nil], finalizeBlock);   //TODO: error
         aSendKeyExchangeBlock(keyExchangeMessageOut, finalizeBlock);
+    }
+    else
+    {
+        DDLogError(@"Could not generate a valid JSON key exchange message.");
+    }
+}
+
+- (void) performKeyExchangeWithAlice: (MOBRemoteIdentity *) aAlice
+              usingKeyExchangeMessage: (NSData *) aTheirKeyExchangeMessage
+      andSendKeyExchangeMessageUsing: (KeyExchangeSendBlockBob) aSendKeyExchangeBlock
+{
+    // When we are Bob we need two ephemeral keys:
+    NACLAsymmetricKeyPair *myEphemeralKeyPair0 = [NACLAsymmetricKeyPair keyPair];
+    NACLAsymmetricKeyPair *myEphemeralKeyPair1 = [NACLAsymmetricKeyPair keyPair];
+    NSMutableDictionary *keyExchangeMessageOut = [NSMutableDictionary dictionary];
+    
+    [keyExchangeMessageOut setObject:[self.identity.identityKey.data base64EncodedStringWithOptions: 0] forKey:@"id"];
+    [keyExchangeMessageOut setObject:[myEphemeralKeyPair0.publicKey.data base64EncodedStringWithOptions: 0] forKey:@"eph0"];
+    [keyExchangeMessageOut setObject:[myEphemeralKeyPair1.publicKey.data base64EncodedStringWithOptions: 0] forKey:@"eph1"];
+    
+    MOBAxolotlSession *newSession = [[MOBAxolotlSession alloc] initWithMyIdentityKeyPair: self.identity.identityKeyPair
+                                                                        theirIdentityKey: aAlice.identityKey];
+    NSDictionary *keyExchangeMessageIn = [NSJSONSerialization JSONObjectWithData: aTheirKeyExchangeMessage
+                                                                         options: 0
+                                                                           error: nil]; // TODO: error / conversion might already have been handled!
+    if (![keyExchangeMessageIn isKindOfClass: [NSDictionary class]])
+    { // Error while interpreting key exchange message
+        DDLogError(@"Error while interpreting Alice's key exchange message. %@", aTheirKeyExchangeMessage);
+        return;
+    }
+    [newSession finishKeyAgreementWithAliceWithKeyExchangeMessage: keyExchangeMessageIn
+                                              myEphemeralKeyPair0: myEphemeralKeyPair0
+                                              myEphemeralKeyPair1: myEphemeralKeyPair1];
+    [self addSession: newSession forBob: aAlice]; // TODO rename method??
+    //[self.keychain setObject: self.sessions
+    //                  forKey: self.identity.identityKey];
+    
+    if ([NSJSONSerialization isValidJSONObject: keyExchangeMessageOut])
+    {
+        //aSendKeyExchangeBlock([NSJSONSerialization dataWithJSONObject:keyExchangeMessageOut options:0 error:nil], finalizeBlock);   //TODO: error
+        aSendKeyExchangeBlock(keyExchangeMessageOut);
     }
     else
     {
@@ -425,6 +467,18 @@
     if (!self.sessions) {
         self.sessions = [NSMutableDictionary dictionary];
     }
-    [self.sessions setObject:aSession forKey:aBobIdentity];
+    [self.sessions setObject: aSession forKey: aBobIdentity.base64];
 }
+
+#pragma mark -
+#pragma mark Testing functions
+- (NSData *) getSessionKeyMaterialForTestingForRemote: (MOBRemoteIdentity *) aRemote
+{
+    if (self.sessions) {
+        DDLogDebug(@"In IF %@ %@", self.sessions, aRemote); // ((MOBAxolotlSession *)self.sessions[aRemote]).rootKey);
+        return ((MOBAxolotlSession *) self.sessions[aRemote.base64]).rootKey;
+    }
+    return nil;
+}
+
 @end

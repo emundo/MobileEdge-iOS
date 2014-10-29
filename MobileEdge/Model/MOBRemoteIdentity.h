@@ -13,11 +13,15 @@
 
 #import "MOBBaseIdentity.h"
 
+#define kMOBRemoteIdentityServiceURLKey @"serviceURL"
+
 @interface MOBRemoteIdentity : MOBBaseIdentity
 
 @property (nonatomic, strong) NSURL *serviceURL;
 
 - (instancetype) initWithPublicKey: (NACLAsymmetricPublicKey *) aPublicKey
                         serviceURL: (NSURL *) aServiceURL;
+
+- (NSString *) base64;
 
 @end

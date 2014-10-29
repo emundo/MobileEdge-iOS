@@ -16,7 +16,8 @@
 
 typedef void (^KeyExchangeFinalizeBlock) (NSData *keyExchangeMessageIn);
 //typedef void (^KeyExchangeSendBlock) (NSData * keyExchangeMessage, KeyExchangeFinalizeBlock finalizeBlock);
-typedef void (^KeyExchangeSendBlock) (NSDictionary * keyExchangeMessage, KeyExchangeFinalizeBlock finalizeBlock);
+typedef void (^KeyExchangeSendBlock) (NSDictionary *keyExchangeMessage, KeyExchangeFinalizeBlock finalizeBlock);
+typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
 
 
 @protocol MOBProtocol <NSObject>
@@ -74,4 +75,8 @@ typedef void (^KeyExchangeSendBlock) (NSDictionary * keyExchangeMessage, KeyExch
 //andSendKeyExchangeMessageUsing: (void (^) (NSData * keyExchangeMessage)) sendContinuation;
 /*                    withSuccessBlock: (BOOL (^) (void)) successContinuation
  withFailureBlock: (void (^) (void)) failureContinuation;*/
+
+- (void) performKeyExchangeWithAlice: (MOBRemoteIdentity *) aAlice
+              usingKeyExchangeMessage: (NSData *) aTheirKeyExchangeMessage
+      andSendKeyExchangeMessageUsing: (KeyExchangeSendBlockBob) aSendKeyExchangeBlock;
 @end

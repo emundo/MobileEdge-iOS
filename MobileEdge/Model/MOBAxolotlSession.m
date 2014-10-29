@@ -50,14 +50,27 @@
                          [derivedKeyMaterial subdataWithRange:NSMakeRange(32*4, 32)]];
 }
 
+- (void) addDerivedKeyMaterialAsBob: (NSData *) derivedKeyMaterial
+{
+    _rootKey = [derivedKeyMaterial subdataWithRange:NSMakeRange(0, 32)];
+    _senderHeaderKey = [NACLSymmetricPrivateKey keyWithData:
+                          [derivedKeyMaterial subdataWithRange:NSMakeRange(32*1, 32)]];
+    _receiverNextHeaderKey = [NACLSymmetricPrivateKey keyWithData:
+                            [derivedKeyMaterial subdataWithRange:NSMakeRange(32*2, 32)]];
+    _senderNextHeaderKey = [NACLSymmetricPrivateKey keyWithData:
+                              [derivedKeyMaterial subdataWithRange:NSMakeRange(32*3, 32)]];
+    _senderChainKey = [[MOBAxolotlChainKey alloc] initWithKeyData:
+                         [derivedKeyMaterial subdataWithRange:NSMakeRange(32*4, 32)]];
+}
+
 - (void) finishKeyAgreementWithKeyExchangeMessage: (NSDictionary *) keyExchangeMessageIn
                                myEphemeralKeyPair: (NACLAsymmetricKeyPair *) myEphemeralKeyPair
 {
-    NACLAsymmetricPublicKey *theirId =[NACLAsymmetricPublicKey keyWithData: [[NSData alloc] initWithBase64EncodedString: keyExchangeMessageIn[@"id"]
+    NACLAsymmetricPublicKey *theirId =[[NACLAsymmetricPublicKey alloc] initWithData: [[NSData alloc] initWithBase64EncodedString: keyExchangeMessageIn[@"id"]
                                                                                 options:0]];
-    NACLAsymmetricPublicKey *theirEph0 =[NACLAsymmetricPublicKey keyWithData: [[NSData alloc] initWithBase64EncodedString: keyExchangeMessageIn[@"eph0"]
+    NACLAsymmetricPublicKey *theirEph0 =[[NACLAsymmetricPublicKey alloc] initWithData: [[NSData alloc] initWithBase64EncodedString: keyExchangeMessageIn[@"eph0"]
                                                                                   options:0]];
-    NACLAsymmetricPublicKey *theirEph1 =[NACLAsymmetricPublicKey keyWithData: [[NSData alloc] initWithBase64EncodedString: keyExchangeMessageIn[@"eph1"]
+    NACLAsymmetricPublicKey *theirEph1 =[[NACLAsymmetricPublicKey alloc] initWithData: [[NSData alloc] initWithBase64EncodedString: keyExchangeMessageIn[@"eph1"]
                                                                                   options:0]];
     NACLKey *part1 = [self.myIdentityKeyPair.privateKey multWithKey:theirEph0];
     NACLKey *part2 = [myEphemeralKeyPair.privateKey multWithKey: theirId];
@@ -76,6 +89,35 @@
     NSData *derivedKeyMaterial = [HKDFKit deriveKey: masterSecret info: info salt: salt outputSize: 5*32];
     [self addDerivedKeyMaterial: derivedKeyMaterial];
     _receiverDiffieHellmanKey = theirEph1;
+    DDLogVerbose(@"Finished key agreement. Session: %@", self);
+}
+
+- (void) finishKeyAgreementWithAliceWithKeyExchangeMessage: (NSDictionary *) aKeyExchangeMessageIn
+                                       myEphemeralKeyPair0: (NACLAsymmetricKeyPair *) aMyEphemeralKeyPair0
+                                       myEphemeralKeyPair1: (NACLAsymmetricKeyPair *) aMyEphemeralKeyPair1
+{
+    NACLAsymmetricPublicKey *theirId =[[NACLAsymmetricPublicKey alloc] initWithData: [[NSData alloc] initWithBase64EncodedString: aKeyExchangeMessageIn[@"id"]
+                                                                                options: 0]];
+    NACLAsymmetricPublicKey *theirEph0 =[[NACLAsymmetricPublicKey alloc] initWithData: [[NSData alloc] initWithBase64EncodedString: aKeyExchangeMessageIn[@"eph0"]
+                                                                                  options: 0]];
+    
+    NACLKey *part1 = [aMyEphemeralKeyPair0.privateKey multWithKey: theirId];
+    NACLKey *part2 = [self.myIdentityKeyPair.privateKey multWithKey:theirEph0];
+    NACLKey *part3 = [aMyEphemeralKeyPair0.privateKey multWithKey: theirEph0];
+    
+    NSMutableData *masterSecret = [NSMutableData dataWithCapacity:[NACLKey keyLength] * 3];
+    [masterSecret appendData:part1.data];
+    [masterSecret appendData:part2.data];
+    [masterSecret appendData:part3.data];
+    
+    NSMutableData *inputKeyMaterial = [NSMutableData dataWithCapacity: (512 / 8)];
+    crypto_hash(inputKeyMaterial.mutableBytes, masterSecret.bytes, [NACLKey keyLength] * 3);
+    
+    NSData *info = [@"MobileEdge" dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *salt = [@"salty" dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *derivedKeyMaterial = [HKDFKit deriveKey: masterSecret info: info salt: salt outputSize: 5*32];
+    [self addDerivedKeyMaterialAsBob: derivedKeyMaterial];
+    _senderDiffieHellmanKey = aMyEphemeralKeyPair1;
     DDLogVerbose(@"Finished key agreement. Session: %@", self);
 }
 
@@ -214,6 +256,76 @@
 {
     return [NSString stringWithFormat: @"[AxolotlSession]\nidKeyPair:%@\ntheirIdKey:%@\nrootKey:%@",
                         self.myIdentityKeyPair, self.theirIdentityKey, self.rootKey];
+}
+
+#define kMOBAxolotlSessionIdentityKeyPairKey @"identityKeyPair"
+#define kMOBAxolotlSessionTheirIdentityKeyKey @"theirIdentityKey"
+
+#define kMOBAxolotlSessionRootKeyKey @"rootKey"
+
+#define kMOBAxolotlSessionSenderChainKeyKey @"senderChainKey"
+#define kMOBAxolotlSessionSenderHeaderKeyKey @"senderHeaderKey"
+#define kMOBAxolotlSessionSenderNextHeaderKeyKey @"senderNextHeaderKey"
+#define kMOBAxolotlSessionSenderDiffieHellmanKeyKey @"senderDiffieHellmanKey"
+
+#define kMOBAxolotlSessionReceiverChainKeyKey @"receiverChainKey"
+#define kMOBAxolotlSessionReceiverHeaderKeyKey @"receiverHeaderKey"
+#define kMOBAxolotlSessionReceiverNextHeaderKeyKey @"receiverNextHeaderKey"
+#define kMOBAxolotlSessionReceiverDiffieHellmanKeyKey @"receiverDiffieHellmanKey"
+
+#define kMOBAxolotlSessionMessagesReceivedCountKey @"messagesReceivedCount"
+#define kMOBAxolotlSessionMessagesSentCountKey @"messagesSentCount"
+#define kMOBAxolotlSessionMessagesSentUnderPreviousRatchetCountKey @"messagesSentUnderPreviousRatchetCount"
+
+#define kMOBAxolotlSessionRatchetFlagKey @"ratchetFlag"
+#define kMOBAxolotlSessionSkippedHeaderAndMessageKeysKey @"skippedHeaderAndMessageKeys"
+
+#pragma mark NSCoding
+- (void) encodeWithCoder: (NSCoder *) encoder
+{
+    [encoder encodeObject: _myIdentityKeyPair forKey: kMOBAxolotlSessionIdentityKeyPairKey];
+    [encoder encodeObject: _theirIdentityKey forKey: kMOBAxolotlSessionTheirIdentityKeyKey];
+    
+    [encoder encodeObject: _rootKey                               forKey: kMOBAxolotlSessionRootKeyKey];
+    [encoder encodeObject: _senderChainKey                        forKey: kMOBAxolotlSessionSenderChainKeyKey];
+    [encoder encodeObject: _senderHeaderKey                       forKey: kMOBAxolotlSessionSenderHeaderKeyKey];
+    [encoder encodeObject: _senderNextHeaderKey                   forKey: kMOBAxolotlSessionSenderNextHeaderKeyKey];
+    [encoder encodeObject: _senderDiffieHellmanKey                forKey: kMOBAxolotlSessionSenderDiffieHellmanKeyKey];
+    [encoder encodeObject: _receiverChainKey                      forKey: kMOBAxolotlSessionReceiverChainKeyKey];
+    [encoder encodeObject: _receiverHeaderKey                     forKey: kMOBAxolotlSessionReceiverHeaderKeyKey];
+    [encoder encodeObject: _receiverNextHeaderKey                 forKey: kMOBAxolotlSessionReceiverNextHeaderKeyKey];
+    [encoder encodeObject: _receiverDiffieHellmanKey              forKey: kMOBAxolotlSessionReceiverDiffieHellmanKeyKey];
+    [encoder encodeInteger: _messagesReceivedCount                 forKey: kMOBAxolotlSessionMessagesReceivedCountKey];
+    [encoder encodeInteger: _messagesSentCount                     forKey: kMOBAxolotlSessionMessagesSentCountKey];
+    [encoder encodeInteger: _messagesSentUnderPreviousRatchetCount forKey: kMOBAxolotlSessionMessagesSentUnderPreviousRatchetCountKey];
+    [encoder encodeBool: _ratchetFlag                           forKey: kMOBAxolotlSessionRatchetFlagKey];
+    [encoder encodeObject: _skippedHeaderAndMessageKeys           forKey: kMOBAxolotlSessionSkippedHeaderAndMessageKeysKey];
+    //[encoder encodeObject: _ forKey: kMOBAxolotlSessionKey];
+}
+
+- (id)initWithCoder: (NSCoder *) coder
+{
+    NACLAsymmetricKeyPair *identityKeyPair;
+    NACLAsymmetricPublicKey *theirIdentityKey;
+    if (self = [self initWithMyIdentityKeyPair: identityKeyPair theirIdentityKey: theirIdentityKey])
+    {
+        _rootKey                                = [coder decodeObjectForKey: kMOBAxolotlSessionRootKeyKey];
+        _senderChainKey                         = [coder decodeObjectForKey: kMOBAxolotlSessionSenderChainKeyKey];
+        _senderHeaderKey                        = [coder decodeObjectForKey: kMOBAxolotlSessionSenderHeaderKeyKey];
+        _senderNextHeaderKey                    = [coder decodeObjectForKey: kMOBAxolotlSessionSenderNextHeaderKeyKey];
+        _senderDiffieHellmanKey                 = [coder decodeObjectForKey: kMOBAxolotlSessionSenderDiffieHellmanKeyKey];
+        _receiverChainKey                       = [coder decodeObjectForKey: kMOBAxolotlSessionReceiverChainKeyKey];
+        _receiverHeaderKey                      = [coder decodeObjectForKey: kMOBAxolotlSessionReceiverHeaderKeyKey];
+        _receiverNextHeaderKey                  = [coder decodeObjectForKey: kMOBAxolotlSessionReceiverNextHeaderKeyKey];
+        _receiverDiffieHellmanKey               = [coder decodeObjectForKey: kMOBAxolotlSessionReceiverDiffieHellmanKeyKey];
+        _messagesReceivedCount                  = [coder decodeIntegerForKey: kMOBAxolotlSessionMessagesReceivedCountKey];
+        _messagesSentCount                      = [coder decodeIntegerForKey: kMOBAxolotlSessionMessagesSentCountKey];
+        _messagesSentUnderPreviousRatchetCount  = [coder decodeIntegerForKey: kMOBAxolotlSessionMessagesSentUnderPreviousRatchetCountKey];
+        _ratchetFlag                            = [coder decodeBoolForKey: kMOBAxolotlSessionRatchetFlagKey];
+        _skippedHeaderAndMessageKeys            = [coder decodeObjectForKey: kMOBAxolotlSessionSkippedHeaderAndMessageKeysKey];
+        //_ = [coder decodeObjectForKey: kMOBAxolotlSession];
+    }
+    return self;
 }
 
 @end

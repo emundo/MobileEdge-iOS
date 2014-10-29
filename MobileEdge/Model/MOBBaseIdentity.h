@@ -14,7 +14,9 @@
 #import <Foundation/Foundation.h>
 #import <SodiumObjc.h>
 
-@interface MOBBaseIdentity : NSObject <NSCopying>
+#define kMOBBaseIdentityIdentityKey @"identityKey"
+
+@interface MOBBaseIdentity : NSObject <NSCopying, NSCoding>
 
 @property (nonatomic,strong) NACLAsymmetricPublicKey *identityKey;
 

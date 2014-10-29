@@ -62,6 +62,10 @@
 - (void) finishKeyAgreementWithKeyExchangeMessage: (NSDictionary *) keyExchangeMessageIn
                                myEphemeralKeyPair: (NACLAsymmetricKeyPair *) myEphemeralKeyPair;
 
+- (void) finishKeyAgreementWithAliceWithKeyExchangeMessage: (NSDictionary *) aKeyExchangeMessageIn
+                                       myEphemeralKeyPair0: (NACLAsymmetricKeyPair *) aMyEphemeralKeyPair0
+                                       myEphemeralKeyPair1: (NACLAsymmetricKeyPair *) aMyEphemeralKeyPair1;
+
 - (void) ratchetStateBeforeSending;
 
 - (void) advanceStateAfterSending;

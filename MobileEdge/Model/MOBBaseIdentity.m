@@ -24,9 +24,25 @@
     return self;
 }
 
+#pragma mark -
+#pragma mark NSCopying
 - (id) copyWithZone:(NSZone *)zone
 {
     return [[MOBBaseIdentity alloc] initWithPublicKey: self.identityKey];
+}
+
+#pragma mark NSCoding
+
+
+- (void) encodeWithCoder: (NSCoder *) encoder
+{
+    [encoder encodeObject: _identityKey forKey: kMOBBaseIdentityIdentityKey];
+}
+
+- (id)initWithCoder: (NSCoder *) decoder
+{
+    NACLAsymmetricPublicKey *identityKey = [decoder decodeObjectForKey: kMOBBaseIdentityIdentityKey];
+    return [self initWithPublicKey: identityKey];
 }
 
 @end

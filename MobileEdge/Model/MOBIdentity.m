@@ -37,5 +37,32 @@
 /*
  * No support for NSCopying!
  */
+#pragma mark -
+#pragma mark NSCopying
+
+- (id) copyWithZone:(NSZone *)zone
+{
+    MOBIdentity *copy = [super copyWithZone:zone];
+    copy->_identityKeyPair = [self.identityKeyPair copyWithZone: zone];
+    return copy;
+}
+
+#pragma mark NSCoding
+- (void) encodeWithCoder: (NSCoder *) encoder
+{
+    [super encodeWithCoder: encoder];
+    [encoder encodeObject: _identityKeyPair forKey: kMOBIdentityKeyPairKey];
+}
+
+- (id)initWithCoder: (NSCoder *) coder
+{
+    if ( (self = [super initWithCoder: coder]) )
+    {
+        _identityKeyPair = [coder decodeObjectForKey: kMOBIdentityKeyPairKey];
+    }
+    return self;
+}
+
+
 
 @end

@@ -15,6 +15,8 @@
 #import "MOBBaseIdentity.h"
 #import <SodiumObjc.h>
 
+#define kMOBIdentityKeyPairKey @"identityKeyPair"
+
 @interface MOBIdentity : MOBBaseIdentity
 
 @property (nonatomic, strong, readonly) NACLAsymmetricKeyPair *identityKeyPair;
