@@ -32,7 +32,6 @@
         _messagesSentCount = 0;
         _messagesReceivedCount = 0;
         _messagesSentUnderPreviousRatchetCount = 0;
-        _ratchetFlag = YES;
     }
     return self;
 }
@@ -89,6 +88,7 @@
     NSData *derivedKeyMaterial = [HKDFKit deriveKey: masterSecret info: info salt: salt outputSize: 5*32];
     [self addDerivedKeyMaterial: derivedKeyMaterial];
     _receiverDiffieHellmanKey = theirEph1;
+    _ratchetFlag = YES;
     DDLogVerbose(@"Finished key agreement. Session: %@", self);
 }
 
@@ -118,6 +118,7 @@
     NSData *derivedKeyMaterial = [HKDFKit deriveKey: masterSecret info: info salt: salt outputSize: 5*32];
     [self addDerivedKeyMaterialAsBob: derivedKeyMaterial];
     _senderDiffieHellmanKey = aMyEphemeralKeyPair1;
+    _ratchetFlag = NO;
     DDLogVerbose(@"Finished key agreement. Session: %@", self);
 }
 
@@ -181,6 +182,10 @@
 - (void) stageMessageKeys: (NSMutableArray *) aMessageKeys
              forHeaderKey: (NACLSymmetricPrivateKey *) aReceiverHeaderKey
 {
+    if (0 == [aMessageKeys count])
+    { // Nothing to be staged
+        return;
+    }
     if (!self.stagingArea)
     { // lazily instantiate:
         _stagingArea = [NSMutableDictionary dictionaryWithCapacity: 1];

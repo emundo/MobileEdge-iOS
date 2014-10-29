@@ -14,6 +14,13 @@
 
 @interface MOBAxolotlLocalTest : XCTestCase
 
+@property MOBIdentity *alice;
+@property MOBIdentity *bob;
+@property MOBAxolotl *axolotl;
+@property MOBAxolotl *bxolotl;
+@property MOBRemoteIdentity *aRemote;
+@property MOBRemoteIdentity *bRemote;
+
 @end
 
 @implementation MOBAxolotlLocalTest
@@ -22,6 +29,13 @@
 {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
+    self.alice = [[MOBIdentity alloc] init];
+    self.bob   = [[MOBIdentity alloc] init];
+    self.axolotl = [[MOBAxolotl alloc] initWithIdentity: self.alice];
+    self.bxolotl = [[MOBAxolotl alloc] initWithIdentity: self.bob];
+    
+    self.aRemote = [[MOBRemoteIdentity alloc] initWithPublicKey: self.alice.identityKey];
+    self.bRemote = [[MOBRemoteIdentity alloc] initWithPublicKey: self.bob.identityKey];
 }
 
 - (void)tearDown
@@ -30,18 +44,8 @@
     [super tearDown];
 }
 
-
-- (void) testKeyExchange
+- (void) exchangeKeys
 {
-    MOBIdentity *alice = [[MOBIdentity alloc] init];
-    MOBIdentity *bob = [[MOBIdentity alloc] init];
-    MOBAxolotl *axolotl = [[MOBAxolotl alloc] initWithIdentity: alice];
-    MOBAxolotl *bxolotl = [[MOBAxolotl alloc] initWithIdentity: bob];
-    
-    MOBRemoteIdentity *aRemote = [[MOBRemoteIdentity alloc] initWithPublicKey: alice.identityKey];
-    MOBRemoteIdentity *bRemote = [[MOBRemoteIdentity alloc] initWithPublicKey: bob.identityKey];
-    
-    
     KeyExchangeSendBlock alicesSendingBlock = ^(NSDictionary *alicesKeyExchangeMessage, KeyExchangeFinalizeBlock alicesFinalizeBlock) {
         NSData *alicesKeyExchangeMessageData =
             [NSJSONSerialization dataWithJSONObject: alicesKeyExchangeMessage
@@ -51,17 +55,38 @@
         {
             alicesFinalizeBlock ([NSJSONSerialization dataWithJSONObject: bobsKeyExchangeMessage options: 0 error: nil]);
         };
-        [bxolotl performKeyExchangeWithAlice: aRemote
+        [self.bxolotl performKeyExchangeWithAlice: self.aRemote
                      usingKeyExchangeMessage: alicesKeyExchangeMessageData
               andSendKeyExchangeMessageUsing: bobsSendingBlock];
     };
     
-    [axolotl performKeyExchangeWithBob: bRemote andSendKeyExchangeMessageUsing: alicesSendingBlock];
+    [self.axolotl performKeyExchangeWithBob: self.bRemote andSendKeyExchangeMessageUsing: alicesSendingBlock];
+}
+
+- (void) testKeyExchange
+{
+    [self exchangeKeys];
+    
     //NSLog(@"DATA 1: %@\n", [axolotl getSessionKeyMaterialForTestingForRemote: bRemote]);
     //NSLog(@"DATA 2: %@\n", [bxolotl getSessionKeyMaterialForTestingForRemote: aRemote]);
-    XCTAssert([[axolotl getSessionKeyMaterialForTestingForRemote: bRemote]
-               isEqualToData: [bxolotl getSessionKeyMaterialForTestingForRemote: aRemote]],
-              @"DATA 1: %@ \nDATA 2: %@", [axolotl getSessionKeyMaterialForTestingForRemote:bRemote], [bxolotl getSessionKeyMaterialForTestingForRemote:aRemote]);
+    XCTAssert([[self.axolotl getSessionKeyMaterialForTestingForRemote: self.bRemote]
+               isEqualToData: [self.bxolotl getSessionKeyMaterialForTestingForRemote: self.aRemote]],
+              @"DATA 1: %@ \nDATA 2: %@", [self.axolotl getSessionKeyMaterialForTestingForRemote: self.bRemote], [self.bxolotl getSessionKeyMaterialForTestingForRemote: self.aRemote]);
 }
+
+
+- (void) testAliceSendBobReceive
+{
+    [self exchangeKeys];
+    NSString *message1 = @"Test message 1 encrypted by Alice";
+    NSData *alicesMessageData = [message1 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *alicesMessage = [self.axolotl encryptData: alicesMessageData forRecipient: self.bRemote];
+    NSData *decryptedMessageData = [self.bxolotl decryptMessage: alicesMessage fromSender: self.aRemote];
+    XCTAssert(decryptedMessageData);
+    NSString *decryptedMessage = [[NSString alloc] initWithData: decryptedMessageData encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage isEqualToString: message1], @"Original: %@, Decrypted: %@", message1, decryptedMessage);
+}
+
+
 
 @end

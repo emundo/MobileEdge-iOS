@@ -71,7 +71,7 @@
             forRecipient: (MOBRemoteIdentity *) aRecipient
 {
     MOBAxolotlSession *session;
-    if (!(session = self.sessions[aRecipient.base64])) {
+    if (!(session = (MOBAxolotlSession *) (self.sessions[aRecipient.base64]))) {
         // TODO: fail! we dont have a session for the given remote!
     }
     
@@ -79,7 +79,7 @@
     [session ratchetStateBeforeSending];
     
     // Derive a new message key from chain key":
-    NACLSymmetricPrivateKey *messageKey = [session.receiverChainKey nextMessageKey];
+    NACLSymmetricPrivateKey *messageKey = [session.senderChainKey nextMessageKey];
     
     // generate nonces:
     NACLNonce *nonce1 = [NACLNonce nonce];
@@ -272,19 +272,23 @@
     {
         return nil;
     }
-    // stage skipped keys for last ratchet:
-    [self stageSkippedKeysInSession: aSession
-               currentMessageNumber: aSession.messagesReceivedCount
-                futureMessageNumber: [((NSNumber *) parsedHeader[1]) unsignedIntegerValue]
-              usingSpecialHeaderKey: nil
-               usingSpecialChainKey: nil];
-    
+    if (aSession.receiverHeaderKey)
+    { // there is a previous ratchet.
+        // stage skipped keys for last ratchet:
+        [self stageSkippedKeysInSession: aSession
+                   currentMessageNumber: aSession.messagesReceivedCount
+                    futureMessageNumber: [((NSNumber *) parsedHeader[1]) unsignedIntegerValue]
+                  usingSpecialHeaderKey: nil
+                   usingSpecialChainKey: nil];
+    }
     NACLSymmetricPrivateKey *purportedHeaderKey = aSession.receiverNextHeaderKey;
-    
+    NSData *keyData = [[NSData alloc] initWithBase64EncodedString: ((NSString *) parsedHeader[2])
+                                                          options: 0];
+    NACLAsymmetricPublicKey *theirEphemeralKey = [[NACLAsymmetricPublicKey alloc] initWithData: keyData];
     // derive new key material from ratchet keys in state and message:
     NSData *derivedKeyMaterial = [self deriveKeyDataWithRootKey: aSession.rootKey
                                                    ourEphemeral: aSession.senderDiffieHellmanKey.privateKey
-                                                 theirEphemeral: (NACLAsymmetricPublicKey *) parsedHeader[2]];
+                                                 theirEphemeral: theirEphemeralKey];
     NSData *purportedRootKey = [derivedKeyMaterial subdataWithRange: NSMakeRange(0, 32)];
     NACLSymmetricPrivateKey *purportedReceiverNextHeaderKey = [NACLSymmetricPrivateKey keyWithData:
                                                                [derivedKeyMaterial subdataWithRange: NSMakeRange(1*32, 32)]];
@@ -306,7 +310,7 @@
     NSData *decryptedMessageBody = [messageBodyData decryptedDataUsingPrivateKey: aSession.currentMessageKey
                                                                            nonce: innerNonce
                                                                            error: nil];
-    if (decryptedMessageBody)
+    if (!decryptedMessageBody)
     { // Decryption failed (again).
         return nil;
     }
@@ -338,7 +342,8 @@
         return decryptedMessage;
     }
     // try decrypting with current header key:
-    if ((decryptedMessage = [self attemptDecryptionUsingCurrentHeaderKeyWithSessionState: session //TODO!
+    if ((session.receiverHeaderKey) &&
+        (decryptedMessage = [self attemptDecryptionUsingCurrentHeaderKeyWithSessionState: session //TODO!
                                                                               forMessage: aEncryptedMessage]))
     { // Decryption successful.
         [session advanceStateAfterReceiving];
@@ -395,16 +400,16 @@
     KeyExchangeFinalizeBlock finalizeBlock;
     finalizeBlock = ^(NSData *theirKeyExchangeMessage)
     {
-        MOBAxolotlSession *newSession = [[MOBAxolotlSession alloc] initWithMyIdentityKeyPair:self.identity.identityKeyPair
-                                                                            theirIdentityKey:aBob.identityKey];
+        MOBAxolotlSession *newSession = [[MOBAxolotlSession alloc] initWithMyIdentityKeyPair: self.identity.identityKeyPair
+                                                                            theirIdentityKey: aBob.identityKey];
         NSDictionary *keyExchangeMessageIn = [NSJSONSerialization JSONObjectWithData: theirKeyExchangeMessage
                                                                              options: 0
                                                                                error: nil]; // TODO: error / conversion might already have been handled!
         [newSession finishKeyAgreementWithKeyExchangeMessage: keyExchangeMessageIn
                                           myEphemeralKeyPair: myEphemeralKeyPair];
         [self addSession:newSession forBob:aBob];
-        //[self.keychain setObject:self.sessions
-        //                  forKey:self.identity.identityKey];
+        //[self.keychain setObject: self.sessions
+        //                  forKey: self.identity.identityKey];
     };
     if ([NSJSONSerialization isValidJSONObject:keyExchangeMessageOut])
     {
@@ -475,7 +480,6 @@
 - (NSData *) getSessionKeyMaterialForTestingForRemote: (MOBRemoteIdentity *) aRemote
 {
     if (self.sessions) {
-        DDLogDebug(@"In IF %@ %@", self.sessions, aRemote); // ((MOBAxolotlSession *)self.sessions[aRemote]).rootKey);
         return ((MOBAxolotlSession *) self.sessions[aRemote.base64]).rootKey;
     }
     return nil;
