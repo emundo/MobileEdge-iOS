@@ -1,0 +1,5 @@
+#include "Pods-MobileEdge Tests-FXKeychain.xcconfig"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/FXKeychain" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworkActivityLogger" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/CocoaLumberjack" "${PODS_ROOT}/Headers/Public/EncryptedCoreData" "${PODS_ROOT}/Headers/Public/FXKeychain" "${PODS_ROOT}/Headers/Public/HKDFKit" "${PODS_ROOT}/Headers/Public/Objection" "${PODS_ROOT}/Headers/Public/SQLCipher" "${PODS_ROOT}/Headers/Public/SodiumObjc"
+OTHER_LDFLAGS = ${PODS_MOBILEEDGE_TESTS_FXKEYCHAIN_OTHER_LDFLAGS} -ObjC
+PODS_ROOT = ${SRCROOT}
