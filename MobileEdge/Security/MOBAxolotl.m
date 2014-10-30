@@ -71,7 +71,7 @@
             forRecipient: (MOBRemoteIdentity *) aRecipient
 {
     MOBAxolotlSession *session;
-    if (!(session = (MOBAxolotlSession *) (self.sessions[aRecipient.base64]))) {
+    if (!(session = (MOBAxolotlSession *) (self.sessions[[aRecipient base64]]))) {
         // TODO: fail! we dont have a session for the given remote!
     }
     
@@ -333,7 +333,7 @@
                  fromSender: (MOBRemoteIdentity *) aSender
 {
     MOBAxolotlSession *session;
-    if (!(session = self.sessions[aSender.base64]))
+    if (!(session = self.sessions[[aSender base64]]))
     {
         // TODO: fail! we dont have a session for the given remote!
         return nil;
@@ -478,7 +478,7 @@
     if (!self.sessions) {
         self.sessions = [NSMutableDictionary dictionary];
     }
-    [self.sessions setObject: aSession forKey: aBobIdentity.base64];
+    [self.sessions setObject: aSession forKey: [aBobIdentity base64]];
 }
 
 #pragma mark -
@@ -486,7 +486,7 @@
 - (NSData *) getSessionKeyMaterialForTestingForRemote: (MOBRemoteIdentity *) aRemote
 {
     if (self.sessions) {
-        return ((MOBAxolotlSession *) self.sessions[aRemote.base64]).rootKey;
+        return ((MOBAxolotlSession *) self.sessions[[aRemote base64]]).rootKey;
     }
     return nil;
 }
