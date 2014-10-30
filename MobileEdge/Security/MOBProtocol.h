@@ -66,6 +66,19 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
                                fromSender: (MOBRemoteIdentity *) aSender;
 
 /**
+ * @discussion Decrypts a given message, if a session can be found for the sender.
+ * Note: The message object MUST contain the sender's identity encrypted with
+ * our public key, else the decryption will fail. This function is provided as
+ * a convenience function to client applications that don't want to manage
+ * identities themselves.
+ * @param aEncryptedMessage - the encrypted message including (!) encrypted sender
+ *  information.
+ * @return the decrypted data
+ */
+- (NSData *) decryptMessage: (NSDictionary *) aEncryptedMessage;
+
+
+/**
  * @discussion Perform an Axolotl key agreement with a given peer.
  *  This will usually be the MobileEdge server or a vendor identity.
  * @param aBob - Bob's identity
