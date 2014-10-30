@@ -190,7 +190,7 @@
     _senderDiffieHellmanKey = [NACLAsymmetricKeyPair keyPair];
     _senderHeaderKey = _senderNextHeaderKey;
     NSData *diffieHellman = [self.senderDiffieHellmanKey.privateKey multWithKey: self.receiverDiffieHellmanKey].data;
-    NSMutableData *inputKeyMaterial = [NSMutableData dataWithCapacity: (512 / 8)];
+    NSMutableData *inputKeyMaterial = [NSMutableData dataWithCapacity: (256 / 8)];
     crypto_auth_hmacsha256(inputKeyMaterial.mutableBytes,
                            diffieHellman.bytes,
                            [diffieHellman length],

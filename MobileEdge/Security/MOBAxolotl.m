@@ -19,6 +19,7 @@
 #import "MOBRemoteIdentity.h"
 #import "MOBCore.h"
 #import "NACLKey+ScalarMult.h"
+#import "NACLKey+Base64.h"
 #import <HKDFKit.h>
 #import <SodiumObjc.h>
 #import <sodium/crypto_hash.h>
@@ -52,7 +53,7 @@
         self.keychain = [[FXKeychain alloc] initWithService:@"MobileEdgeAxolotl"
                                                 accessGroup:@"MobileEdgeAxolotl"
                                               accessibility:FXKeychainAccessibleAfterFirstUnlock];
-        self.sessions = self.keychain[self.identity.identityKey];
+        self.sessions = self.keychain[[self.identity.identityKey base64]];
     }
     return self;
 }
@@ -254,7 +255,7 @@
                     theirEphemeral: (NACLAsymmetricPublicKey *) aTheirEphemeral
 {
     NSData *diffieHellman = [aOurEphemeral multWithKey: aTheirEphemeral].data;
-    NSMutableData *inputKeyMaterial = [NSMutableData dataWithCapacity: (512 / 8)];
+    NSMutableData *inputKeyMaterial = [NSMutableData dataWithCapacity: (256 / 8)];
     crypto_auth_hmacsha256(inputKeyMaterial.mutableBytes,
                            diffieHellman.bytes,
                            [diffieHellman length],
@@ -415,7 +416,7 @@
                                           myEphemeralKeyPair: myEphemeralKeyPair];
         [self addSession:newSession forBob:aBob];
         [self.keychain setObject: self.sessions
-                          forKey: self.identity.identityKey];
+                          forKey: [self.identity.identityKey base64]];
     };
     if ([NSJSONSerialization isValidJSONObject:keyExchangeMessageOut])
     {
@@ -456,7 +457,7 @@
                                               myEphemeralKeyPair1: myEphemeralKeyPair1];
     [self addSession: newSession forBob: aAlice]; // TODO rename method??
     [self.keychain setObject: self.sessions
-                      forKey: self.identity.identityKey];
+                      forKey: [self.identity.identityKey base64]];
     
     if ([NSJSONSerialization isValidJSONObject: keyExchangeMessageOut])
     {

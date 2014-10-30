@@ -22,6 +22,11 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
 
 @protocol MOBProtocol <NSObject>
 
+/**
+ * @discussion Initialize a protocol session using a given Identity.
+ * @param identity - the identity to use fot the new session
+ * @return the initialized protocol instance.
+ */
 - (instancetype) initWithIdentity: (MOBIdentity *) identity;
 
 /**
