@@ -44,7 +44,7 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
  * @return the encrypted data as a dictionary to be used in a JSON object.
  */
 - (NSDictionary *) encryptData: (NSData *) aData
-            forRecipient: (MOBRemoteIdentity *) aRecipient;
+                  forRecipient: (MOBRemoteIdentity *) aRecipient;
 
 /**
  * @discussion Decrypt a given message from a given sender
@@ -53,13 +53,13 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
  * @return the cleartext message if successful or nil if decryption failed
  */
 - (NSData *) decryptMessage: (NSDictionary *) aEncryptedMessage
-                   fromSender: (MOBRemoteIdentity *) aSender;
+                 fromSender: (MOBRemoteIdentity *) aSender;
 
 /**
  * @discussion Decrypt given data from a given sender
  * @param aEncryptedData - the encrypted data
  * @param aSender - the sender of the data
- * @return the cleartext data if successful or nil if decryption failed
+ * @return the cleartext string if successful or nil if decryption failed
  */
 - (NSString *) decryptedStringFromMessage: (NSDictionary *) aEncryptedMessage
                                fromSender: (MOBRemoteIdentity *) aSender;
@@ -81,15 +81,21 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
  * @discussion Perform an Axolotl key agreement with a given peer.
  *  This will usually be the MobileEdge server or a vendor identity.
  * @param aBob - Bob's identity
- * @param TODO
+ * @param aSendKeyExchangeBlock - the block we should use to send a key exchange
+ *  message.
  */
 - (void) performKeyExchangeWithBob: (MOBRemoteIdentity *) aBob
     andSendKeyExchangeMessageUsing: (KeyExchangeSendBlock) aSendKeyExchangeBlock;
-//andSendKeyExchangeMessageUsing: (void (^) (NSData * keyExchangeMessage)) sendContinuation;
-/*                    withSuccessBlock: (BOOL (^) (void)) successContinuation
- withFailureBlock: (void (^) (void)) failureContinuation;*/
 
+/**
+ * @discussion Perform a key exchange with someone who initiated a key exchange
+ * with us.
+ * @param aAlice - Alice's identity.
+ * @param aTheirKeyExchangeMessage - the key exchange message we received.
+ * @param aSendKeyExchangeBlock - the block we should use to send our key exchange
+ *  message.
+ */
 - (void) performKeyExchangeWithAlice: (MOBRemoteIdentity *) aAlice
-              usingKeyExchangeMessage: (NSData *) aTheirKeyExchangeMessage
+             usingKeyExchangeMessage: (NSData *) aTheirKeyExchangeMessage
       andSendKeyExchangeMessageUsing: (KeyExchangeSendBlockBob) aSendKeyExchangeBlock;
 @end
