@@ -15,7 +15,6 @@
 @class MOBRemoteIdentity, MOBIdentity;
 
 typedef void (^KeyExchangeFinalizeBlock) (NSData *keyExchangeMessageIn);
-//typedef void (^KeyExchangeSendBlock) (NSData * keyExchangeMessage, KeyExchangeFinalizeBlock finalizeBlock);
 typedef void (^KeyExchangeSendBlock) (NSDictionary *keyExchangeMessage, KeyExchangeFinalizeBlock finalizeBlock);
 typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
 
