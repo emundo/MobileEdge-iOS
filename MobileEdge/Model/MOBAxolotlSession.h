@@ -57,7 +57,7 @@
 - (instancetype) initWithMyIdentityKeyPair: (NACLAsymmetricKeyPair *) aKeyPair
                           theirIdentityKey: (NACLAsymmetricPublicKey *) aTheirKey;
 
-- (void) addDerivedKeyMaterial: (NSData *) derivedKeyMaterial;
+- (void) addDerivedKeyMaterialAsAlice: (NSData *) aDerivedKeyMaterial;
 
 - (void) finishKeyAgreementWithKeyExchangeMessage: (NSDictionary *) keyExchangeMessageIn
                                myEphemeralKeyPair: (NACLAsymmetricKeyPair *) myEphemeralKeyPair;

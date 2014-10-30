@@ -61,30 +61,30 @@
     return self;
 }
 
-- (void) addDerivedKeyMaterial: (NSData *) derivedKeyMaterial
+- (void) addDerivedKeyMaterialAsAlice: (NSData *) aDerivedKeyMaterial
 {
-    _rootKey = [derivedKeyMaterial subdataWithRange:NSMakeRange(0, 32)];
+    _rootKey = [aDerivedKeyMaterial subdataWithRange: NSMakeRange(0, 32)];
     _receiverHeaderKey = [NACLSymmetricPrivateKey keyWithData:
-                          [derivedKeyMaterial subdataWithRange:NSMakeRange(32*1, 32)]];
+                          [aDerivedKeyMaterial subdataWithRange: NSMakeRange(32*1, 32)]];
     _senderNextHeaderKey = [NACLSymmetricPrivateKey keyWithData:
-                            [derivedKeyMaterial subdataWithRange:NSMakeRange(32*2, 32)]];
+                            [aDerivedKeyMaterial subdataWithRange: NSMakeRange(32*2, 32)]];
     _receiverNextHeaderKey = [NACLSymmetricPrivateKey keyWithData:
-                              [derivedKeyMaterial subdataWithRange:NSMakeRange(32*3, 32)]];
+                              [aDerivedKeyMaterial subdataWithRange: NSMakeRange(32*3, 32)]];
     _receiverChainKey = [[MOBAxolotlChainKey alloc] initWithKeyData:
-                         [derivedKeyMaterial subdataWithRange:NSMakeRange(32*4, 32)]];
+                         [aDerivedKeyMaterial subdataWithRange: NSMakeRange(32*4, 32)]];
 }
 
-- (void) addDerivedKeyMaterialAsBob: (NSData *) derivedKeyMaterial
+- (void) addDerivedKeyMaterialAsBob: (NSData *) aDerivedKeyMaterial
 {
-    _rootKey = [derivedKeyMaterial subdataWithRange:NSMakeRange(0, 32)];
+    _rootKey = [aDerivedKeyMaterial subdataWithRange: NSMakeRange(0, 32)];
     _senderHeaderKey = [NACLSymmetricPrivateKey keyWithData:
-                          [derivedKeyMaterial subdataWithRange:NSMakeRange(32*1, 32)]];
+                          [aDerivedKeyMaterial subdataWithRange: NSMakeRange(32*1, 32)]];
     _receiverNextHeaderKey = [NACLSymmetricPrivateKey keyWithData:
-                            [derivedKeyMaterial subdataWithRange:NSMakeRange(32*2, 32)]];
+                            [aDerivedKeyMaterial subdataWithRange: NSMakeRange(32*2, 32)]];
     _senderNextHeaderKey = [NACLSymmetricPrivateKey keyWithData:
-                              [derivedKeyMaterial subdataWithRange:NSMakeRange(32*3, 32)]];
+                              [aDerivedKeyMaterial subdataWithRange: NSMakeRange(32*3, 32)]];
     _senderChainKey = [[MOBAxolotlChainKey alloc] initWithKeyData:
-                         [derivedKeyMaterial subdataWithRange:NSMakeRange(32*4, 32)]];
+                         [aDerivedKeyMaterial subdataWithRange: NSMakeRange(32*4, 32)]];
 }
 
 - (void) finishKeyAgreementWithKeyExchangeMessage: (NSDictionary *) keyExchangeMessageIn
@@ -110,7 +110,7 @@
     [masterSecret appendData: part1.data];
     [masterSecret appendData: part2.data];
     [masterSecret appendData: part3.data];
-    [self addDerivedKeyMaterial: [self deriveKeyDataFromMasterSecret: masterSecret]];
+    [self addDerivedKeyMaterialAsAlice: [self deriveKeyDataFromMasterSecret: masterSecret]];
     
     _receiverDiffieHellmanKey = theirEph1;
     _ratchetFlag = YES;
@@ -336,7 +336,8 @@
     [encoder encodeInteger: _messagesSentUnderPreviousRatchetCount forKey: kMOBAxolotlSessionMessagesSentUnderPreviousRatchetCountKey];
     [encoder encodeBool: _ratchetFlag                           forKey: kMOBAxolotlSessionRatchetFlagKey];
     [encoder encodeObject: _skippedHeaderAndMessageKeys           forKey: kMOBAxolotlSessionSkippedHeaderAndMessageKeysKey];
-    //[encoder encodeObject: _ forKey: kMOBAxolotlSessionKey];
+    
+    // TODO: also encode temporary fields?
 }
 
 - (id)initWithCoder: (NSCoder *) coder
@@ -359,7 +360,8 @@
         _messagesSentUnderPreviousRatchetCount  = [coder decodeIntegerForKey: kMOBAxolotlSessionMessagesSentUnderPreviousRatchetCountKey];
         _ratchetFlag                            = [coder decodeBoolForKey: kMOBAxolotlSessionRatchetFlagKey];
         _skippedHeaderAndMessageKeys            = [coder decodeObjectForKey: kMOBAxolotlSessionSkippedHeaderAndMessageKeysKey];
-        //_ = [coder decodeObjectForKey: kMOBAxolotlSession];
+        
+        // TODO: also decode temporary fields?
     }
     return self;
 }
