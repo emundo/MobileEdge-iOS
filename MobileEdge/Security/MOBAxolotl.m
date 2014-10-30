@@ -61,11 +61,11 @@
 
 #pragma mark -
 #pragma mark Encryption
-- (NSString *) encryptMessage: (NSString *) aMessage
+- (NSDictionary *) encryptMessage: (NSString *) aMessage
                   forRecipient: (MOBRemoteIdentity *) aReceiver
 {
-#warning stub
-    return nil;
+    return [self encryptData: [aMessage dataUsingEncoding: NSUTF8StringEncoding]
+                forRecipient: aReceiver];
 }
 
 - (NSDictionary *) encryptData: (NSData *) aData
@@ -375,8 +375,8 @@
     return decryptedMessage;
 }
 
-- (NSData *) decryptData: (NSData *) aEncryptedData
-              fromSender: (MOBRemoteIdentity *) aSender
+- (NSString *) decryptedStringFromData: (NSData *) aEncryptedData
+                            fromSender: (MOBRemoteIdentity *) aSender
 {
 #warning stub
     return nil;

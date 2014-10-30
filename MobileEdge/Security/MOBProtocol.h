@@ -35,7 +35,7 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
  * @param aRecipient - the receiver of the message
  * @return the encrypted message or nil if encryption failed
  */
-- (NSString *) encryptMessage: (NSString *) aMessage
+- (NSDictionary *) encryptMessage: (NSString *) aMessage
                  forRecipient: (MOBRemoteIdentity *) aRecipient;
 
 /**
@@ -62,8 +62,9 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
  * @param aSender - the sender of the data
  * @return the cleartext data if successful or nil if decryption failed
  */
-- (NSData *) decryptData: (NSData *) aEncryptedData
-              fromSender: (MOBRemoteIdentity *) aSender;
+- (NSString *) decryptedStringFromData: (NSData *) aEncryptedData
+                            fromSender: (MOBRemoteIdentity *) aSender
+
 
 - (NSData *) decryptBody: (NSString *) aBody
                 withHead: (NSString *) aHead
