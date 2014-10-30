@@ -62,13 +62,8 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
  * @param aSender - the sender of the data
  * @return the cleartext data if successful or nil if decryption failed
  */
-- (NSString *) decryptedStringFromData: (NSData *) aEncryptedData
-                            fromSender: (MOBRemoteIdentity *) aSender
-
-
-- (NSData *) decryptBody: (NSString *) aBody
-                withHead: (NSString *) aHead
-               withNonce: (NSString *) aNonce;
+- (NSString *) decryptedStringFromMessage: (NSDictionary *) aEncryptedMessage
+                               fromSender: (MOBRemoteIdentity *) aSender;
 
 /**
  * @discussion Perform an Axolotl key agreement with a given peer.

@@ -18,6 +18,7 @@
 
 @interface MOBAxolotl : NSObject  <MOBProtocol>
 
+#ifdef DEBUG
 - (NSData *) getSessionKeyMaterialForTestingForRemote: (MOBRemoteIdentity *) aRemote;
-
+#endif
 @end

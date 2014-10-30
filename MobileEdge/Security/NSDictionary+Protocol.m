@@ -20,9 +20,10 @@
 - (NSData *) decryptedDataFromSender: (MOBRemoteIdentity *) aRemoteIdentity
                          withProtocol: (id <MOBProtocol>) aProtocol
 {
-    return [aProtocol decryptBody: self[@"body"]
-                        withHead: self[@"head"]
-                       withNonce: self[@"nonce"]];
+    return [aProtocol decryptMessage: self fromSender: aRemoteIdentity];
+    //return [aProtocol decryptBody: self[@"body"]
+    //                    withHead: self[@"head"]
+    //                   withNonce: self[@"nonce"]];
 }
 
 @end

@@ -195,14 +195,18 @@
                            diffieHellman.bytes,
                            [diffieHellman length],
                            self.rootKey.bytes);
-    NSData *info = [@"MobileEdge Ratchet" dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *salt = [@"salty" dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *derivedKeyMaterial = [HKDFKit deriveKey: inputKeyMaterial info: info salt: salt outputSize: 3*32];
+    NSData *info = [@"MobileEdge Ratchet" dataUsingEncoding: NSUTF8StringEncoding];
+    NSData *salt = [@"salty" dataUsingEncoding: NSUTF8StringEncoding];
+    NSData *derivedKeyMaterial = [HKDFKit deriveKey: inputKeyMaterial
+                                               info: info
+                                               salt: salt
+                                         outputSize: 3*32];
+    
     _rootKey = [derivedKeyMaterial subdataWithRange: NSMakeRange(0, 32)];
     _senderNextHeaderKey = [NACLSymmetricPrivateKey keyWithData:
-                            [derivedKeyMaterial subdataWithRange:NSMakeRange(1*32, 32)]];
+                            [derivedKeyMaterial subdataWithRange: NSMakeRange(1*32, 32)]];
     _senderChainKey = [[MOBAxolotlChainKey alloc] initWithKeyData:
-                       [derivedKeyMaterial subdataWithRange:NSMakeRange(2*32, 32)]];
+                       [derivedKeyMaterial subdataWithRange: NSMakeRange(2*32, 32)]];
     
     _messagesSentUnderPreviousRatchetCount = _messagesSentCount;
     _messagesSentCount = 0;
@@ -264,7 +268,7 @@
         NSMutableArray *messageKeys = aMessageKeys;
         MOBAxolotlSkippedKeyRing *newKeyRing =
             [[MOBAxolotlSkippedKeyRing alloc] initWithMessageKeys: messageKeys
-                                                      forHeaderKey: headerKey];
+                                                     forHeaderKey: headerKey];
         if (self.skippedHeaderAndMessageKeys.count == 4)
         { // only remove entries at the beginning if 4 entries are full:
             [self.skippedHeaderAndMessageKeys removeObjectAtIndex: 0];

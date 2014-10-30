@@ -375,23 +375,12 @@
     return decryptedMessage;
 }
 
-- (NSString *) decryptedStringFromData: (NSData *) aEncryptedData
-                            fromSender: (MOBRemoteIdentity *) aSender
+- (NSString *) decryptedStringFromMessage: (NSDictionary *) aEncryptedMessage
+                               fromSender: (MOBRemoteIdentity *) aSender
 {
-#warning stub
-    return nil;
-}
-
-
-- (NSData *) decryptBody: (NSString *) aBody
-                withHead: (NSString *) aHead
-               withNonce: (NSString *) aNonce
-{
-    NSData *head = 	[[NSData alloc] initWithBase64EncodedString: aHead options: 0];
-    NSMutableData *decryptedHeader = [NSMutableData dataWithLength: head.length];
-#warning unfinished
-    NSMutableData *decrypted = [NSMutableData dataWithLength:0];
-    return decrypted;
+    return [[NSString alloc] initWithData: [self decryptMessage: aEncryptedMessage
+                                                     fromSender: aSender]
+                                 encoding: NSUTF8StringEncoding];
 }
 
 #pragma mark -
