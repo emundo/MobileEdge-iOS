@@ -233,7 +233,10 @@
         MOBAxolotlSkippedKeyRing *newKeyRing =
             [[MOBAxolotlSkippedKeyRing alloc] initWithMessageKeys: messageKeys
                                                       forHeaderKey: headerKey];
-        [self.skippedHeaderAndMessageKeys removeObjectAtIndex: 0];
+        if (self.skippedHeaderAndMessageKeys.count == 4)
+        {
+            [self.skippedHeaderAndMessageKeys removeObjectAtIndex: 0];
+        }
         [self.skippedHeaderAndMessageKeys addObject: newKeyRing];
     };
     [self.stagingArea enumerateKeysAndObjectsUsingBlock: iterator];

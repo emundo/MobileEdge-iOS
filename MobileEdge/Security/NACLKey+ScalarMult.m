@@ -22,10 +22,10 @@
 {
     DDLogVerbose(@"%lu == %lu  == %lu ?", crypto_scalarmult_bytes(),
                  crypto_scalarmult_scalarbytes(), (unsigned long)[NACLKey keyLength]);
-    NSMutableData *data = [NSMutableData dataWithLength:32];
+    NSMutableData *data = [NSMutableData dataWithLength: 32];
     unsigned char *target = data.mutableBytes;
     crypto_scalarmult(target, self.data.bytes, aKey.data.bytes);
-    NACLKey *result = [[NACLKey alloc] initWithData:data];
+    NACLKey *result = [[[self class] alloc] initWithData: data];
     return result;
 }
 

@@ -75,8 +75,10 @@
         // TODO: fail! we dont have a session for the given remote!
     }
     
-    // ratchet the key material:
-    [session ratchetStateBeforeSending];
+    if (session.ratchetFlag)
+    { // ratchet the key material:
+        [session ratchetStateBeforeSending];
+    }
     
     // Derive a new message key from chain key":
     NACLSymmetricPrivateKey *messageKey = [session.senderChainKey nextMessageKey];
@@ -316,9 +318,13 @@
     }
     
     // set new values/keys in state, erase DH key pair and set ratchet flag:
+    NACLAsymmetricPublicKey *parsedDiffieHellmanKey =
+        [[NACLAsymmetricPublicKey alloc] initWithData:
+         [[NSData alloc] initWithBase64EncodedString: parsedHeader[2]
+                                             options: 0]];
     [aSession ratchetStateAfterReceivingRootKey: purportedRootKey
                                   nextHeaderKey: purportedReceiverNextHeaderKey
-                               diffieHellmanKey: (NACLAsymmetricPublicKey *) parsedHeader[2]];
+                               diffieHellmanKey: parsedDiffieHellmanKey];
     
     return decryptedMessageBody;
 }

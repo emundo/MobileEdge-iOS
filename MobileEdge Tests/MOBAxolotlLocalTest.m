@@ -41,6 +41,14 @@
 - (void)tearDown
 {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    self.alice = nil;
+    self.bob   = nil;
+    self.axolotl = nil;
+    self.bxolotl = nil;
+    
+    self.aRemote = nil;
+    self.bRemote = nil;
     [super tearDown];
 }
 
@@ -74,6 +82,17 @@
               @"DATA 1: %@ \nDATA 2: %@", [self.axolotl getSessionKeyMaterialForTestingForRemote: self.bRemote], [self.bxolotl getSessionKeyMaterialForTestingForRemote: self.aRemote]);
 }
 
+- (void) testBobSendAliceReceive
+{
+    [self exchangeKeys];
+    NSString *message1 = @"Test message 1 encrypted by Bob.";
+    NSData *bobsMessageData = [message1 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *bobsMessage = [self.bxolotl encryptData: bobsMessageData forRecipient: self.aRemote];
+    NSData *decryptedMessageData = [self.axolotl decryptMessage: bobsMessage fromSender: self.bRemote];
+    XCTAssert(decryptedMessageData, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage = [[NSString alloc] initWithData: decryptedMessageData encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage isEqualToString: message1], @"Original: %@, Decrypted: %@", message1, decryptedMessage);
+}
 
 - (void) testAliceSendBobReceive
 {
@@ -82,11 +101,257 @@
     NSData *alicesMessageData = [message1 dataUsingEncoding: NSUTF8StringEncoding];
     NSDictionary *alicesMessage = [self.axolotl encryptData: alicesMessageData forRecipient: self.bRemote];
     NSData *decryptedMessageData = [self.bxolotl decryptMessage: alicesMessage fromSender: self.aRemote];
-    XCTAssert(decryptedMessageData);
+    XCTAssert(decryptedMessageData, @"Decrypted message data should not be nil/NULL.");
     NSString *decryptedMessage = [[NSString alloc] initWithData: decryptedMessageData encoding: NSUTF8StringEncoding];
     XCTAssert([decryptedMessage isEqualToString: message1], @"Original: %@, Decrypted: %@", message1, decryptedMessage);
 }
 
+- (void) testBobSend1BobSend2AliceReceive1AliceReceive2
+{
+    [self exchangeKeys];
+    NSString *message1 = @"Test message 1 encrypted by Bob.";
+    NSData *bobsMessageData = [message1 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *bobsMessage = [self.bxolotl encryptData: bobsMessageData forRecipient: self.aRemote];
+    NSData *decryptedMessageData = [self.axolotl decryptMessage: bobsMessage fromSender: self.bRemote];
+    XCTAssert(decryptedMessageData, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage = [[NSString alloc] initWithData: decryptedMessageData encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage isEqualToString: message1], @"Original: %@, Decrypted: %@", message1, decryptedMessage);
+    
+    NSString *message2 = @"Test message 2 encrypted by Bob.";
+    bobsMessageData = [message1 dataUsingEncoding: NSUTF8StringEncoding];
+    bobsMessage = [self.bxolotl encryptData: bobsMessageData forRecipient: self.aRemote];
+    decryptedMessageData = [self.axolotl decryptMessage: bobsMessage fromSender: self.bRemote];
+    XCTAssert(decryptedMessageData, @"Decrypted message data should not be nil/NULL.");
+    decryptedMessage = [[NSString alloc] initWithData: decryptedMessageData encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage isEqualToString: message1], @"Original: %@, Decrypted: %@", message2, decryptedMessage);
+}
 
+- (void) testAliceSend1AliceSend2BobReceive1BobReceive2
+{
+    [self exchangeKeys];
+    NSString *message1 = @"Test message 1 encrypted by Alice";
+    NSData *alicesMessageData = [message1 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *alicesMessage = [self.axolotl encryptData: alicesMessageData forRecipient: self.bRemote];
+    NSData *decryptedMessageData = [self.bxolotl decryptMessage: alicesMessage fromSender: self.aRemote];
+    XCTAssert(decryptedMessageData, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage = [[NSString alloc] initWithData: decryptedMessageData encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage isEqualToString: message1], @"Original: %@, Decrypted: %@", message1, decryptedMessage);
+    
+    NSString *message2 = @"Test message 2 encrypted by Alice";
+    alicesMessageData = [message2 dataUsingEncoding: NSUTF8StringEncoding];
+    alicesMessage = [self.axolotl encryptData: alicesMessageData forRecipient: self.bRemote];
+    decryptedMessageData = [self.bxolotl decryptMessage: alicesMessage fromSender: self.aRemote];
+    XCTAssert(decryptedMessageData, @"Decrypted message data should not be nil/NULL.");
+    decryptedMessage = [[NSString alloc] initWithData: decryptedMessageData encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage isEqualToString: message2], @"Original: %@, Decrypted: %@", message2, decryptedMessage);
+}
+
+- (void) testBobSend1BobSend2AliceReceive2AliceReceive1
+{
+    [self exchangeKeys];
+ 
+    NSString *message1 = @"Test message 1 encrypted by Bob.";
+    NSString *message2 = @"Test message 2 encrypted by Bob.";
+    
+    NSData *bobsMessageData1 = [message1 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *bobsMessage1 = [self.bxolotl encryptData: bobsMessageData1 forRecipient: self.aRemote];
+    NSData *bobsMessageData2 = [message2 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *bobsMessage2 = [self.bxolotl encryptData: bobsMessageData2 forRecipient: self.aRemote];
+    
+    NSData *decryptedMessageData2 = [self.axolotl decryptMessage: bobsMessage2 fromSender: self.bRemote];
+    XCTAssert(decryptedMessageData2, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage2 = [[NSString alloc] initWithData: decryptedMessageData2 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage2 isEqualToString: message2], @"Original: %@, Decrypted: %@", message2, decryptedMessage2);
+    
+    NSData *decryptedMessageData1 = [self.axolotl decryptMessage: bobsMessage1 fromSender: self.bRemote];
+    XCTAssert(decryptedMessageData1, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage1 = [[NSString alloc] initWithData: decryptedMessageData1 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage1 isEqualToString: message1], @"Original: %@, Decrypted: %@", message1, decryptedMessage1);
+}
+
+- (void) testAliceSend1AliceSend2BobReceive2BobReceive1
+{
+    [self exchangeKeys];
+    
+    NSString *message1 = @"Test message 1 encrypted by Alice";
+    NSString *message2 = @"Test message 2 encrypted by Alice";
+    
+    NSData *alicesMessageData1 = [message1 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *alicesMessage1 = [self.axolotl encryptData: alicesMessageData1 forRecipient: self.bRemote];
+    NSData *alicesMessageData2 = [message2 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *alicesMessage2 = [self.axolotl encryptData: alicesMessageData2 forRecipient: self.bRemote];
+    
+    NSData *decryptedMessageData2 = [self.bxolotl decryptMessage: alicesMessage2 fromSender: self.aRemote];
+    XCTAssert(decryptedMessageData2, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage2 = [[NSString alloc] initWithData: decryptedMessageData2 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage2 isEqualToString: message2], @"Original: %@, Decrypted: %@", message2, decryptedMessage2);
+    
+    NSData *decryptedMessageData1 = [self.bxolotl decryptMessage: alicesMessage1 fromSender: self.aRemote];
+    XCTAssert(decryptedMessageData1, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage1 = [[NSString alloc] initWithData: decryptedMessageData1 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage1 isEqualToString: message1], @"Original: %@, Decrypted: %@", message1, decryptedMessage1);
+}
+
+- (void) testBobSend1AliceReceive1AliceSend2BobReceive2
+{
+    [self exchangeKeys];
+ 
+    NSString *message1 = @"Test message 1 encrypted by Bob.";
+    NSString *message2 = @"Test message 2 encrypted by Alice.";
+    
+    NSData *bobsMessageData1 = [message1 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *bobsMessage1 = [self.bxolotl encryptData: bobsMessageData1 forRecipient: self.aRemote];
+    
+    NSData *decryptedMessageData1 = [self.axolotl decryptMessage: bobsMessage1 fromSender: self.bRemote];
+    XCTAssert(decryptedMessageData1, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage1 = [[NSString alloc] initWithData: decryptedMessageData1 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage1 isEqualToString: message1], @"Original: %@, Decrypted: %@", message1, decryptedMessage1);
+    
+    NSData *alicesMessageData2 = [message2 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *alicesMessage2 = [self.axolotl encryptData: alicesMessageData2 forRecipient: self.bRemote];
+    
+    NSData *decryptedMessageData2 = [self.bxolotl decryptMessage: alicesMessage2 fromSender: self.aRemote];
+    XCTAssert(decryptedMessageData2, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage2 = [[NSString alloc] initWithData: decryptedMessageData2 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage2 isEqualToString: message2], @"Original: %@, Decrypted: %@", message2, decryptedMessage2);
+}
+
+- (void) testAliceSend1BobReceive1BobSend2AliceReceive2
+{
+    [self exchangeKeys];
+ 
+    NSString *message1 = @"Test message 1 encrypted by Alice.";
+    NSString *message2 = @"Test message 2 encrypted by Bob.";
+    
+    NSData *alicesMessageData1 = [message1 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *alicesMessage1 = [self.axolotl encryptData: alicesMessageData1 forRecipient: self.bRemote];
+    
+    NSData *decryptedMessageData1 = [self.bxolotl decryptMessage: alicesMessage1 fromSender: self.aRemote];
+    XCTAssert(decryptedMessageData1, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage1 = [[NSString alloc] initWithData: decryptedMessageData1 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage1 isEqualToString: message1], @"Original: %@, Decrypted: %@", message1, decryptedMessage1);
+    
+    NSData *bobsMessageData2 = [message2 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *bobsMessage2 = [self.bxolotl encryptData: bobsMessageData2 forRecipient: self.aRemote];
+    
+    NSData *decryptedMessageData2 = [self.axolotl decryptMessage: bobsMessage2 fromSender: self.bRemote];
+    XCTAssert(decryptedMessageData2, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage2 = [[NSString alloc] initWithData: decryptedMessageData2 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage2 isEqualToString: message2], @"Original: %@, Decrypted: %@", message2, decryptedMessage2);
+}
+
+- (void) testBobSend1AliceSend2AliceReceive1BobReceive2
+{
+    [self exchangeKeys];
+ 
+    NSString *message1 = @"Test message 1 encrypted by Bob.";
+    NSString *message2 = @"Test message 2 encrypted by Alice.";
+    
+    NSData *bobsMessageData1 = [message1 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *bobsMessage1 = [self.bxolotl encryptData: bobsMessageData1 forRecipient: self.aRemote];
+    
+    NSData *alicesMessageData2 = [message2 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *alicesMessage2 = [self.axolotl encryptData: alicesMessageData2 forRecipient: self.bRemote];
+    
+    NSData *decryptedMessageData1 = [self.axolotl decryptMessage: bobsMessage1 fromSender: self.bRemote];
+    XCTAssert(decryptedMessageData1, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage1 = [[NSString alloc] initWithData: decryptedMessageData1 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage1 isEqualToString: message1], @"Original: %@, Decrypted: %@", message1, decryptedMessage1);
+    
+    NSData *decryptedMessageData2 = [self.bxolotl decryptMessage: alicesMessage2 fromSender: self.aRemote];
+    XCTAssert(decryptedMessageData2, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage2 = [[NSString alloc] initWithData: decryptedMessageData2 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage2 isEqualToString: message2], @"Original: %@, Decrypted: %@", message2, decryptedMessage2);
+}
+
+- (void) testAliceSend1BobSend2BobReceive1AliceReceive2
+{
+    [self exchangeKeys];
+ 
+    NSString *message1 = @"Test message 1 encrypted by Alice.";
+    NSString *message2 = @"Test message 2 encrypted by Bob.";
+    
+    NSData *alicesMessageData1 = [message1 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *alicesMessage1 = [self.axolotl encryptData: alicesMessageData1 forRecipient: self.bRemote];
+    
+    NSData *bobsMessageData2 = [message2 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *bobsMessage2 = [self.bxolotl encryptData: bobsMessageData2 forRecipient: self.aRemote];
+    
+    NSData *decryptedMessageData1 = [self.bxolotl decryptMessage: alicesMessage1 fromSender: self.aRemote];
+    XCTAssert(decryptedMessageData1, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage1 = [[NSString alloc] initWithData: decryptedMessageData1 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage1 isEqualToString: message1], @"Original: %@, Decrypted: %@", message1, decryptedMessage1);
+    
+    NSData *decryptedMessageData2 = [self.axolotl decryptMessage: bobsMessage2 fromSender: self.bRemote];
+    XCTAssert(decryptedMessageData2, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage2 = [[NSString alloc] initWithData: decryptedMessageData2 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage2 isEqualToString: message2], @"Original: %@, Decrypted: %@", message2, decryptedMessage2);
+}
+
+- (void) testBobSend1AliceSend2BobReceive2BobSend3AliceReceive3AliceReceive1
+{
+    [self exchangeKeys];
+ 
+    NSString *message1 = @"Test message 1 encrypted by Bob.";
+    NSString *message2 = @"Test message 2 encrypted by Alice.";
+    NSString *message3 = @"Test message 3 encrypted by Bob.";
+    
+    NSData *bobsMessageData1 = [message1 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *bobsMessage1 = [self.bxolotl encryptData: bobsMessageData1 forRecipient: self.aRemote];
+    
+    NSData *alicesMessageData2 = [message2 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *alicesMessage2 = [self.axolotl encryptData: alicesMessageData2 forRecipient: self.bRemote];
+    
+    NSData *decryptedMessageData2 = [self.bxolotl decryptMessage: alicesMessage2 fromSender: self.aRemote];
+    XCTAssert(decryptedMessageData2, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage2 = [[NSString alloc] initWithData: decryptedMessageData2 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage2 isEqualToString: message2], @"Original: %@, Decrypted: %@", message2, decryptedMessage2);
+    
+    NSData *bobsMessageData3 = [message3 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *bobsMessage3 = [self.bxolotl encryptData: bobsMessageData3 forRecipient: self.aRemote];
+    
+    NSData *decryptedMessageData3 = [self.axolotl decryptMessage: bobsMessage3 fromSender: self.bRemote];
+    XCTAssert(decryptedMessageData3, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage3 = [[NSString alloc] initWithData: decryptedMessageData3 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage3 isEqualToString: message3], @"Original: %@, Decrypted: %@", message3, decryptedMessage3);
+    
+    NSData *decryptedMessageData1 = [self.axolotl decryptMessage: bobsMessage1 fromSender: self.bRemote];
+    XCTAssert(decryptedMessageData1, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage1 = [[NSString alloc] initWithData: decryptedMessageData1 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage1 isEqualToString: message1], @"Original: %@, Decrypted: %@", message1, decryptedMessage1);
+}
+
+- (void) testAliceSend1BobSend2AliceReceive2AliceSend3BobReceive3BobReceive1
+{
+    [self exchangeKeys];
+ 
+    NSString *message1 = @"Test message 1 encrypted by Alice.";
+    NSString *message2 = @"Test message 2 encrypted by Bob.";
+    NSString *message3 = @"Test message 3 encrypted by Alice.";
+    
+    NSData *alicesMessageData1 = [message1 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *alicesMessage1 = [self.axolotl encryptData: alicesMessageData1 forRecipient: self.bRemote];
+    
+    NSData *bobsMessageData2 = [message2 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *bobsMessage2 = [self.bxolotl encryptData: bobsMessageData2 forRecipient: self.aRemote];
+    
+    NSData *decryptedMessageData2 = [self.axolotl decryptMessage: bobsMessage2 fromSender: self.bRemote];
+    XCTAssert(decryptedMessageData2, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage2 = [[NSString alloc] initWithData: decryptedMessageData2 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage2 isEqualToString: message2], @"Original: %@, Decrypted: %@", message2, decryptedMessage2);
+    
+    NSData *alicesMessageData3 = [message3 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *alicesMessage3 = [self.axolotl encryptData: alicesMessageData3 forRecipient: self.bRemote];
+    
+    NSData *decryptedMessageData3 = [self.bxolotl decryptMessage: alicesMessage3 fromSender: self.aRemote];
+    XCTAssert(decryptedMessageData3, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage3 = [[NSString alloc] initWithData: decryptedMessageData3 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage3 isEqualToString: message3], @"Original: %@, Decrypted: %@", message3, decryptedMessage3);
+    
+    NSData *decryptedMessageData1 = [self.bxolotl decryptMessage: alicesMessage1 fromSender: self.aRemote];
+    XCTAssert(decryptedMessageData1, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage1 = [[NSString alloc] initWithData: decryptedMessageData1 encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage1 isEqualToString: message1], @"Original: %@, Decrypted: %@", message1, decryptedMessage1);
+}
 
 @end
