@@ -299,20 +299,20 @@
 		23F37DD519936F970074E62D /* Security */ = {
 			isa = PBXGroup;
 			children = (
+				234DB25C19F95CAE006CD605 /* MOBAnonymizerSettings.h */,
 				23F37DD619936F970074E62D /* MOBAxolotl.h */,
 				23F37DD719936F970074E62D /* MOBAxolotl.m */,
 				23CDB7F419990EC20007C3C5 /* MOBKeyExchangeMessage.h */,
 				23CDB7F519990EC20007C3C5 /* MOBKeyExchangeMessage.m */,
+				23F70C2919EE56A8000C6656 /* MOBProtocol.h */,
 				23BAE23519A1E19D00D3CDD8 /* MOBTorSettings.h */,
 				23BAE23619A1E19D00D3CDD8 /* MOBTorSettings.m */,
+				23065FBF1A026AB8006EE2D2 /* NACLKey+Base64.h */,
+				23065FC01A026AB8006EE2D2 /* NACLKey+Base64.m */,
 				23BAE27D19A241A000D3CDD8 /* NACLKey+ScalarMult.h */,
 				23BAE27E19A241A000D3CDD8 /* NACLKey+ScalarMult.m */,
 				23BAE28019A4990A00D3CDD8 /* NSDictionary+Protocol.h */,
 				23BAE28119A4990A00D3CDD8 /* NSDictionary+Protocol.m */,
-				23F70C2919EE56A8000C6656 /* MOBProtocol.h */,
-				234DB25C19F95CAE006CD605 /* MOBAnonymizerSettings.h */,
-				23065FBF1A026AB8006EE2D2 /* NACLKey+Base64.h */,
-				23065FC01A026AB8006EE2D2 /* NACLKey+Base64.m */,
 			);
 			path = Security;
 			sourceTree = "<group>";
