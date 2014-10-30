@@ -7,10 +7,10 @@
 //
 
 #import <sodium.h>
-#import "NACL.h"
-#import "NACLSigningPublicKey.h"
-#import "NSString+NACL.h"
-#import "NSData+NACL.h"
+#import <SodiumObjc/NACL.h>
+#import <SodiumObjc/NACLSigningPublicKey.h>
+#import <SodiumObjc/NSString+NACL.h>
+#import <SodiumObjc/NSData+NACL.h>
 
 @implementation NACLSigningPublicKey
 
@@ -50,6 +50,11 @@
 - (NSData *)verifiedDataFromSignedData:(NSData *)data error:(NSError **)outError
 {
     return [data verifiedDataUsingPublicKey:self error:outError];
+}
+
++ (NSUInteger)signatureLength
+{
+    return crypto_sign_BYTES;
 }
 
 @end

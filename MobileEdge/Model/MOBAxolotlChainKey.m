@@ -44,4 +44,17 @@
     return messageKey;
 }
 
+#pragma mark NSCoding
+
+#define kMOBAxolotlChainKeyDataKey @"data"
+
+- (void) encodeWithCoder: (NSCoder *) encoder
+{
+    [encoder encodeObject: _data forKey: kMOBAxolotlChainKeyDataKey];
+}
+
+- (id)initWithCoder: (NSCoder *) coder
+{
+    return [self initWithKeyData: [coder decodeObjectForKey: kMOBAxolotlChainKeyDataKey]];
+}
 @end

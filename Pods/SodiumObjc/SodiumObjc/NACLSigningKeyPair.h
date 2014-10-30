@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 TabbedOut. All rights reserved.
 //
 
-#import "NACLKeyPair.h"
-#import "NACLSigningPublicKey.h"
-#import "NACLSigningPrivateKey.h"
+#import <SodiumObjc/NACLKeyPair.h>
+#import <SodiumObjc/NACLSigningPublicKey.h>
+#import <SodiumObjc/NACLSigningPrivateKey.h>
 
 /**
  *  A key pair that is to be used in signing operations.
@@ -19,7 +19,7 @@
 
 /**
  *  Indicates whether or not the receiver is equal to the given key pair. 
- *  Equality is determined by `publicKeyData` and `secretKeyData` being 
+ *  Equality is determined by `publicKeyData` and `privateKeyData` being 
  *  equal for both the receiver and the given key pair.
  *  
  *  @param keyPair The key pair to test for equalitys.

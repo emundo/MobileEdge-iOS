@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 TabbedOut. All rights reserved.
 //
 
-#import "NACLKey.h"
+#import <SodiumObjc/NACLKey.h>
 
 @interface NACLSigningPublicKey : NACLKey
 
@@ -15,5 +15,7 @@
 
 - (NSData *)verifiedDataFromSignedData:(NSData *)data;
 - (NSData *)verifiedDataFromSignedData:(NSData *)data error:(NSError **)outError;
+
++ (NSUInteger)signatureLength;
 
 @end

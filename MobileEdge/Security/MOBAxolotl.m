@@ -88,9 +88,9 @@
     NACLNonce *nonce2 = [NACLNonce nonce];
     
     // encrypt Axolotl body:
-    NSData *encryptedBody = [aData encryptedDataUsingPrivateKey: messageKey
+    NSData *encryptedBody = [[aData encryptedDataUsingPrivateKey: messageKey
                                                           nonce: nonce1
-                                                          error: nil]; // TODO: error handling
+                                                          error: nil] dataWithoutNonce]; // TODO: error handling
     
     // encrypt Axolotl header:
     NSArray *header = [NSArray arrayWithObjects:
@@ -101,9 +101,9 @@
     NSData *headerData = [NSJSONSerialization dataWithJSONObject: header
                                                          options: 0
                                                            error: nil]; // TODO: error handling
-    NSData *encryptedHeader = [headerData encryptedDataUsingPrivateKey: session.senderHeaderKey
+    NSData *encryptedHeader = [[headerData encryptedDataUsingPrivateKey: session.senderHeaderKey
                                                                  nonce: nonce2
-                                                                 error: nil]; // TODO: error handling
+                                                                 error: nil] dataWithoutNonce]; // TODO: error handling
     // pack message:
     NSDictionary *message = @{ @"v" : @"0.1",
                                @"nonce" : [nonce2.data base64EncodedStringWithOptions: 0],
@@ -414,8 +414,8 @@
         [newSession finishKeyAgreementWithKeyExchangeMessage: keyExchangeMessageIn
                                           myEphemeralKeyPair: myEphemeralKeyPair];
         [self addSession:newSession forBob:aBob];
-        //[self.keychain setObject: self.sessions
-        //                  forKey: self.identity.identityKey];
+        [self.keychain setObject: self.sessions
+                          forKey: self.identity.identityKey];
     };
     if ([NSJSONSerialization isValidJSONObject:keyExchangeMessageOut])
     {
@@ -455,8 +455,8 @@
                                               myEphemeralKeyPair0: myEphemeralKeyPair0
                                               myEphemeralKeyPair1: myEphemeralKeyPair1];
     [self addSession: newSession forBob: aAlice]; // TODO rename method??
-    //[self.keychain setObject: self.sessions
-    //                  forKey: self.identity.identityKey];
+    [self.keychain setObject: self.sessions
+                      forKey: self.identity.identityKey];
     
     if ([NSJSONSerialization isValidJSONObject: keyExchangeMessageOut])
     {

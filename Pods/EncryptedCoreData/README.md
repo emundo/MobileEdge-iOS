@@ -1,4 +1,4 @@
-# Encrypted Core Data SQLite Store [![analytics](http://www.google-analytics.com/collect?v=1&t=pageview&_s=1&dl=https%3A%2F%2Fgithub.com%2Fproject-imas%2Fencrypted-core-data&_u=MAC~&cid=1757014354.1393964045&tid=UA-38868530-1)]()
+# Encrypted Core Data SQLite Store [![Build Status](https://travis-ci.org/project-imas/encrypted-core-data.svg?branch=master)](https://travis-ci.org/project-imas/encrypted-core-data)[![analytics](http://www.google-analytics.com/collect?v=1&t=pageview&_s=1&dl=https%3A%2F%2Fgithub.com%2Fproject-imas%2Fencrypted-core-data&_u=MAC~&cid=1757014354.1393964045&tid=UA-38868530-1)]()
 
 
 Provides a Core Data store that encrypts all data that is persisted.  Besides the initial setup, the usage is exactly the same as Core Data and can be used in existing projects that use Core Data.
@@ -40,6 +40,8 @@ Provides a Core Data store that encrypts all data that is persisted.  Besides th
 * _Note:_ Along with the move to CommonCrypto, we've updated the version of SQLCipher included as a submodule from v2.0.6 to v3.1.0. Databases created with v2.0.6 will not be able to be read directly by v3.1.0, and support for legacy database migration is not yet supported by ECD.
 
 # Installation via CocoaPod
+* If you don't already have CocoaPods installed, do `$ sudo gem install cocoapods` in your terminal. (See the [CocoaPods website](http://guides.cocoapods.org/using/getting-started.html#getting-started) for details.)
+* In your project directory, do `pod init` to create a Podfile.
 * Add `pod 'EncryptedCoreData', :git => 'https://github.com/project-imas/encrypted-core-data.git'` to your Podfile
 * Run `pod install`
 * In your application delegate source file (AppDelegate.m), add `#import "EncryptedStore.h"`

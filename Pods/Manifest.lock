@@ -2,25 +2,25 @@ PODS:
   - AFNetworkActivityLogger (2.0.3):
     - AFNetworking/NSURLConnection (~> 2.0)
     - AFNetworking/NSURLSession (~> 2.0)
-  - AFNetworking (2.3.1):
+  - AFNetworking (2.4.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
     - AFNetworking/UIKit
-  - AFNetworking/NSURLConnection (2.3.1):
+  - AFNetworking/NSURLConnection (2.4.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.3.1):
+  - AFNetworking/NSURLSession (2.4.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.3.1)
-  - AFNetworking/Security (2.3.1)
-  - AFNetworking/Serialization (2.3.1)
-  - AFNetworking/UIKit (2.3.1):
+  - AFNetworking/Reachability (2.4.1)
+  - AFNetworking/Security (2.4.1)
+  - AFNetworking/Serialization (2.4.1)
+  - AFNetworking/UIKit (2.4.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - CocoaLumberjack (1.9.2):
@@ -28,9 +28,9 @@ PODS:
   - CocoaLumberjack/Core (1.9.2)
   - CocoaLumberjack/Extensions (1.9.2):
     - CocoaLumberjack/Core
-  - EncryptedCoreData (2.0):
+  - EncryptedCoreData (3.0):
     - SQLCipher (~> 3.1.0)
-  - FXKeychain (1.5.1)
+  - FXKeychain (1.5.2)
   - HKDFKit (0.0.3)
   - Objection (1.4)
   - SodiumObjc (1.1)
@@ -58,10 +58,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworkActivityLogger: d6a2d2755fada3a1fbf1f490ec0dd92224e092a4
-  AFNetworking: 6d7b76aa5d04c8c37daad3eef4b7e3f2a7620da3
+  AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
   CocoaLumberjack: 205769c032b5fef85b92472046bcc8b7e7c8a817
-  EncryptedCoreData: da635f9ec2413601ba5cbed71d29d75d91c79e95
-  FXKeychain: beb642a4218ba783507af08865eda05e9b26a612
+  EncryptedCoreData: a52183de3620d305b78b8c8a3b323ebf7adf76a5
+  FXKeychain: c97c352f1923809032339514ec4d6b0ed151bc3b
   HKDFKit: 5998cf1bbb611e7ecc6bd3eaaef8c7a7da7be949
   Objection: 8176a996209cdcd23490c57d6e807a25faa8d54d
   SodiumObjc: 69c90c435fe0d6d91bdb0ac5e5deb8fe0b93502c

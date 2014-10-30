@@ -14,7 +14,7 @@
 #import <Foundation/Foundation.h>
 
 @class NACLAsymmetricKeyPair, NACLAsymmetricPublicKey, NACLSymmetricPrivateKey;
-@interface MOBAxolotlChainKey : NSObject
+@interface MOBAxolotlChainKey : NSObject <NSCoding>
 
 @property (nonatomic, retain, readonly) NSData *data;
 

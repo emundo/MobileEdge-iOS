@@ -22,6 +22,11 @@ extern NSString * const EncryptedStoreErrorMessageKey;
 extern NSString * const EncryptedStoreDatabaseLocation;
 extern NSString * const EncryptedStoreCacheSize;
 
+typedef NS_ENUM(NSInteger, EncryptedStoreError)
+{
+    EncryptedStoreErrorIncorrectPasscode = 6000
+};
+
 @interface EncryptedStore : NSIncrementalStore
 + (NSPersistentStoreCoordinator *)makeStoreWithOptions:(NSDictionary *)options managedObjectModel:(NSManagedObjectModel *)objModel;
 + (NSPersistentStoreCoordinator *)makeStoreWithStructOptions:(EncryptedStoreOptions *) options managedObjectModel:(NSManagedObjectModel *)objModel;
@@ -37,7 +42,6 @@ extern NSString * const EncryptedStoreCacheSize;
 - (id)valueForProperty:(NSPropertyDescription *)property
            inStatement:(sqlite3_stmt *)statement
                atIndex:(int)index;
-- (NSString *)foreignKeyColumnForRelationshipP:(NSRelationshipDescription *)relationship;
 - (NSString *)foreignKeyColumnForRelationship:(NSRelationshipDescription *)relationship;
 - (void)bindProperty:(NSPropertyDescription *)property
            withValue:(id)value
