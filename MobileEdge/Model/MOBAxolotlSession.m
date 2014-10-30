@@ -106,30 +106,40 @@
     NACLKey *part3 = [myEphemeralKeyPair.privateKey multWithKey: theirEph0];
     
     NSMutableData *masterSecret = [NSMutableData dataWithCapacity:[NACLKey keyLength] * 3];
-    [masterSecret appendData:part1.data];
-    [masterSecret appendData:part2.data];
-    [masterSecret appendData:part3.data];
+    [masterSecret appendData: part1.data];
+    [masterSecret appendData: part2.data];
+    [masterSecret appendData: part3.data];
+    [self addDerivedKeyMaterial: [self deriveKeyDataFromMasterSecret: masterSecret]];
     
-    NSMutableData *inputKeyMaterial = [NSMutableData dataWithCapacity: (512 / 8)];
-    crypto_hash(inputKeyMaterial.mutableBytes, masterSecret.bytes, [NACLKey keyLength] * 3);
-    
-    NSData *info = [@"MobileEdge" dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *salt = [@"salty" dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *derivedKeyMaterial = [HKDFKit deriveKey: masterSecret info: info salt: salt outputSize: 5*32];
-    [self addDerivedKeyMaterial: derivedKeyMaterial];
     _receiverDiffieHellmanKey = theirEph1;
     _ratchetFlag = YES;
     DDLogVerbose(@"Finished key agreement. Session: %@", self);
+}
+
+- (NSData *) deriveKeyDataFromMasterSecret: (NSData *) aMasterSecret
+{
+    NSMutableData *inputKeyMaterial = [NSMutableData dataWithCapacity: (512 / 8)];
+    crypto_hash(inputKeyMaterial.mutableBytes, aMasterSecret.bytes, [NACLKey keyLength] * 3);
+    
+    NSData *info = [@"MobileEdge" dataUsingEncoding: NSUTF8StringEncoding];
+    NSData *salt = [@"salty" dataUsingEncoding: NSUTF8StringEncoding];
+    NSData *derivedKeyMaterial = [HKDFKit deriveKey: aMasterSecret info: info salt: salt outputSize: 5*32];
+    
+    return derivedKeyMaterial;
 }
 
 - (void) finishKeyAgreementWithAliceWithKeyExchangeMessage: (NSDictionary *) aKeyExchangeMessageIn
                                        myEphemeralKeyPair0: (NACLAsymmetricKeyPair *) aMyEphemeralKeyPair0
                                        myEphemeralKeyPair1: (NACLAsymmetricKeyPair *) aMyEphemeralKeyPair1
 {
-    NACLAsymmetricPublicKey *theirId =[[NACLAsymmetricPublicKey alloc] initWithData: [[NSData alloc] initWithBase64EncodedString: aKeyExchangeMessageIn[@"id"]
-                                                                                options: 0]];
-    NACLAsymmetricPublicKey *theirEph0 =[[NACLAsymmetricPublicKey alloc] initWithData: [[NSData alloc] initWithBase64EncodedString: aKeyExchangeMessageIn[@"eph0"]
-                                                                                  options: 0]];
+    NACLAsymmetricPublicKey *theirId =
+        [[NACLAsymmetricPublicKey alloc] initWithData:
+         [[NSData alloc] initWithBase64EncodedString: aKeyExchangeMessageIn[@"id"]
+                                             options: 0]];
+    NACLAsymmetricPublicKey *theirEph0 =
+        [[NACLAsymmetricPublicKey alloc] initWithData:
+         [[NSData alloc] initWithBase64EncodedString: aKeyExchangeMessageIn[@"eph0"]
+                                             options: 0]];
     
     NACLKey *part1 = [aMyEphemeralKeyPair0.privateKey multWithKey: theirId];
     NACLKey *part2 = [self.myIdentityKeyPair.privateKey multWithKey:theirEph0];
@@ -139,14 +149,8 @@
     [masterSecret appendData: part1.data];
     [masterSecret appendData: part2.data];
     [masterSecret appendData: part3.data];
+    [self addDerivedKeyMaterialAsBob: [self deriveKeyDataFromMasterSecret: masterSecret]];
     
-    NSMutableData *inputKeyMaterial = [NSMutableData dataWithCapacity: (512 / 8)];
-    crypto_hash(inputKeyMaterial.mutableBytes, masterSecret.bytes, [NACLKey keyLength] * 3);
-    
-    NSData *info = [@"MobileEdge" dataUsingEncoding: NSUTF8StringEncoding];
-    NSData *salt = [@"salty" dataUsingEncoding: NSUTF8StringEncoding];
-    NSData *derivedKeyMaterial = [HKDFKit deriveKey: masterSecret info: info salt: salt outputSize: 5*32];
-    [self addDerivedKeyMaterialAsBob: derivedKeyMaterial];
     _senderDiffieHellmanKey = aMyEphemeralKeyPair1;
     _ratchetFlag = NO;
     DDLogVerbose(@"Finished key agreement. Session: %@", self);
