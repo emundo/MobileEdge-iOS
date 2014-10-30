@@ -159,12 +159,7 @@
 - (void) advanceStateAfterSending
 {
     _messagesSentCount += 1;
-    // deriving a new  chain key can be omitted, as deriving the new message key took care of that
-    /*
-    NSMutableData *newChainKey = [NSMutableData dataWithLength: self.senderChainKey.length];
-    crypto_auth_hmacsha256(newChainKey.mutableBytes, (unsigned char *) "1", 1, self.senderChainKey.bytes);
-    _senderChainKey = newChainKey;
-    */
+    // deriving a new chain key can be omitted, as deriving the new message key took care of that
 }
 
 - (void) advanceStateAfterReceiving
