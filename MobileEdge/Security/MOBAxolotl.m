@@ -38,7 +38,7 @@
 @property (nonatomic,assign) BOOL appendEncryptedSenderInformation;
 
 - (void) addSession: (MOBAxolotlSession *) aSession
-             forBob: (MOBRemoteIdentity *) aBobIdentity;
+          forRemote: (MOBRemoteIdentity *) aBobIdentity;
 
 @end
 
@@ -52,9 +52,9 @@
     if (self = [super init])
     {
         self.identity = aIdentity;
-        self.keychain = [[FXKeychain alloc] initWithService:@"MobileEdgeAxolotl"
-                                                accessGroup:@"MobileEdgeAxolotl"
-                                              accessibility:FXKeychainAccessibleAfterFirstUnlock];
+        self.keychain = [[FXKeychain alloc] initWithService: @"MobileEdgeAxolotl"
+                                                accessGroup: @"MobileEdgeAxolotl"
+                                              accessibility: FXKeychainAccessibleAfterFirstUnlock];
         self.sessions = self.keychain[[self.identity.identityKey base64]];
         self.appendEncryptedSenderInformation = YES;
     }
@@ -75,8 +75,10 @@
                   forRecipient: (MOBRemoteIdentity *) aRecipient
 {
     MOBAxolotlSession *session;
-    if (!(session = (MOBAxolotlSession *) (self.sessions[[aRecipient base64]]))) {
+    if (!(session = (MOBAxolotlSession *) (self.sessions[[aRecipient base64]])))
+    {
         // TODO: fail! we dont have a session for the given remote!
+        return nil;
     }
     
     if (session.ratchetFlag)
@@ -93,8 +95,8 @@
     
     // encrypt Axolotl body:
     NSData *encryptedBody = [[aData encryptedDataUsingPrivateKey: messageKey
-                                                          nonce: nonce1
-                                                          error: nil] dataWithoutNonce]; // TODO: error handling
+                                                           nonce: nonce1
+                                                           error: nil] dataWithoutNonce]; // TODO: error handling
     
     // encrypt Axolotl header:
     NSArray *header = [NSArray arrayWithObjects:
@@ -106,8 +108,8 @@
                                                          options: 0
                                                            error: nil]; // TODO: error handling
     NSData *encryptedHeader = [[headerData encryptedDataUsingPrivateKey: session.senderHeaderKey
-                                                                 nonce: nonce2
-                                                                 error: nil] dataWithoutNonce]; // TODO: error handling
+                                                                  nonce: nonce2
+                                                                  error: nil] dataWithoutNonce]; // TODO: error handling
     // pack message:
     NSMutableDictionary *message = [NSMutableDictionary dictionaryWithDictionary: @{ @"v" : @"0.1",
                                       @"nonce" : [nonce2.data base64EncodedStringWithOptions: 0],
@@ -177,7 +179,8 @@
         NSArray *parsedHeader = [self decryptAndParseHeader: aEncryptedMessage[@"head"]
                                                     withKey: keyRing.headerKey
                                                    andNonce: aEncryptedMessage[@"nonce"]];
-        if (!parsedHeader) {
+        if (!parsedHeader)
+        {
             continue;
         }
         NACLNonce *innerNonce = [NACLNonce nonceWithData:
@@ -258,8 +261,8 @@
                                                                   options: 0];
     NSData *decryptedMessage;
     if (!(decryptedMessage = [messageBodyData decryptedDataUsingPrivateKey: messageKey
-                                                               nonce: innerNonce
-                                                               error: nil]))
+                                                                     nonce: innerNonce
+                                                                     error: nil]))
     { // Decryption failed. Do something here. TODO!
         DDLogError(@"Error while decrypting with existing chain. Header key matches but message key does not.");
         // Do we set an error object?
@@ -385,7 +388,7 @@
     }
     if (!(decryptedMessage = [self attemptDecryptionUsingNextHeaderKeyWithSessionState: session
                                                                             forMessage: aEncryptedMessage]))
-    { // Last decryption attempt has failed. Cannot decrypt.
+    { // Last decryption attempt has failed. Cannot decrypt. // TODO: error handling
         return nil;
     }
     // Decryption successful!
@@ -406,8 +409,10 @@
 
 - (NSData *) decryptMessage: (NSDictionary *) aEncryptedMessage
 {
-    if (!aEncryptedMessage[@"from"])
-    {
+    if (!aEncryptedMessage[@"from"]
+        || !aEncryptedMessage[@"eph"]
+        || !aEncryptedMessage[@"pknonce"])
+    { // TODO: error handling
         return nil;
     }
     NSData *encryptedSenderData = [[NSData alloc] initWithBase64EncodedString: aEncryptedMessage[@"from"]
@@ -431,7 +436,7 @@
                                                      error: nil]];
     MOBRemoteIdentity *senderIdentity = [[MOBRemoteIdentity alloc] initWithPublicKey: senderIdentityKey];
     if (!encryptedSenderData)
-    {
+    { // TODO: error handling
         return nil;
     }
     return [self decryptMessage: aEncryptedMessage fromSender: senderIdentity];
@@ -457,7 +462,7 @@
                                                                                error: nil]; // TODO: error / conversion might already have been handled!
         [newSession finishKeyAgreementWithKeyExchangeMessage: keyExchangeMessageIn
                                           myEphemeralKeyPair: myEphemeralKeyPair];
-        [self addSession:newSession forBob:aBob];
+        [self addSession:newSession forRemote:aBob];
         [self.keychain setObject: self.sessions
                           forKey: [self.identity.identityKey base64]];
     };
@@ -467,7 +472,7 @@
         aSendKeyExchangeBlock(keyExchangeMessageOut, finalizeBlock);
     }
     else
-    {
+    { // TODO: error handling
         DDLogError(@"Could not generate a valid JSON key exchange message.");
     }
 }
@@ -498,7 +503,7 @@
     [newSession finishKeyAgreementWithAliceWithKeyExchangeMessage: keyExchangeMessageIn
                                               myEphemeralKeyPair0: myEphemeralKeyPair0
                                               myEphemeralKeyPair1: myEphemeralKeyPair1];
-    [self addSession: newSession forBob: aAlice]; // TODO rename method??
+    [self addSession: newSession forRemote: aAlice];
     [self.keychain setObject: self.sessions
                       forKey: [self.identity.identityKey base64]];
     
@@ -508,7 +513,7 @@
         aSendKeyExchangeBlock(keyExchangeMessageOut);
     }
     else
-    {
+    { // TODO: error handling
         DDLogError(@"Could not generate a valid JSON key exchange message.");
     }
 }
@@ -517,12 +522,12 @@
 #pragma mark Session management
 
 - (void) addSession: (MOBAxolotlSession *) aSession
-             forBob: (MOBRemoteIdentity *) aBobIdentity
+          forRemote: (MOBRemoteIdentity *) aRemoteIdentity
 {
     if (!self.sessions) {
         self.sessions = [NSMutableDictionary dictionary];
     }
-    [self.sessions setObject: aSession forKey: [aBobIdentity base64]];
+    [self.sessions setObject: aSession forKey: [aRemoteIdentity base64]];
 }
 
 #pragma mark -
