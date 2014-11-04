@@ -15,9 +15,9 @@
 
 @implementation HKDFKit (Strings)
 + (NSData *) deriveKey: (NSData *) seed
-                 infoString: (NSString *) info
-                 saltString: (NSString *) salt
-           outputSize: (int) outputSize
+            infoString: (NSString *) info
+            saltString: (NSString *) salt
+            outputSize: (int) outputSize
 {
     return [HKDFKit deriveKey: seed
                          info: [info dataUsingEncoding: NSUTF8StringEncoding]
