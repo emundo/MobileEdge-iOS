@@ -34,6 +34,7 @@
 @property (nonatomic,strong) MOBIdentity *identity;
 @property (nonatomic,strong) FXKeychain *keychain;
 @property (nonatomic,strong) NSMutableDictionary *sessions;
+@property (nonatomic,assign) BOOL appendEncryptedSenderInformation;
 
 - (void) addSession: (MOBAxolotlSession *) aSession
              forBob: (MOBRemoteIdentity *) aBobIdentity;
@@ -54,6 +55,7 @@
                                                 accessGroup:@"MobileEdgeAxolotl"
                                               accessibility:FXKeychainAccessibleAfterFirstUnlock];
         self.sessions = self.keychain[[self.identity.identityKey base64]];
+        self.appendEncryptedSenderInformation = YES;
     }
     return self;
 }
@@ -106,11 +108,30 @@
                                                                  nonce: nonce2
                                                                  error: nil] dataWithoutNonce]; // TODO: error handling
     // pack message:
-    NSDictionary *message = @{ @"v" : @"0.1",
-                               @"nonce" : [nonce2.data base64EncodedStringWithOptions: 0],
-                               @"head" : [encryptedHeader base64EncodedStringWithOptions: 0],
-                               @"body" : [encryptedBody base64EncodedStringWithOptions: 0] };
-    
+    NSMutableDictionary *message = [NSMutableDictionary dictionaryWithDictionary: @{ @"v" : @"0.1",
+                                      @"nonce" : [nonce2.data base64EncodedStringWithOptions: 0],
+                                      @"head" : [encryptedHeader base64EncodedStringWithOptions: 0],
+                                      @"body" : [encryptedBody base64EncodedStringWithOptions: 0] }];
+    if (self.appendEncryptedSenderInformation)
+    {
+        NACLNonce *pubKeyNonce = [NACLNonce nonce];
+        NACLAsymmetricKeyPair *ephKeyPair = [NACLAsymmetricKeyPair keyPair];
+        NSData *diffieHellmanData = [ephKeyPair.privateKey multWithKey: aRecipient.identityKey].data;
+        NSData *info = [@"MobileEdge PubKeyEncrypt" dataUsingEncoding: NSUTF8StringEncoding];
+        NSData *salt = [@"salty" dataUsingEncoding: NSUTF8StringEncoding];
+        NACLSymmetricPrivateKey *pubKeyEncryptionKey =
+        [[NACLSymmetricPrivateKey alloc] initWithData: [HKDFKit deriveKey: diffieHellmanData
+                                                                     info: info
+                                                                     salt: salt
+                                                               outputSize: [NACLSymmetricPrivateKey keyLength]]]; //FIXME: int conversion?
+        NSData *encryptedPubKeyData =
+            [[self.identity.identityKey.data encryptedDataUsingPrivateKey: pubKeyEncryptionKey
+                                                                   nonce: pubKeyNonce
+                                                                   error: nil] dataWithoutNonce];
+        message[@"eph"] = [ephKeyPair.publicKey.data base64EncodedStringWithOptions: 0];
+        message[@"from"] = [encryptedPubKeyData base64EncodedStringWithOptions: 0];
+        message[@"pknonce"] = [pubKeyNonce.data base64EncodedStringWithOptions: 0];
+    }
     // advance session state:
     [session advanceStateAfterSending];
     
@@ -381,6 +402,40 @@
     return [[NSString alloc] initWithData: [self decryptMessage: aEncryptedMessage
                                                      fromSender: aSender]
                                  encoding: NSUTF8StringEncoding];
+}
+
+- (NSData *) decryptMessage: (NSDictionary *) aEncryptedMessage
+{
+    if (!aEncryptedMessage[@"from"])
+    {
+        return nil;
+    }
+    NSData *encryptedSenderData = [[NSData alloc] initWithBase64EncodedString: aEncryptedMessage[@"from"]
+                                                                      options: 0];
+    NSData *ephPubData = [[NSData alloc] initWithBase64EncodedString: aEncryptedMessage[@"eph"]
+                                                             options: 0];
+    NSData *pubKeyNonce = [[NSData alloc] initWithBase64EncodedString: aEncryptedMessage[@"pknonce"]
+                                                              options: 0];
+    NACLAsymmetricPublicKey *ephPubKey = [[NACLAsymmetricPublicKey alloc] initWithData: ephPubData];
+    NSData *diffieHellmanData = [self.identity.identityKeyPair.privateKey multWithKey: ephPubKey].data;
+    NSData *info = [@"MobileEdge PubKeyEncrypt" dataUsingEncoding: NSUTF8StringEncoding];
+    NSData *salt = [@"salty" dataUsingEncoding: NSUTF8StringEncoding];
+    NACLSymmetricPrivateKey *pubKeyCipher =
+        [[NACLSymmetricPrivateKey alloc] initWithData: [HKDFKit deriveKey: diffieHellmanData
+                                                                     info: info
+                                                                     salt: salt
+                                                               outputSize: [NACLSymmetricPrivateKey keyLength]]]; //FIXME: int conversion?
+    NACLAsymmetricPublicKey *senderIdentityKey =
+        [[NACLAsymmetricPublicKey alloc] initWithData:
+         [encryptedSenderData decryptedDataUsingPrivateKey: pubKeyCipher
+                                                     nonce: [NACLNonce nonceWithData: pubKeyNonce]
+                                                     error: nil]];
+    MOBRemoteIdentity *senderIdentity = [[MOBRemoteIdentity alloc] initWithPublicKey: senderIdentityKey];
+    if (!encryptedSenderData)
+    {
+        return nil;
+    }
+    return [self decryptMessage: aEncryptedMessage fromSender: senderIdentity];
 }
 
 #pragma mark -

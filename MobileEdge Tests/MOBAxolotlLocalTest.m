@@ -354,6 +354,18 @@
     XCTAssert([decryptedMessage1 isEqualToString: message1], @"Original: %@, Decrypted: %@", message1, decryptedMessage1);
 }
 
+- (void) testBobSendAliceReceiveNoSenderSpecified
+{
+    [self exchangeKeys];
+    NSString *message1 = @"Test message 1 encrypted by Bob.";
+    NSData *bobsMessageData = [message1 dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary *bobsMessage = [self.bxolotl encryptData: bobsMessageData forRecipient: self.aRemote];
+    NSData *decryptedMessageData = [self.axolotl decryptMessage: bobsMessage];
+    XCTAssert(decryptedMessageData, @"Decrypted message data should not be nil/NULL.");
+    NSString *decryptedMessage = [[NSString alloc] initWithData: decryptedMessageData encoding: NSUTF8StringEncoding];
+    XCTAssert([decryptedMessage isEqualToString: message1], @"Original: %@, Decrypted: %@", message1, decryptedMessage);
+}
+
 - (void) testSerializationDeserialization
 {
     [self exchangeKeys];
