@@ -15,4 +15,9 @@
 
 @interface HKDFKit (Strings)
 
++ (NSData *) deriveKey: (NSString *) seed
+                 info: (NSString *) info
+                 salt: (NSString *) salt
+           outputSize: (int) outputSize;
+
 @end
