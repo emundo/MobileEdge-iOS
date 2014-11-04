@@ -34,8 +34,8 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
  * @param aRecipient - the receiver of the message
  * @return the encrypted message or nil if encryption failed
  */
-- (NSDictionary *) encryptMessage: (NSString *) aMessage
-                 forRecipient: (MOBRemoteIdentity *) aRecipient;
+- (NSDictionary *) encryptString: (NSString *) aMessage
+                    forRecipient: (MOBRemoteIdentity *) aRecipient;
 
 /**
  * @discussion Encrypt given data for a given recipient.

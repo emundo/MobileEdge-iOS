@@ -64,8 +64,8 @@
 
 #pragma mark -
 #pragma mark Encryption
-- (NSDictionary *) encryptMessage: (NSString *) aMessage
-                     forRecipient: (MOBRemoteIdentity *) aReceiver
+- (NSDictionary *) encryptString: (NSString *) aMessage
+                    forRecipient: (MOBRemoteIdentity *) aReceiver
 {
     return [self encryptData: [aMessage dataUsingEncoding: NSUTF8StringEncoding]
                 forRecipient: aReceiver];
