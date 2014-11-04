@@ -16,6 +16,7 @@
 #import "MOBAxolotlSkippedKeyRing.h"
 #import "NACLKey+ScalarMult.h"
 #import "NACLKey+Base64.h"
+#import "HKDFKit+Strings.h"
 #import <HKDFKit.h>
 #import <SodiumObjc.h>
 #import <sodium/crypto_hash.h>
@@ -122,11 +123,10 @@
     NSMutableData *inputKeyMaterial = [NSMutableData dataWithCapacity: (512 / 8)];
     crypto_hash(inputKeyMaterial.mutableBytes, aMasterSecret.bytes, [NACLKey keyLength] * 3);
     
-    NSData *info = [@"MobileEdge" dataUsingEncoding: NSUTF8StringEncoding];
-    NSData *salt = [@"salty" dataUsingEncoding: NSUTF8StringEncoding];
-    NSData *derivedKeyMaterial = [HKDFKit deriveKey: aMasterSecret info: info salt: salt outputSize: 5*32];
-    
-    return derivedKeyMaterial;
+    return [HKDFKit deriveKey: aMasterSecret
+                   infoString: @"MobileEdge"
+                   saltString: @"salty"
+                   outputSize: 5*32];
 }
 
 - (void) finishKeyAgreementWithAliceWithKeyExchangeMessage: (NSDictionary *) aKeyExchangeMessageIn
@@ -195,11 +195,9 @@
                            diffieHellman.bytes,
                            [diffieHellman length],
                            self.rootKey.bytes);
-    NSData *info = [@"MobileEdge Ratchet" dataUsingEncoding: NSUTF8StringEncoding];
-    NSData *salt = [@"salty" dataUsingEncoding: NSUTF8StringEncoding];
     NSData *derivedKeyMaterial = [HKDFKit deriveKey: inputKeyMaterial
-                                               info: info
-                                               salt: salt
+                                         infoString: @"MobileEdge Ratchet"
+                                         saltString: @"salty"
                                          outputSize: 3*32];
     
     _rootKey = [derivedKeyMaterial subdataWithRange: NSMakeRange(0, 32)];

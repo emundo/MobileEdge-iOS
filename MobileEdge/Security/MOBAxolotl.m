@@ -20,6 +20,7 @@
 #import "MOBCore.h"
 #import "NACLKey+ScalarMult.h"
 #import "NACLKey+Base64.h"
+#import "HKDFKit+Strings.h"
 #import <HKDFKit.h>
 #import <SodiumObjc.h>
 #import <sodium/crypto_hash.h>
@@ -64,14 +65,14 @@
 #pragma mark -
 #pragma mark Encryption
 - (NSDictionary *) encryptMessage: (NSString *) aMessage
-                  forRecipient: (MOBRemoteIdentity *) aReceiver
+                     forRecipient: (MOBRemoteIdentity *) aReceiver
 {
     return [self encryptData: [aMessage dataUsingEncoding: NSUTF8StringEncoding]
                 forRecipient: aReceiver];
 }
 
 - (NSDictionary *) encryptData: (NSData *) aData
-            forRecipient: (MOBRemoteIdentity *) aRecipient
+                  forRecipient: (MOBRemoteIdentity *) aRecipient
 {
     MOBAxolotlSession *session;
     if (!(session = (MOBAxolotlSession *) (self.sessions[[aRecipient base64]]))) {
@@ -117,17 +118,15 @@
         NACLNonce *pubKeyNonce = [NACLNonce nonce];
         NACLAsymmetricKeyPair *ephKeyPair = [NACLAsymmetricKeyPair keyPair];
         NSData *diffieHellmanData = [ephKeyPair.privateKey multWithKey: aRecipient.identityKey].data;
-        NSData *info = [@"MobileEdge PubKeyEncrypt" dataUsingEncoding: NSUTF8StringEncoding];
-        NSData *salt = [@"salty" dataUsingEncoding: NSUTF8StringEncoding];
         NACLSymmetricPrivateKey *pubKeyEncryptionKey =
         [[NACLSymmetricPrivateKey alloc] initWithData: [HKDFKit deriveKey: diffieHellmanData
-                                                                     info: info
-                                                                     salt: salt
+                                                               infoString: @"MobileEdge PubKeyEncrypt"
+                                                               saltString: @"salty"
                                                                outputSize: [NACLSymmetricPrivateKey keyLength]]]; //FIXME: int conversion?
         NSData *encryptedPubKeyData =
             [[self.identity.identityKey.data encryptedDataUsingPrivateKey: pubKeyEncryptionKey
-                                                                   nonce: pubKeyNonce
-                                                                   error: nil] dataWithoutNonce];
+                                                                    nonce: pubKeyNonce
+                                                                    error: nil] dataWithoutNonce];
         message[@"eph"] = [ephKeyPair.publicKey.data base64EncodedStringWithOptions: 0];
         message[@"from"] = [encryptedPubKeyData base64EncodedStringWithOptions: 0];
         message[@"pknonce"] = [pubKeyNonce.data base64EncodedStringWithOptions: 0];
@@ -281,9 +280,10 @@
                            diffieHellman.bytes,
                            [diffieHellman length],
                            aRootKey.bytes);
-    NSData *info = [@"MobileEdge Ratchet" dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *salt = [@"salty" dataUsingEncoding:NSUTF8StringEncoding];
-    return [HKDFKit deriveKey: inputKeyMaterial info: info salt: salt outputSize: 3*32];
+    return [HKDFKit deriveKey: inputKeyMaterial
+                   infoString: @"MobileEdge Ratchet"
+                   saltString: @"salty"
+                   outputSize: 3*32];
 }
 
 - (NSData *) attemptDecryptionUsingNextHeaderKeyWithSessionState: (MOBAxolotlSession *) aSession
@@ -418,12 +418,11 @@
                                                               options: 0];
     NACLAsymmetricPublicKey *ephPubKey = [[NACLAsymmetricPublicKey alloc] initWithData: ephPubData];
     NSData *diffieHellmanData = [self.identity.identityKeyPair.privateKey multWithKey: ephPubKey].data;
-    NSData *info = [@"MobileEdge PubKeyEncrypt" dataUsingEncoding: NSUTF8StringEncoding];
-    NSData *salt = [@"salty" dataUsingEncoding: NSUTF8StringEncoding];
+
     NACLSymmetricPrivateKey *pubKeyCipher =
         [[NACLSymmetricPrivateKey alloc] initWithData: [HKDFKit deriveKey: diffieHellmanData
-                                                                     info: info
-                                                                     salt: salt
+                                                               infoString: @"MobileEdge PubKeyEncrypt"
+                                                               saltString: @"salty"
                                                                outputSize: [NACLSymmetricPrivateKey keyLength]]]; //FIXME: int conversion?
     NACLAsymmetricPublicKey *senderIdentityKey =
         [[NACLAsymmetricPublicKey alloc] initWithData:

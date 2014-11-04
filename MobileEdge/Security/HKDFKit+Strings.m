@@ -14,12 +14,12 @@
 #import "HKDFKit+Strings.h"
 
 @implementation HKDFKit (Strings)
-+ (NSData *) deriveKey: (NSString *) seed
-                 info: (NSString *) info
-                 salt: (NSString *) salt
++ (NSData *) deriveKey: (NSData *) seed
+                 infoString: (NSString *) info
+                 saltString: (NSString *) salt
            outputSize: (int) outputSize
 {
-    return [HKDFKit deriveKey: [seed dataUsingEncoding: NSUTF8StringEncoding]
+    return [HKDFKit deriveKey: seed
                          info: [info dataUsingEncoding: NSUTF8StringEncoding]
                          salt: [salt dataUsingEncoding: NSUTF8StringEncoding]
                    outputSize: outputSize];
