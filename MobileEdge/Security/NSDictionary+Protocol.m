@@ -18,9 +18,12 @@
 @implementation NSDictionary (Protocol)
 
 - (NSData *) decryptedDataFromSender: (MOBRemoteIdentity *) aRemoteIdentity
-                         withProtocol: (id <MOBProtocol>) aProtocol
+                        withProtocol: (id <MOBProtocol>) aProtocol
+                               error: (NSError *) aError
 {
-    return [aProtocol decryptMessage: self fromSender: aRemoteIdentity];
+    return [aProtocol decryptMessage: self
+                          fromSender: aRemoteIdentity
+                               error: aError];
     //return [aProtocol decryptBody: self[@"body"]
     //                    withHead: self[@"head"]
     //                   withNonce: self[@"nonce"]];

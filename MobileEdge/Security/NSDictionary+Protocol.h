@@ -19,6 +19,7 @@
 @interface NSDictionary (Protocol)
 
 - (NSData *) decryptedDataFromSender: (MOBRemoteIdentity *) aRemoteIdentity
-                        withProtocol: (id <MOBProtocol>) aProtocol;
+                        withProtocol: (id <MOBProtocol>) aProtocol
+                               error: (NSError *) aError;
 
 @end

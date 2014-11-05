@@ -128,11 +128,13 @@ typedef void (^RequestOperationOnFailureBlock) ( AFHTTPRequestOperation *operati
                 // the structure of the response should look as follows:
                 // { "message" : { "id" : ..., "eph0" : ..., "eph1" : ... } }
                 finalizeBlock(responseObject[@"message"]);
-                NSData *encryptedData = [axolotl encryptData:request.HTTPBody forRecipient: remoteIdentity];
+                NSDictionary *encryptedData = [axolotl encryptData:request.HTTPBody
+                                                forRecipient: remoteIdentity
+                                                       error: nil]; // TODO: error handling
                 NSMutableURLRequest *newRequest = [request mutableCopy]; //[NSMutableURLRequest requestWithURL:request.URL];
                 [newRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
                 [newRequest setHTTPMethod:@"POST"];
-                [newRequest setHTTPBody: encryptedData];
+                [newRequest setHTTPBody: encryptedData]; // TODO FIXME: type!
                 
                 AFHTTPRequestOperation *encryptedRequest = [super HTTPRequestOperationWithRequest:newRequest
                                                                                           success:onSuccessfulEncryptedRequest
@@ -170,7 +172,8 @@ typedef void (^RequestOperationOnFailureBlock) ( AFHTTPRequestOperation *operati
             //TODO: further implement method!
         };
         [axolotl performKeyExchangeWithBob: remoteIdentity
-            andSendKeyExchangeMessageUsing: sendBlock];
+            andSendKeyExchangeMessageUsing: sendBlock
+                                     error: nil]; // TODO: error handling
         return keyExchangeRequestOperation;
     }
     else

@@ -66,13 +66,16 @@
 #pragma mark Encryption
 - (NSDictionary *) encryptString: (NSString *) aMessage
                     forRecipient: (MOBRemoteIdentity *) aReceiver
+                           error: (NSError *) aError
 {
     return [self encryptData: [aMessage dataUsingEncoding: NSUTF8StringEncoding]
-                forRecipient: aReceiver];
+                forRecipient: aReceiver
+                       error: aError];
 }
 
 - (NSDictionary *) encryptData: (NSData *) aData
                   forRecipient: (MOBRemoteIdentity *) aRecipient
+                         error: (NSError *) aError
 {
     MOBAxolotlSession *session;
     if (!(session = (MOBAxolotlSession *) (self.sessions[[aRecipient base64]])))
@@ -275,8 +278,8 @@
 }
 
 - (NSData *) deriveKeyDataWithRootKey: (NSData *) aRootKey
-                      ourEphemeral: (NACLAsymmetricPrivateKey *) aOurEphemeral
-                    theirEphemeral: (NACLAsymmetricPublicKey *) aTheirEphemeral
+                         ourEphemeral: (NACLAsymmetricPrivateKey *) aOurEphemeral
+                       theirEphemeral: (NACLAsymmetricPublicKey *) aTheirEphemeral
 {
     NSData *diffieHellman = [aOurEphemeral multWithKey: aTheirEphemeral].data;
     NSMutableData *inputKeyMaterial = [NSMutableData dataWithCapacity: (256 / 8)];
@@ -357,6 +360,7 @@
 
 - (NSData *) decryptMessage: (NSDictionary *) aEncryptedMessage
                  fromSender: (MOBRemoteIdentity *) aSender
+                      error: (NSError *) aError
 {
     MOBAxolotlSession *session;
     if (!(session = self.sessions[[aSender base64]]))
@@ -402,13 +406,16 @@
 
 - (NSString *) decryptedStringFromMessage: (NSDictionary *) aEncryptedMessage
                                fromSender: (MOBRemoteIdentity *) aSender
+                                    error: (NSError *) aError
 {
     return [[NSString alloc] initWithData: [self decryptMessage: aEncryptedMessage
-                                                     fromSender: aSender]
+                                                     fromSender: aSender
+                                                          error: aError]
                                  encoding: NSUTF8StringEncoding];
 }
 
 - (NSData *) decryptMessage: (NSDictionary *) aEncryptedMessage
+                           error: (NSError *) aError
 {
     if (!aEncryptedMessage[@"from"]
         || !aEncryptedMessage[@"eph"]
@@ -440,13 +447,14 @@
     { // TODO: error handling
         return nil;
     }
-    return [self decryptMessage: aEncryptedMessage fromSender: senderIdentity];
+    return [self decryptMessage: aEncryptedMessage fromSender: senderIdentity error: aError];
 }
 
 #pragma mark -
 #pragma mark Key exchange
 - (void) performKeyExchangeWithBob: (MOBRemoteIdentity *) aBob
     andSendKeyExchangeMessageUsing: (KeyExchangeSendBlock) aSendKeyExchangeBlock
+                             error: (NSError *) aError
 {
     NACLAsymmetricKeyPair *myEphemeralKeyPair = [NACLAsymmetricKeyPair keyPair];
     NSMutableDictionary *keyExchangeMessageOut = [NSMutableDictionary dictionary];
@@ -479,8 +487,9 @@
 }
 
 - (void) performKeyExchangeWithAlice: (MOBRemoteIdentity *) aAlice
-              usingKeyExchangeMessage: (NSData *) aTheirKeyExchangeMessage
+             usingKeyExchangeMessage: (NSData *) aTheirKeyExchangeMessage
       andSendKeyExchangeMessageUsing: (KeyExchangeSendBlockBob) aSendKeyExchangeBlock
+                               error: (NSError *) aError
 {
     // When we are Bob we need two ephemeral keys:
     NACLAsymmetricKeyPair *myEphemeralKeyPair0 = [NACLAsymmetricKeyPair keyPair];

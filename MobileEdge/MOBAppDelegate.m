@@ -60,7 +60,8 @@
                        }];
     };
     [axolotl performKeyExchangeWithBob: remote
-        andSendKeyExchangeMessageUsing: sendBlock];
+        andSendKeyExchangeMessageUsing: sendBlock
+                                 error: nil]; // TODO: error handling
     //TODO: output shared secret
     
     return YES;
