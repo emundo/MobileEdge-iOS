@@ -161,12 +161,12 @@
     id parsedHeaderObject = [NSJSONSerialization JSONObjectWithData: decryptedHeader // TODO: check if valid
                                                             options: 0
                                                               error: nil];
-    if ([parsedHeaderObject isKindOfClass: [NSArray class]])
+    if (![parsedHeaderObject isKindOfClass: [NSArray class]])
     {
-        return parsedHeaderObject;
+        return nil;
     }
     
-    return nil;
+    return parsedHeaderObject;
 }
 
 - (NSData *) attemptDecryptionWithSkippedKeys: (NSMutableArray *) aSkippedKeys
@@ -241,7 +241,8 @@
     NSArray *parsedHeader = [self decryptAndParseHeader: aEncryptedMessage[@"head"]
                                                 withKey: aSession.receiverHeaderKey
                                                andNonce: aEncryptedMessage[@"nonce"]];
-    if (!parsedHeader) {
+    if (!parsedHeader)
+    { // TODO: error handling
         return nil;
     }
     
@@ -486,9 +487,9 @@
     NACLAsymmetricKeyPair *myEphemeralKeyPair1 = [NACLAsymmetricKeyPair keyPair];
     NSMutableDictionary *keyExchangeMessageOut = [NSMutableDictionary dictionary];
     
-    [keyExchangeMessageOut setObject:[self.identity.identityKey.data base64EncodedStringWithOptions: 0] forKey:@"id"];
-    [keyExchangeMessageOut setObject:[myEphemeralKeyPair0.publicKey.data base64EncodedStringWithOptions: 0] forKey:@"eph0"];
-    [keyExchangeMessageOut setObject:[myEphemeralKeyPair1.publicKey.data base64EncodedStringWithOptions: 0] forKey:@"eph1"];
+    [keyExchangeMessageOut setObject: [self.identity.identityKey.data base64EncodedStringWithOptions: 0] forKey: @"id"];
+    [keyExchangeMessageOut setObject: [myEphemeralKeyPair0.publicKey.data base64EncodedStringWithOptions: 0] forKey: @"eph0"];
+    [keyExchangeMessageOut setObject: [myEphemeralKeyPair1.publicKey.data base64EncodedStringWithOptions: 0] forKey: @"eph1"];
     
     MOBAxolotlSession *newSession = [[MOBAxolotlSession alloc] initWithMyIdentityKeyPair: self.identity.identityKeyPair
                                                                         theirIdentityKey: aAlice.identityKey];
@@ -509,7 +510,7 @@
     
     if ([NSJSONSerialization isValidJSONObject: keyExchangeMessageOut])
     {
-        //aSendKeyExchangeBlock([NSJSONSerialization dataWithJSONObject:keyExchangeMessageOut options:0 error:nil], finalizeBlock);   //TODO: error
+        //aSendKeyExchangeBlock([NSJSONSerialization dataWithJSONObject: keyExchangeMessageOut options:0 error: nil], finalizeBlock);   //TODO: error
         aSendKeyExchangeBlock(keyExchangeMessageOut);
     }
     else
