@@ -47,6 +47,7 @@
 		23CDB7F91999FEFE0007C3C5 /* MOBAxolotlSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CDB7F81999FEFE0007C3C5 /* MOBAxolotlSession.m */; };
 		23CDB7FF199A0E840007C3C5 /* MOBValueToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CDB7FE199A0E840007C3C5 /* MOBValueToken.m */; };
 		23CDB802199A0E840007C3C5 /* MOBVendorSecret.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CDB801199A0E840007C3C5 /* MOBVendorSecret.m */; };
+		23E0115A1A0A3AC6008F7373 /* MOBError.m in Sources */ = {isa = PBXBuildFile; fileRef = 23E011591A0A3AC6008F7373 /* MOBError.m */; };
 		23EE190019F0023700014900 /* MOBAxolotlChainKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 23EE18FF19F0023700014900 /* MOBAxolotlChainKey.m */; };
 		23F37DC419910F230074E62D /* MobileEdge.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DC219910F230074E62D /* MobileEdge.xcdatamodeld */; };
 		23F37DD819936F970074E62D /* MOBAxolotl.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F37DD719936F970074E62D /* MOBAxolotl.m */; };
@@ -152,6 +153,8 @@
 		23CDB7FE199A0E840007C3C5 /* MOBValueToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBValueToken.m; path = Model/MOBValueToken.m; sourceTree = "<group>"; };
 		23CDB800199A0E840007C3C5 /* MOBVendorSecret.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBVendorSecret.h; path = Model/MOBVendorSecret.h; sourceTree = "<group>"; };
 		23CDB801199A0E840007C3C5 /* MOBVendorSecret.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBVendorSecret.m; path = Model/MOBVendorSecret.m; sourceTree = "<group>"; };
+		23E011581A0A3AC6008F7373 /* MOBError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBError.h; sourceTree = "<group>"; };
+		23E011591A0A3AC6008F7373 /* MOBError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBError.m; sourceTree = "<group>"; };
 		23EE18FE19F0023700014900 /* MOBAxolotlChainKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBAxolotlChainKey.h; path = Model/MOBAxolotlChainKey.h; sourceTree = "<group>"; };
 		23EE18FF19F0023700014900 /* MOBAxolotlChainKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBAxolotlChainKey.m; path = Model/MOBAxolotlChainKey.m; sourceTree = "<group>"; };
 		23F37DC319910F230074E62D /* MobileEdge.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MobileEdge.xcdatamodel; sourceTree = "<group>"; };
@@ -337,6 +340,8 @@
 				23BAE210199B60E800D3CDD8 /* MOBHTTPRequestOperationManager.m */,
 				23BAE23819A1E4D400D3CDD8 /* MOBCore.h */,
 				23BAE23919A1E4D400D3CDD8 /* MOBCore.m */,
+				23E011581A0A3AC6008F7373 /* MOBError.h */,
+				23E011591A0A3AC6008F7373 /* MOBError.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -690,6 +695,7 @@
 				23CDB7F619990EC20007C3C5 /* MOBKeyExchangeMessage.m in Sources */,
 				23BAE23A19A1E4D400D3CDD8 /* MOBCore.m in Sources */,
 				23AF8C3D1998E63B00DB4B2B /* AMErrorHandlerUI.m in Sources */,
+				23E0115A1A0A3AC6008F7373 /* MOBError.m in Sources */,
 				23FD77B2198A904400E3CD76 /* MOBViewController.m in Sources */,
 				23BAE22F19A1DC7300D3CDD8 /* CKHTTPConnection.m in Sources */,
 				23F37DFF1998A34F0074E62D /* MOBTorInterface.m in Sources */,

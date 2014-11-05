@@ -65,7 +65,7 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
  */
 - (NSDictionary *) encryptString: (NSString *) aMessage
                     forRecipient: (MOBRemoteIdentity *) aRecipient
-                           error: (NSError *) aError;
+                           error: (NSError **) aError;
 
 /**
  * @discussion Encrypt given data for a given recipient.
@@ -77,7 +77,7 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
  */
 - (NSDictionary *) encryptData: (NSData *) aData
                   forRecipient: (MOBRemoteIdentity *) aRecipient
-                         error: (NSError *) aError;
+                         error: (NSError **) aError;
 
 /**
  * @discussion Decrypt a given message from a given sender
@@ -88,7 +88,7 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
  */
 - (NSData *) decryptMessage: (NSDictionary *) aEncryptedMessage
                  fromSender: (MOBRemoteIdentity *) aSender
-                      error: (NSError *) aError;
+                      error: (NSError **) aError;
 
 /**
  * @discussion Decrypt given data from a given sender
@@ -99,7 +99,7 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
  */
 - (NSString *) decryptedStringFromMessage: (NSDictionary *) aEncryptedMessage
                                fromSender: (MOBRemoteIdentity *) aSender
-                                    error: (NSError *) aError;
+                                    error: (NSError **) aError;
 
 /**
  * @discussion Decrypts a given message, if a session can be found for the sender.
@@ -113,7 +113,7 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
  * @return the decrypted data or nil if decryption fails
  */
 - (NSData *) decryptMessage: (NSDictionary *) aEncryptedMessage
-                      error: (NSError *) aError;
+                      error: (NSError **) aError;
 
 
 /**
@@ -130,7 +130,7 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
  */
 - (void) performKeyExchangeWithBob: (MOBRemoteIdentity *) aBob
     andSendKeyExchangeMessageUsing: (KeyExchangeSendBlock) aSendKeyExchangeBlock
-                             error: (NSError *) aError;
+                             error: (NSError **) aError;
 
 /**
  * @discussion Perform a key exchange with someone who initiated a key exchange
@@ -148,6 +148,6 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
 - (void) performKeyExchangeWithAlice: (MOBRemoteIdentity *) aAlice
              usingKeyExchangeMessage: (NSData *) aTheirKeyExchangeMessage
       andSendKeyExchangeMessageUsing: (KeyExchangeSendBlockBob) aSendKeyExchangeBlock
-                               error: (NSError *) aError;
+                               error: (NSError **) aError;
 
 @end

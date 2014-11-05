@@ -66,7 +66,7 @@
 #pragma mark Encryption
 - (NSDictionary *) encryptString: (NSString *) aMessage
                     forRecipient: (MOBRemoteIdentity *) aReceiver
-                           error: (NSError *) aError
+                           error: (NSError **) aError
 {
     return [self encryptData: [aMessage dataUsingEncoding: NSUTF8StringEncoding]
                 forRecipient: aReceiver
@@ -75,7 +75,7 @@
 
 - (NSDictionary *) encryptData: (NSData *) aData
                   forRecipient: (MOBRemoteIdentity *) aRecipient
-                         error: (NSError *) aError
+                         error: (NSError **) aError
 {
     MOBAxolotlSession *session;
     if (!(session = (MOBAxolotlSession *) (self.sessions[[aRecipient base64]])))
@@ -360,7 +360,7 @@
 
 - (NSData *) decryptMessage: (NSDictionary *) aEncryptedMessage
                  fromSender: (MOBRemoteIdentity *) aSender
-                      error: (NSError *) aError
+                      error: (NSError **) aError
 {
     MOBAxolotlSession *session;
     if (!(session = self.sessions[[aSender base64]]))
@@ -406,7 +406,7 @@
 
 - (NSString *) decryptedStringFromMessage: (NSDictionary *) aEncryptedMessage
                                fromSender: (MOBRemoteIdentity *) aSender
-                                    error: (NSError *) aError
+                                    error: (NSError **) aError
 {
     return [[NSString alloc] initWithData: [self decryptMessage: aEncryptedMessage
                                                      fromSender: aSender
@@ -415,7 +415,7 @@
 }
 
 - (NSData *) decryptMessage: (NSDictionary *) aEncryptedMessage
-                           error: (NSError *) aError
+                           error: (NSError **) aError
 {
     if (!aEncryptedMessage[@"from"]
         || !aEncryptedMessage[@"eph"]
@@ -454,7 +454,7 @@
 #pragma mark Key exchange
 - (void) performKeyExchangeWithBob: (MOBRemoteIdentity *) aBob
     andSendKeyExchangeMessageUsing: (KeyExchangeSendBlock) aSendKeyExchangeBlock
-                             error: (NSError *) aError
+                             error: (NSError **) aError
 {
     NACLAsymmetricKeyPair *myEphemeralKeyPair = [NACLAsymmetricKeyPair keyPair];
     NSMutableDictionary *keyExchangeMessageOut = [NSMutableDictionary dictionary];
@@ -489,7 +489,7 @@
 - (void) performKeyExchangeWithAlice: (MOBRemoteIdentity *) aAlice
              usingKeyExchangeMessage: (NSData *) aTheirKeyExchangeMessage
       andSendKeyExchangeMessageUsing: (KeyExchangeSendBlockBob) aSendKeyExchangeBlock
-                               error: (NSError *) aError
+                               error: (NSError **) aError
 {
     // When we are Bob we need two ephemeral keys:
     NACLAsymmetricKeyPair *myEphemeralKeyPair0 = [NACLAsymmetricKeyPair keyPair];
