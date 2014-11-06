@@ -19,7 +19,7 @@
 
 - (NSData *) decryptedDataFromSender: (MOBRemoteIdentity *) aRemoteIdentity
                         withProtocol: (id <MOBProtocol>) aProtocol
-                               error: (NSError *) aError
+                               error: (NSError **) aError
 {
     return [aProtocol decryptMessage: self
                           fromSender: aRemoteIdentity

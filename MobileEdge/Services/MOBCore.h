@@ -19,6 +19,7 @@
 #import "MOBAxolotl.h"
 #import "MOBHTTPRequestOperationManager.h"
 #import "MOBAnonymizerSettings.h"
+#import "MOBError.h"
 
 
 #ifdef DEBUG

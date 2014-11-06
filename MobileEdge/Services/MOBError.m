@@ -40,6 +40,18 @@
             case kMOBProtocolMessageDecryptionFailed:
                 localizedDescription = @"Message was undecryptable.";
                 break;
+            case kMOBProtocolNoSenderInformation:
+                localizedDescription = @"Cannot decrypt a message without information about its sender.";
+                break;
+            case kMOBProtocolIncorrectSenderInformation:
+                localizedDescription = @"The sender information given could not be decrypted.";
+                break;
+            case kMOBAxolotlRatchetFlagSetUnexpectedly:
+                localizedDescription = @"The ratchet flag was set unexpectedly. This should not happen whe decryption with current header key failed.";
+                break;
+            case kMOBAxolotlExceedingSkippedMessageLimit:
+                localizedDescription = @"The received message is more than 500 messages into the future. Aborting decryption.";
+                break;
                 
             default:
                 localizedDescription = @"An unknown error occurred.";

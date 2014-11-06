@@ -79,8 +79,10 @@
 {
     MOBAxolotlSession *session;
     if (!(session = (MOBAxolotlSession *) (self.sessions[[aRecipient base64]])))
-    {
-        // TODO: fail! we dont have a session for the given remote!
+    { // fail! we dont have a session for the given remote!
+        [MOBError populateErrorObject: aError
+                            forDomain: kMOBErrorDomainProtocol
+                            errorCode: kMOBProtocolNoSessionForRemote];
         return nil;
     }
     
@@ -151,21 +153,24 @@
 {
     NSData *headerData = [[NSData alloc] initWithBase64EncodedString: aBase64Header
                                                              options: 0];
-    NACLNonce *nonce = [NACLNonce nonceWithData: [[NSData alloc] initWithBase64EncodedString: aBase64Nonce
-                                                                                     options: 0]];
+    NACLNonce *nonce = [NACLNonce nonceWithData:
+                        [[NSData alloc] initWithBase64EncodedString: aBase64Nonce
+                                                            options: 0]];
     NSData *decryptedHeader;
     if (!(decryptedHeader = [headerData decryptedDataUsingPrivateKey: aHeaderKey
-                                                           nonce: nonce
-                                                           error: nil]))
+                                                               nonce: nonce
+                                                               error: nil]))
     { // Decryption of the header failed.
         return nil;
     }
 
-    id parsedHeaderObject = [NSJSONSerialization JSONObjectWithData: decryptedHeader // TODO: check if valid
+    id parsedHeaderObject = [NSJSONSerialization JSONObjectWithData: decryptedHeader
                                                             options: 0
                                                               error: nil];
-    if (![parsedHeaderObject isKindOfClass: [NSArray class]])
-    {
+    if (!parsedHeaderObject
+        || ![parsedHeaderObject isKindOfClass: [NSArray class]]
+        || ([parsedHeaderObject count] != 4))
+    { // Header format invalid.
         return nil;
     }
     
@@ -216,13 +221,17 @@
                futureMessageNumber: (NSUInteger) aFutureMessageNumber
              usingSpecialHeaderKey: (NACLSymmetricPrivateKey *) aHeaderKey
               usingSpecialChainKey: (MOBAxolotlChainKey *) aChainKey
+                             error: (NSError **) aError
 {
     MOBAxolotlChainKey *chainKey = (aChainKey) ? aChainKey : aSession.receiverChainKey;
     NACLSymmetricPrivateKey *headerKey = (aHeaderKey) ? aHeaderKey : aSession.receiverHeaderKey;
     // TODO: check what TS does here with chainkey.index > counter
     if (aFutureMessageNumber - aCurrentMessageNumber > 500)
     { // more than 500 skipped messages (same number TextSecure sets as limit)
-        // TODO: error/exception?
+        [MOBError populateErrorObject: aError
+                            forDomain: kMOBErrorDomainProtocol
+                            errorCode: kMOBAxolotlExceedingSkippedMessageLimit];
+        return;
     }
     
     NSMutableArray *messageKeys = [NSMutableArray arrayWithCapacity: aFutureMessageNumber - aCurrentMessageNumber];
@@ -239,6 +248,7 @@
 
 - (NSData *) attemptDecryptionUsingCurrentHeaderKeyWithSessionState: (MOBAxolotlSession *) aSession
                                                          forMessage: (NSDictionary *) aEncryptedMessage
+                                                              error: (NSError **) aError
 {
     // attempt to decrypt header with receiverHeaderKey:
     NSArray *parsedHeader = [self decryptAndParseHeader: aEncryptedMessage[@"head"]
@@ -253,7 +263,8 @@
                currentMessageNumber: aSession.messagesReceivedCount
                 futureMessageNumber: [((NSNumber *) parsedHeader[0]) unsignedIntegerValue]
               usingSpecialHeaderKey: nil
-               usingSpecialChainKey: nil]; // passing nil just takes the one from the session.
+               usingSpecialChainKey: nil
+                              error: aError]; // passing nil just takes the one from the session.
     
     NACLSymmetricPrivateKey *messageKey = aSession.currentMessageKey;
     
@@ -295,6 +306,7 @@
 
 - (NSData *) attemptDecryptionUsingNextHeaderKeyWithSessionState: (MOBAxolotlSession *) aSession
                                                       forMessage: (NSDictionary *) aEncryptedMessage
+                                                           error: (NSError **) aError
 {
     NSArray *parsedHeader = [self decryptAndParseHeader: aEncryptedMessage[@"head"]
                                                 withKey: aSession.receiverNextHeaderKey
@@ -310,7 +322,8 @@
                    currentMessageNumber: aSession.messagesReceivedCount
                     futureMessageNumber: [((NSNumber *) parsedHeader[1]) unsignedIntegerValue]
                   usingSpecialHeaderKey: nil
-                   usingSpecialChainKey: nil];
+                   usingSpecialChainKey: nil
+                                  error: aError];
     }
     NACLSymmetricPrivateKey *purportedHeaderKey = aSession.receiverNextHeaderKey;
     NSData *keyData = [[NSData alloc] initWithBase64EncodedString: ((NSString *) parsedHeader[2])
@@ -330,8 +343,9 @@
                currentMessageNumber: 0
                 futureMessageNumber: [((NSNumber *) parsedHeader[0]) unsignedIntegerValue]
               usingSpecialHeaderKey: purportedHeaderKey //purportedReceiverNextHeaderKey
-               usingSpecialChainKey: purportedReceiverChainKey];
-    
+               usingSpecialChainKey: purportedReceiverChainKey
+                              error: aError];
+  
     // Attempt decrypting message body:
     NACLNonce *innerNonce = [NACLNonce nonceWithData:
                                  [[NSData alloc] initWithBase64EncodedString: parsedHeader[3]
@@ -364,8 +378,10 @@
 {
     MOBAxolotlSession *session;
     if (!(session = self.sessions[[aSender base64]]))
-    {
-        // TODO: fail! we dont have a session for the given remote!
+    { // fail! we dont have a session for the given remote!
+        [MOBError populateErrorObject: aError
+                            forDomain: kMOBErrorDomainProtocol
+                            errorCode: kMOBProtocolNoSessionForRemote];
         return nil;
     }
     
@@ -379,8 +395,9 @@
     }
     // try decrypting with current header key:
     if ((session.receiverHeaderKey) &&
-        (decryptedMessage = [self attemptDecryptionUsingCurrentHeaderKeyWithSessionState: session //TODO!
-                                                                              forMessage: aEncryptedMessage]))
+        (decryptedMessage = [self attemptDecryptionUsingCurrentHeaderKeyWithSessionState: session //TODO! // What exactly? :(
+                                                                              forMessage: aEncryptedMessage
+                                                                                   error: aError]))
     { // Decryption successful.
         [session advanceStateAfterReceiving];
         return decryptedMessage;
@@ -388,12 +405,20 @@
     
     // So far, decryption has _not_ been successful. Advance the state and retry:
     if (session.ratchetFlag)
-    { // TODO: set some error
+    { // Ratchet flag is set.
+        // This should not be if the message was undecryptable with current header key
+        [MOBError populateErrorObject: aError
+                            forDomain: kMOBErrorDomainProtocol
+                            errorCode: kMOBAxolotlRatchetFlagSetUnexpectedly];
         return nil;
     }
     if (!(decryptedMessage = [self attemptDecryptionUsingNextHeaderKeyWithSessionState: session
-                                                                            forMessage: aEncryptedMessage]))
-    { // Last decryption attempt has failed. Cannot decrypt. // TODO: error handling
+                                                                            forMessage: aEncryptedMessage
+                                                                                 error: aError]))
+    { // Last decryption attempt has failed. Cannot decrypt.
+        [MOBError populateErrorObject: aError
+                            forDomain: kMOBErrorDomainProtocol
+                            errorCode: kMOBProtocolMessageDecryptionFailed];
         return nil;
     }
     // Decryption successful!
@@ -415,12 +440,15 @@
 }
 
 - (NSData *) decryptMessage: (NSDictionary *) aEncryptedMessage
-                           error: (NSError **) aError
+                      error: (NSError **) aError
 {
     if (!aEncryptedMessage[@"from"]
         || !aEncryptedMessage[@"eph"]
         || !aEncryptedMessage[@"pknonce"])
-    { // TODO: error handling
+    { // We cannot decrypt a message without information about the sender:
+        [MOBError populateErrorObject: aError
+                            forDomain: kMOBErrorDomainProtocol
+                            errorCode: kMOBProtocolNoSenderInformation];
         return nil;
     }
     NSData *encryptedSenderData = [[NSData alloc] initWithBase64EncodedString: aEncryptedMessage[@"from"]
@@ -437,16 +465,19 @@
                                                                infoString: @"MobileEdge PubKeyEncrypt"
                                                                saltString: @"salty"
                                                                outputSize: [NACLSymmetricPrivateKey keyLength]]]; //FIXME: int conversion?
-    NACLAsymmetricPublicKey *senderIdentityKey =
-        [[NACLAsymmetricPublicKey alloc] initWithData:
-         [encryptedSenderData decryptedDataUsingPrivateKey: pubKeyCipher
-                                                     nonce: [NACLNonce nonceWithData: pubKeyNonce]
-                                                     error: nil]];
-    MOBRemoteIdentity *senderIdentity = [[MOBRemoteIdentity alloc] initWithPublicKey: senderIdentityKey];
-    if (!encryptedSenderData)
-    { // TODO: error handling
+    NSData *decryptedSenderData = [encryptedSenderData decryptedDataUsingPrivateKey: pubKeyCipher
+                                                                              nonce: [NACLNonce nonceWithData: pubKeyNonce]
+                                                                              error: nil];
+    if (!decryptedSenderData)
+    { // Could not decrypt the sender information. It was incomplete or incorrect.
+        [MOBError populateErrorObject: aError
+                            forDomain: kMOBErrorDomainProtocol
+                            errorCode: kMOBProtocolIncorrectSenderInformation];
         return nil;
     }
+    NACLAsymmetricPublicKey *senderIdentityKey =
+        [[NACLAsymmetricPublicKey alloc] initWithData: decryptedSenderData];
+    MOBRemoteIdentity *senderIdentity = [[MOBRemoteIdentity alloc] initWithPublicKey: senderIdentityKey];
     return [self decryptMessage: aEncryptedMessage fromSender: senderIdentity error: aError];
 }
 
@@ -475,9 +506,8 @@
         [self.keychain setObject: self.sessions
                           forKey: [self.identity.identityKey base64]];
     };
-    if ([NSJSONSerialization isValidJSONObject:keyExchangeMessageOut])
+    if ([NSJSONSerialization isValidJSONObject: keyExchangeMessageOut])
     {
-        //aSendKeyExchangeBlock([NSJSONSerialization dataWithJSONObject:keyExchangeMessageOut options:0 error:nil], finalizeBlock);   //TODO: error
         aSendKeyExchangeBlock(keyExchangeMessageOut, finalizeBlock);
     }
     else
@@ -507,6 +537,9 @@
                                                                            error: nil]; // TODO: error / conversion might already have been handled!
     if (![keyExchangeMessageIn isKindOfClass: [NSDictionary class]])
     { // Error while interpreting key exchange message
+        [MOBError populateErrorObject: aError
+                            forDomain: kMOBErrorDomainProtocol
+                            errorCode: kMOBProtocolKeyExchangeMessageInvalid];
         DDLogError(@"Error while interpreting Alice's key exchange message. %@", aTheirKeyExchangeMessage);
         return;
     }
@@ -534,7 +567,8 @@
 - (void) addSession: (MOBAxolotlSession *) aSession
           forRemote: (MOBRemoteIdentity *) aRemoteIdentity
 {
-    if (!self.sessions) {
+    if (!self.sessions)
+    {
         self.sessions = [NSMutableDictionary dictionary];
     }
     [self.sessions setObject: aSession forKey: [aRemoteIdentity base64]];
@@ -544,7 +578,8 @@
 #pragma mark Testing functions
 - (NSData *) getSessionKeyMaterialForTestingForRemote: (MOBRemoteIdentity *) aRemote
 {
-    if (self.sessions) {
+    if (self.sessions)
+    {
         return ((MOBAxolotlSession *) self.sessions[[aRemote base64]]).rootKey;
     }
     return nil;

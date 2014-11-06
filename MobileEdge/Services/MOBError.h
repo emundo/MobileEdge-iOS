@@ -21,8 +21,12 @@ enum MOBProtocolErrorCode
 {
     kMOBProtocolKeyExchangeMessageInvalid,
     kMOBProtocolNoSessionForRemote,
+    kMOBProtocolNoSenderInformation,
+    kMOBProtocolIncorrectSenderInformation,
     kMOBProtocolMessageFormatInvalid,
-    kMOBProtocolMessageDecryptionFailed
+    kMOBProtocolMessageDecryptionFailed,
+    kMOBAxolotlRatchetFlagSetUnexpectedly,
+    kMOBAxolotlExceedingSkippedMessageLimit
 };
 
 enum MOBAnonymizerErrorCode
