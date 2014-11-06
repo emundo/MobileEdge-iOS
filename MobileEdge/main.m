@@ -14,7 +14,7 @@
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
-        //[NSURLProtocol registerClass:[ProxyURLProtocol class]];
+        [NSURLProtocol registerClass:[ProxyURLProtocol class]];
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([MOBAppDelegate class]));
     }
 }

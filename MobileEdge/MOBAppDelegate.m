@@ -24,9 +24,15 @@
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
 #ifdef DEBUG
     DDLogDebug(@"IN DEBUG MODE");
-    #define _AFNETWORKING_ALLOW_INVALID_SSL_CERTIFICATES_
+    // #define _AFNETWORKING_ALLOW_INVALID_SSL_CERTIFICATES_
     // has no effect
     #endif
+    self.mobileEdgeCore = [[MOBCore alloc] init];
+    self.mobileEdgeCore.anonymizerSettings = [[MOBTorSettings alloc] init];
+    [self.mobileEdgeCore.anonymizerSettings whitelistDomainForSelfSignedCertificates: @"localhost"];
+    [self.mobileEdgeCore.anonymizerSettings whitelistDomainForSelfSignedCertificates: @"127.0.0.1"];
+    [self.mobileEdgeCore.anonymizerSettings whitelistDomainForSelfSignedCertificates: @"192.168.1.124"];
+    [self.mobileEdgeCore.anonymizerSettings whitelistDomainForSelfSignedCertificates: @"192.168.1.131"];
     DDLogVerbose(@"%@", [[NACLAsymmetricKeyPair keyPair].privateKey.data base64EncodedStringWithOptions:0]);
     MOBIdentity *myIdentity = [[MOBIdentity alloc] init]; // load an Identity (key pair).
     MOBAxolotl *axolotl = [[MOBAxolotl alloc] initWithIdentity: myIdentity]; //TODO: Create Axolotl instance (identity)
@@ -34,14 +40,14 @@
     MOBRemoteIdentity *remote = [[MOBRemoteIdentity alloc] initWithPublicKey: mobileEdgePK
                                                                   serviceURL:[NSURL URLWithString:@"test.mobileedge.de"]];// load a remote identity (pubkey + url).
     //TODO: perform key exchange with remote identity.
-    NSURL *baseURL = [NSURL URLWithString:@"https://localhost:8888"];
-    //NSURL *baseURL = [NSURL URLWithString:@"https://google.com"];
+    //NSURL *baseURL = [NSURL URLWithString:@"https://192.168.1.124:8888"];
+    NSURL *baseURL = [NSURL URLWithString:@"https://google.com"];
     //MOBHTTPRequestOperationManager *operationManager = [[MOBHTTPRequestOperationManager alloc] initWithBaseURL: baseURL];
     KeyExchangeSendBlock sendBlock;
     //sendBlock = ^(NSData *keyExchangeMessage, KeyExchangeFinalizeBlock finalizeBlock)
     sendBlock = ^(NSDictionary *keyExchangeMessage, KeyExchangeFinalizeBlock finalizeBlock)
     {
-        AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+        AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL: baseURL];
         NSDictionary *parameters = @{ @"type" : @"KEYXC", @"keys" : keyExchangeMessage };
         #ifdef DEBUG
         manager.securityPolicy.allowInvalidCertificates=YES;    //allow unsigned //TODO: FIXME!!!!!!
@@ -49,11 +55,21 @@
         #endif
         manager.responseSerializer = [AFJSONResponseSerializer serializer];   //set up for JSOn
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        NSMutableIndexSet *indeces = [[NSMutableIndexSet alloc] initWithIndexSet: manager.responseSerializer.acceptableStatusCodes];
+        [indeces addIndex: 400];
+        manager.responseSerializer.acceptableStatusCodes = indeces;
         [manager POST: @"/"
                     parameters: parameters
                        success: ^(AFHTTPRequestOperation *operation, id responseObject) {
-                           DDLogDebug(@"Received response: %@", responseObject);
-                           finalizeBlock(responseObject);
+                           DDLogDebug(@"Received response: Status code: %ld \nResponse object: %@", (long) operation.response.statusCode, responseObject);
+                           if (400 == operation.response.statusCode)
+                           {
+                               DDLogDebug(@"Status code was 400");
+                           }
+                           else
+                           {
+                               finalizeBlock(responseObject);
+                           }
                        }
                        failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
                            DDLogError(@"Error during key exchange. %@", error);

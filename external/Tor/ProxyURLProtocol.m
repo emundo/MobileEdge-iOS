@@ -186,7 +186,7 @@
     _data.length = 0;
     
     MOBAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    NSMutableDictionary *settings = appDelegate.mobileEdgeCore.torSettings.settings;
+    NSMutableDictionary *settings = ((MOBTorSettings *)appDelegate.mobileEdgeCore.anonymizerSettings).settings;
 
     /* If this incoming request is HTML or Javascript (based on content-type header),
      * flag it for processing later. (We'll prepend some JS to try to rewrite navigator.useragent,
@@ -442,7 +442,7 @@
     NSMutableString *str = [[NSMutableString alloc] init];
     MOBAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
 
-    Byte uaspoof = [[appDelegate.mobileEdgeCore.torSettings.settings valueForKey:@"uaspoof"] integerValue];
+    Byte uaspoof = [[((MOBTorSettings *)appDelegate.mobileEdgeCore.anonymizerSettings).settings valueForKey:@"uaspoof"] integerValue];
     if (uaspoof == UA_SPOOF_SAFARI_MAC) {
         [str appendString:@"var __originalNavigator = navigator;"];
         [str appendString:@"navigator = new Object();"];
@@ -482,7 +482,7 @@
         [str appendString:@"navigator.__defineGetter__('userAgent',function(){return 'Mozilla/5.0 (iPad; CPU OS 7_1_1 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D201 Safari/9537.53';});"];
     }
 
-    Byte activeContent = [[appDelegate.mobileEdgeCore.torSettings.settings valueForKey:@"javascript"] integerValue];
+    Byte activeContent = [[((MOBTorSettings *)appDelegate.mobileEdgeCore.anonymizerSettings).settings valueForKey:@"javascript"] integerValue];
     if (activeContent != CONTENTPOLICY_PERMISSIVE) {
         [str appendString:@"function Worker(){};"];
         [str appendString:@"function WebSocket(){};"];

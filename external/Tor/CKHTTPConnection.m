@@ -141,8 +141,8 @@
     NSURL *URL = [_HTTPStream propertyForKey:(NSString *)kCFStreamPropertyHTTPFinalURL];
     if ([URL.absoluteString rangeOfString:@"https://"].location == 0) {
         Boolean ignoreSSLErrors = NO;
-        /* RA: COMMENTING OUT FOR NOW (FIXME) move the whitelist to tor settings
-        for (NSString *whitelistHost in appDelegate.sslWhitelistedDomains) {
+        // RA: COMMENTING OUT FOR NOW (FIXME) move the whitelist to tor settings
+        for (NSString *whitelistHost in [appDelegate.mobileEdgeCore.anonymizerSettings getValueForKey: @"sslWhitelistedDomains"]) {
             if ([whitelistHost isEqualToString:URL.host]) {
                 #ifdef DEBUG
                     NSLog(@"%@ in SSL host whitelist ignoring SSL certificate status", URL.host);
@@ -151,7 +151,7 @@
                 break;
             }
         }
-        */
+        
         if (ignoreSSLErrors) {
             CFMutableDictionaryRef sslOption = CFDictionaryCreateMutable(kCFAllocatorDefault, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
             CFDictionarySetValue(sslOption, kCFStreamSSLValidatesCertificateChain, kCFBooleanFalse);
@@ -342,7 +342,7 @@
     //[NSMakeCollectable(result) autorelease];
     
     MOBAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    NSMutableDictionary *settings = appDelegate.mobileEdgeCore.torSettings.settings;
+    NSMutableDictionary *settings = ((MOBTorSettings *)appDelegate.mobileEdgeCore.anonymizerSettings).settings;
 
     Byte spoofUserAgent = [[settings valueForKey:@"uaspoof"] integerValue];
 
@@ -358,7 +358,7 @@
             #endif
             CFHTTPMessageSetHeaderFieldValue(result,
                                              (__bridge CFStringRef)aHTTPHeaderField,
-                                             (__bridge CFStringRef)appDelegate.mobileEdgeCore.torSettings.customUserAgent);
+                                             (__bridge CFStringRef)[appDelegate.mobileEdgeCore.anonymizerSettings getValueForKey: @"customUserAgent"]);
             continue;
         }
         CFHTTPMessageSetHeaderFieldValue(result,
