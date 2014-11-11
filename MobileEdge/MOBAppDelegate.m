@@ -9,6 +9,7 @@
 #import "MOBAppDelegate.h"
 #import "EncryptedStore.h"
 #import "MOBCore.h"
+#import "TorController.h"
 #import <SodiumObjc.h>
 #import <AFNetworkActivityLogger.h>
 
@@ -33,6 +34,8 @@
     [self.mobileEdgeCore.anonymizerSettings whitelistDomainForSelfSignedCertificates: @"127.0.0.1"];
     [self.mobileEdgeCore.anonymizerSettings whitelistDomainForSelfSignedCertificates: @"192.168.1.124"];
     [self.mobileEdgeCore.anonymizerSettings whitelistDomainForSelfSignedCertificates: @"192.168.1.131"];
+    [self.mobileEdgeCore.anonymizerSettings whitelistDomainForSelfSignedCertificates: @"129.187.100.231"];
+    [self.mobileEdgeCore.tor startTor];
     DDLogVerbose(@"%@", [[NACLAsymmetricKeyPair keyPair].privateKey.data base64EncodedStringWithOptions:0]);
     MOBIdentity *myIdentity = [[MOBIdentity alloc] init]; // load an Identity (key pair).
     MOBAxolotl *axolotl = [[MOBAxolotl alloc] initWithIdentity: myIdentity]; //TODO: Create Axolotl instance (identity)
@@ -40,8 +43,8 @@
     MOBRemoteIdentity *remote = [[MOBRemoteIdentity alloc] initWithPublicKey: mobileEdgePK
                                                                   serviceURL:[NSURL URLWithString:@"test.mobileedge.de"]];// load a remote identity (pubkey + url).
     //TODO: perform key exchange with remote identity.
-    //NSURL *baseURL = [NSURL URLWithString:@"https://192.168.1.124:8888"];
-    NSURL *baseURL = [NSURL URLWithString:@"https://google.com"];
+    //NSURL *baseURL = [NSURL URLWithString:@"https://129.187.100.231:8888"];
+    NSURL *baseURL = [NSURL URLWithString:@"https://check.torproject.org"];
     //MOBHTTPRequestOperationManager *operationManager = [[MOBHTTPRequestOperationManager alloc] initWithBaseURL: baseURL];
     KeyExchangeSendBlock sendBlock;
     //sendBlock = ^(NSData *keyExchangeMessage, KeyExchangeFinalizeBlock finalizeBlock)

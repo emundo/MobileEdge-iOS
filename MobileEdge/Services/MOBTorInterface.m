@@ -23,4 +23,9 @@
 
 @implementation MOBTorInterface
 
+- (void) notifyConnectionComplete
+{
+    
+}
+
 @end

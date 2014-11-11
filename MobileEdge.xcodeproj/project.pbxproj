@@ -11,6 +11,7 @@
 		234DB24C19F94B37006CD605 /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = 234DB24B19F94B37006CD605 /* server.cer */; };
 		234DB25619F94DD8006CD605 /* MobileEdge_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 234DB25519F94DD8006CD605 /* MobileEdge_Tests.m */; };
 		234DB25E19FFD286006CD605 /* MOBAxolotlLocalTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 234DB25D19FFD286006CD605 /* MOBAxolotlLocalTest.m */; };
+		23501C6A1A0BCEFA00E650BB /* geoip in Resources */ = {isa = PBXBuildFile; fileRef = 23501C691A0BCEFA00E650BB /* geoip */; };
 		23AF8C3D1998E63B00DB4B2B /* AMErrorHandlerUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8C3A1998E63B00DB4B2B /* AMErrorHandlerUI.m */; };
 		23AF8C3E1998E63B00DB4B2B /* AMErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8C3C1998E63B00DB4B2B /* AMErrorManager.m */; };
 		23AF8C3F1998F7C700DB4B2B /* MOBIDDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77A4198A904400E3CD76 /* MOBIDDetailViewController.m */; };
@@ -93,6 +94,9 @@
 		234DB25519F94DD8006CD605 /* MobileEdge_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MobileEdge_Tests.m; sourceTree = "<group>"; };
 		234DB25C19F95CAE006CD605 /* MOBAnonymizerSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOBAnonymizerSettings.h; sourceTree = "<group>"; };
 		234DB25D19FFD286006CD605 /* MOBAxolotlLocalTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBAxolotlLocalTest.m; sourceTree = "<group>"; };
+		23501C691A0BCEFA00E650BB /* geoip */ = {isa = PBXFileReference; lastKnownFileType = text; name = geoip; path = ../../dependencies/share/geoip; sourceTree = "<group>"; };
+		23501C6B1A0BD50E00E650BB /* torrc */ = {isa = PBXFileReference; lastKnownFileType = text; name = torrc; path = external/Tor/torrc; sourceTree = "<group>"; };
+		23501C6C1A1267A000E650BB /* MOBAnonymizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOBAnonymizer.h; sourceTree = "<group>"; };
 		23AF8C381998E63B00DB4B2B /* AMErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMErrorHandler.h; sourceTree = "<group>"; };
 		23AF8C391998E63B00DB4B2B /* AMErrorHandlerUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMErrorHandlerUI.h; sourceTree = "<group>"; };
 		23AF8C3A1998E63B00DB4B2B /* AMErrorHandlerUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMErrorHandlerUI.m; sourceTree = "<group>"; };
@@ -280,6 +284,7 @@
 		23BAE22619A1DC7300D3CDD8 /* Tor */ = {
 			isa = PBXGroup;
 			children = (
+				23501C691A0BCEFA00E650BB /* geoip */,
 				23BAE24819A1F07D00D3CDD8 /* Reachability.h */,
 				23BAE24919A1F07D00D3CDD8 /* Reachability.m */,
 				23BAE24519A1F04500D3CDD8 /* ULINetSocket.h */,
@@ -342,6 +347,7 @@
 				23BAE23919A1E4D400D3CDD8 /* MOBCore.m */,
 				23E011581A0A3AC6008F7373 /* MOBError.h */,
 				23E011591A0A3AC6008F7373 /* MOBError.m */,
+				23501C6C1A1267A000E650BB /* MOBAnonymizer.h */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -440,6 +446,7 @@
 		8142F56F1988CEDC0088B18B = {
 			isa = PBXGroup;
 			children = (
+				23501C6B1A0BD50E00E650BB /* torrc */,
 				23BAE22519A1DC7300D3CDD8 /* external */,
 				23FD6717198A639100D1A344 /* iPad */,
 				23FD6720198A64C400D1A344 /* MobileEdge */,
@@ -591,11 +598,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23BAE24319A1EA2B00D3CDD8 /* torrc in Resources */,
+				23501C6A1A0BCEFA00E650BB /* geoip in Resources */,
 				23FD6739198A64C400D1A344 /* Images.xcassets in Resources */,
 				23FD672E198A64C400D1A344 /* Main_iPhone.storyboard in Resources */,
 				23FD6725198A64C400D1A344 /* InfoPlist.strings in Resources */,
 				234DB24C19F94B37006CD605 /* server.cer in Resources */,
-				23BAE24319A1EA2B00D3CDD8 /* torrc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

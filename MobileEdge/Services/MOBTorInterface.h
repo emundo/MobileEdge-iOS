@@ -23,7 +23,8 @@
 //  https://github.com/mtigas/iOS-OnionBrowser
 
 #import <Foundation/Foundation.h>
+#import "MOBAnonymizer.h"
 
-@interface MOBTorInterface : NSObject
+@interface MOBTorInterface : NSObject <MOBAnonymizer>
 
 @end

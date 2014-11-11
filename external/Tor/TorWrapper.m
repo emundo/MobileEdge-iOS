@@ -31,9 +31,9 @@
                                                             inDomains:NSUserDomainMask] lastObject];
     NSURL *torrcURL = [docURL URLByAppendingPathComponent:@"torrc"];
     
-    //NSString *base_torrc = [[NSBundle mainBundle] pathForResource:@"torrc" ofType:nil];
+    NSString *base_torrc = [[NSBundle mainBundle] pathForResource:@"torrc" ofType:nil];
     //NSString *base_torrc = [[[appDelegate applicationDocumentsDirectory] URLByAppendingPathComponent:@"torrc"] relativePath];
-    NSString *base_torrc = [torrcURL relativePath];
+    //NSString *base_torrc = [torrcURL relativePath];
     NSString *geoip = [[NSBundle mainBundle] pathForResource:@"geoip" ofType:nil];
     
     NSString *controlPortStr = [NSString stringWithFormat:@"%ld", (unsigned long)appDelegate.mobileEdgeCore.tor.torControlPort];

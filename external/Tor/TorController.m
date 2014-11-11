@@ -205,6 +205,9 @@
                          [torCookie hexadecimalString]];
     [_mSocket writeString:authMsg encoding:NSUTF8StringEncoding];
     
+    #ifdef DEBUG
+    NSLog(@"[tor] Using authentication: %@", [torCookie hexadecimalString]);
+    #endif
     _controllerIsAuthenticated = NO;
 }
 
@@ -222,6 +225,7 @@
 - (void)netsocket:(ULINetSocket*)inNetSocket dataAvailable:(unsigned)inAmount {
     NSString *msgIn = [_mSocket readString:NSUTF8StringEncoding];
     
+    NSLog(@"BOOTSTRAP: %@", msgIn);
     if (!_controllerIsAuthenticated) {
         // Response to AUTHENTICATE
         if ([msgIn hasPrefix:@"250"]) {
@@ -266,24 +270,25 @@
         }
     } else if ([msgIn rangeOfString:@"-status/bootstrap-phase="].location != NSNotFound) {
         // Response to "getinfo status/bootstrap-phase"
-        MOBAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-        
         if ([msgIn rangeOfString:@"BOOTSTRAP PROGRESS=100"].location != NSNotFound) {
             _connectionStatus = CONN_STATUS_CONNECTED;
+            [self.delegate notifyConnectionComplete];
         }
         /* RA: COMMENTING OUT FOR NOW! (FIXME)
         WebViewController *wvc = appDelegate.appWebView;
+        */
         if (!didFirstConnect) {
             if ([msgIn rangeOfString:@"BOOTSTRAP PROGRESS=100"].location != NSNotFound) {
                 // This is our first go-around (haven't loaded page into webView yet)
                 // but we are now at 100%, so go ahead.
-                if (appDelegate.startUrl != nil) {
+                /* RA: COMMENTING OUT FOR NOW! (FIXME)
+                 if (appDelegate.startUrl != nil) {
                     [wvc askToLoadURL:appDelegate.startUrl];
                 } else {
                     // Didn't launch with a "onionbrowser://" or "onionbrowsers://" URL
                     // so just launch regular start page.
                     [wvc loadURL:[NSURL URLWithString:appDelegate.homepage]];
-                }
+                }*/
                 didFirstConnect = YES;
                 
                 // See "checkTor call in middle of app" a little bit below.
@@ -295,7 +300,7 @@
             } else {
                 // Haven't done initial load yet and still waiting on bootstrap, so
                 // render status.
-                [wvc renderTorStatus:msgIn];
+                //[wvc renderTorStatus:msgIn];
                 _torCheckLoopTimer = [NSTimer scheduledTimerWithTimeInterval:0.15f
                                                                       target:self
                                                                     selector:@selector(checkTor)
@@ -303,7 +308,6 @@
                                                                      repeats:NO];
             }
         }
-        */
     } else if ([msgIn rangeOfString:@"+orconn-status="].location != NSNotFound) {
         [_torStatusTimeoutTimer invalidate];
         
@@ -333,6 +337,15 @@
 }
 
 - (void)netsocketDataSent:(ULINetSocket*)inNetSocket { }
+
+- (instancetype) initWithDelegate: (id<MOBAnonymizer>) aDelegate
+{
+    if (self = [self init])
+    {
+        self.delegate = aDelegate;
+    }
+    return self;
+}
 
 
 @end

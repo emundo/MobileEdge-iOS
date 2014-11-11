@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "TorWrapper.h"
 #import "ULINetSocket.h"
+#import "MOBAnonymizer.h"
 
 @interface TorController : NSObject
 
@@ -27,6 +28,11 @@
 @property (nonatomic) unsigned int torSocksPort;
 @property (nonatomic) unsigned int torControlPort;
 
+/*
+ * MobileEdge adjustments
+ */
+@property (nonatomic) id <MOBAnonymizer> delegate;
+
 
 - (id)init;
 - (void)startTor;
@@ -42,5 +48,10 @@
 - (void)reachabilityChanged;
 - (void)appDidEnterBackground;
 - (void)appDidBecomeActive;
+
+/*
+ * MobileEdge adjustments
+ */
+- (instancetype) initWithDelegate: (id <MOBAnonymizer>) aDelegate;
 
 @end

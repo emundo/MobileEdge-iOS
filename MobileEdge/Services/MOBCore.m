@@ -20,7 +20,17 @@
  */
 
 #import "MOBCore.h"
+#import "TorController.h"
 
 @implementation MOBCore
+
+- (instancetype) init
+{
+    if (self = [super init])
+    {
+        self.tor = [[TorController alloc] init];
+    }
+    return self;
+}
 
 @end
