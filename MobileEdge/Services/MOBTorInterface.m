@@ -21,11 +21,46 @@
 
 #import "MOBTorInterface.h"
 
+@interface MOBTorInterface ()
+
+@property (nonatomic, assign) ConnectSuccessfulBlock onConnect;
+
+@property (nonatomic, assign) ConnectFailureBlock onFailure;
+
+@property (nonatomic, retain) id <MOBAnonymizerSettings> settings;
+
+@end
+
 @implementation MOBTorInterface
+
+- (instancetype) initWithSettings: (id<MOBAnonymizerSettings>) aSettings
+{
+    if (self = [super init])
+    {
+        self.settings = aSettings;
+    }
+    return self;
+}
+
+- (void) connectOnFinishExecuteBlock: (ConnectSuccessfulBlock) aOnConnect
+                             failure: (ConnectFailureBlock) aOnFailure
+{
+    // TODO: Add connection code here!
+    self.onConnect = aOnConnect;
+    self.onFailure = aOnFailure;
+}
 
 - (void) notifyConnectionComplete
 {
-    
+    // TODO: parameters
+    self.onConnect();
 }
+
+- (void) notifyConnectionFailed
+{
+    // TODO: parameters
+    self.onFailure();
+}
+
 
 @end

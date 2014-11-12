@@ -29,11 +29,33 @@ typedef void (^ConnectFailureBlock) (/* Parameters */);
 
 @protocol MOBAnonymizer <NSObject>
 
-- (instancetype) initWithSettings: (id <MOBAnonymizerSettings>) settings;
+/**
+ * @discussion initializes an Anonymizer with some settings
+ * @param aSettings - the settings to initialize the anonymizer with
+ * @return a newly initialized Anonymizer
+ */
+- (instancetype) initWithSettings: (id <MOBAnonymizerSettings>) aSettings;
 
+/**
+ * @discussion Start connection to the anonymizing network. The onConnect or
+ *  onFailure blocks are called once connection is complete.
+ * @param aOnConnect - the block to be executed when connection was successful
+ * @param aOnFailure - the block to be executed when connection fails for some reason
+ */
 - (void) connectOnFinishExecuteBlock: (ConnectSuccessfulBlock) aOnConnect
                              failure: (ConnectFailureBlock) aOnFailure;
 
+
+/**
+ * @discussion Lets the anonymizer interface know that connection has finished.
+ *  The interface can now call the specified aOnConnect block.
+ */
 - (void) notifyConnectionComplete;
+
+/**
+ * @discussion Lets the anonymizer interface know that connection has failed.
+ *  The interface can now call the specified aOnFailure block.
+ */
+- (void) notifyConnectionFailed;
 
 @end
