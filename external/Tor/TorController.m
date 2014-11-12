@@ -263,6 +263,7 @@
                                                                     userInfo:nil
                                                                      repeats:NO];
             } else {
+                [self.delegate notifyConnectionFailed]; // TODO: thread!
                 // Otherwise, crash because we don't know the app's current state
                 // (since it hasn't totally initialized yet).
                 exit(0);
@@ -272,7 +273,7 @@
         // Response to "getinfo status/bootstrap-phase"
         if ([msgIn rangeOfString:@"BOOTSTRAP PROGRESS=100"].location != NSNotFound) {
             _connectionStatus = CONN_STATUS_CONNECTED;
-            [self.delegate notifyConnectionComplete];
+            [self.delegate notifyConnectionComplete]; // TODO: thread!
         }
         /* RA: COMMENTING OUT FOR NOW! (FIXME)
         WebViewController *wvc = appDelegate.appWebView;
