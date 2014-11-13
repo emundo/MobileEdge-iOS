@@ -14,6 +14,7 @@ pod "Objection",            "~> 1.4"
 pod "FXKeychain",           "~> 1.5.1"
 pod "HKDFKit",              "~> 0.0.3"
 pod "SodiumObjc",           :git => "https://github.com/r-arias/SodiumObjc.git"
+pod "CPAProxy",             :git => 'https://github.com/ursachec/CPAProxy.git' 
 
 end
 
