@@ -29,6 +29,8 @@ typedef void (^ConnectFailureBlock) (/* Parameters */);
 
 @protocol MOBAnonymizer <NSObject>
 
+- (id <MOBAnonymizerSettings>) settings;
+
 /**
  * @discussion initializes an Anonymizer with some settings
  * @param aSettings - the settings to initialize the anonymizer with

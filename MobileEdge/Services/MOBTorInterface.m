@@ -20,14 +20,16 @@
  */
 
 #import "MOBTorInterface.h"
+#import "TorController.h"
+#import "MOBCore.h"
+
+@class TorController;
 
 @interface MOBTorInterface ()
 
-@property (nonatomic, assign) ConnectSuccessfulBlock onConnect;
+@property (nonatomic, copy) ConnectSuccessfulBlock onConnect;
 
-@property (nonatomic, assign) ConnectFailureBlock onFailure;
-
-@property (nonatomic, retain) id <MOBAnonymizerSettings> settings;
+@property (nonatomic, copy) ConnectFailureBlock onFailure;
 
 @end
 
@@ -38,6 +40,7 @@
     if (self = [super init])
     {
         self.settings = aSettings;
+        self.tor = [[TorController alloc] initWithDelegate: self];
     }
     return self;
 }
@@ -45,21 +48,24 @@
 - (void) connectOnFinishExecuteBlock: (ConnectSuccessfulBlock) aOnConnect
                              failure: (ConnectFailureBlock) aOnFailure
 {
-    // TODO: Add connection code here!
     self.onConnect = aOnConnect;
     self.onFailure = aOnFailure;
+    // TODO: Add connection code here!
+    [self.tor startTor];
 }
 
 - (void) notifyConnectionComplete
 {
     // TODO: parameters
+    DDLogDebug(@"connection complete!");
     self.onConnect();
+    //dispatch_async(dispatch_get_main_queue(), self.onConnect);
 }
 
 - (void) notifyConnectionFailed
 {
     // TODO: parameters
-    self.onFailure();
+    dispatch_async( dispatch_get_main_queue(), self.onFailure);
 }
 
 

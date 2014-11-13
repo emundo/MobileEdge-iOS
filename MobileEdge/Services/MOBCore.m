@@ -21,16 +21,16 @@
 
 #import "MOBCore.h"
 #import "TorController.h"
+#import "MOBTorInterface.h"
 
 @implementation MOBCore
 
-- (instancetype) init
+- (instancetype) initWithAnonymizerSettings: (id<MOBAnonymizerSettings>) aSettings
 {
-    if (self = [super init])
+    if (self = [self init])
     {
-        self.tor = [[TorController alloc] init];
+        self.anonymizer = [[MOBTorInterface alloc] initWithSettings: aSettings];
     }
     return self;
 }
-
 @end
