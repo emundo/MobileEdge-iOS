@@ -17,6 +17,7 @@
 #import "MOBAppDelegate.h"
 #import "MOBCore.h"
 #import "MOBTorSettings.h"
+#import "MOBTorInterface.h"
 #import "TorController.h"
 
 
@@ -142,7 +143,7 @@
     if ([URL.absoluteString rangeOfString:@"https://"].location == 0) {
         Boolean ignoreSSLErrors = NO;
         // RA: COMMENTING OUT FOR NOW (FIXME) move the whitelist to tor settings
-        for (NSString *whitelistHost in [appDelegate.mobileEdgeCore.anonymizerSettings getValueForKey: @"sslWhitelistedDomains"]) {
+        for (NSString *whitelistHost in [appDelegate.mobileEdgeCore.anonymizer.settings getValueForKey: @"sslWhitelistedDomains"]) {
             if ([whitelistHost isEqualToString:URL.host]) {
                 #ifdef DEBUG
                     NSLog(@"%@ in SSL host whitelist ignoring SSL certificate status", URL.host);
@@ -162,7 +163,7 @@
     // Use tor proxy server
     NSString *hostKey = (NSString *)kCFStreamPropertySOCKSProxyHost;
     NSString *portKey = (NSString *)kCFStreamPropertySOCKSProxyPort;
-    int proxyPortNumber = appDelegate.mobileEdgeCore.tor.torSocksPort;
+    int proxyPortNumber = ((MOBTorInterface *) appDelegate.mobileEdgeCore.anonymizer).tor.torSocksPort;
 
     NSMutableDictionary *proxyToUse = [NSMutableDictionary
                                        dictionaryWithObjectsAndKeys:@"127.0.0.1",hostKey,
@@ -342,7 +343,7 @@
     //[NSMakeCollectable(result) autorelease];
     
     MOBAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    NSMutableDictionary *settings = ((MOBTorSettings *)appDelegate.mobileEdgeCore.anonymizerSettings).settings;
+    NSMutableDictionary *settings = ((MOBTorSettings *)appDelegate.mobileEdgeCore.anonymizer.settings).settings;
 
     Byte spoofUserAgent = [[settings valueForKey:@"uaspoof"] integerValue];
 
@@ -358,7 +359,7 @@
             #endif
             CFHTTPMessageSetHeaderFieldValue(result,
                                              (__bridge CFStringRef)aHTTPHeaderField,
-                                             (__bridge CFStringRef)[appDelegate.mobileEdgeCore.anonymizerSettings getValueForKey: @"customUserAgent"]);
+                                             (__bridge CFStringRef)[appDelegate.mobileEdgeCore.anonymizer.settings getValueForKey: @"customUserAgent"]);
             continue;
         }
         CFHTTPMessageSetHeaderFieldValue(result,

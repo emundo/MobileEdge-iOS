@@ -13,7 +13,7 @@
 
 @implementation TorController
 
-#define STATUS_CHECK_TIMEOUT 3.0f
+#define STATUS_CHECK_TIMEOUT 10.0f
 
 @synthesize
     didFirstConnect,
@@ -82,7 +82,7 @@
     }
 
     [_mSocket writeString:@"SIGNAL HUP\n" encoding:NSUTF8StringEncoding];
-    _torCheckLoopTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f
+    _torCheckLoopTimer = [NSTimer scheduledTimerWithTimeInterval:3.0f // RA: was 1.0
                                                           target:self
                                                         selector:@selector(activateTorCheckLoop)
                                                         userInfo:nil
@@ -225,7 +225,8 @@
 - (void)netsocket:(ULINetSocket*)inNetSocket dataAvailable:(unsigned)inAmount {
     NSString *msgIn = [_mSocket readString:NSUTF8StringEncoding];
     
-    NSLog(@"BOOTSTRAP: %@", msgIn);
+    
+    //NSLog(@"BOOTSTRAP: %@", msgIn);
     if (!_controllerIsAuthenticated) {
         // Response to AUTHENTICATE
         if ([msgIn hasPrefix:@"250"]) {
@@ -273,7 +274,10 @@
         // Response to "getinfo status/bootstrap-phase"
         if ([msgIn rangeOfString:@"BOOTSTRAP PROGRESS=100"].location != NSNotFound) {
             _connectionStatus = CONN_STATUS_CONNECTED;
-            [self.delegate notifyConnectionComplete]; // TODO: thread!
+            [self.delegate notifyConnectionComplete];
+            if (_torStatusTimeoutTimer != nil) {
+                [_torStatusTimeoutTimer invalidate];
+            }
         }
         /* RA: COMMENTING OUT FOR NOW! (FIXME)
         WebViewController *wvc = appDelegate.appWebView;

@@ -17,8 +17,8 @@ CookieAuthentication 1
 ConnLimit 100
 
 UseEntryGuards 1
-TunnelDirConns 1
-PreferTunneledDirConns 1
+#TunnelDirConns 1
+#PreferTunneledDirConns 1
 
 # Use "ntor" connection handshake to help w/tor network congestion.
 # In theory, this is already happening since consensus is likely promoting "ntor" already.
