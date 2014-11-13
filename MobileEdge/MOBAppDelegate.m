@@ -28,14 +28,12 @@
     // #define _AFNETWORKING_ALLOW_INVALID_SSL_CERTIFICATES_
     // has no effect
     #endif
-    self.mobileEdgeCore = [[MOBCore alloc] init];
-    self.mobileEdgeCore.anonymizerSettings = [[MOBTorSettings alloc] init];
-    [self.mobileEdgeCore.anonymizerSettings whitelistDomainForSelfSignedCertificates: @"localhost"];
-    [self.mobileEdgeCore.anonymizerSettings whitelistDomainForSelfSignedCertificates: @"127.0.0.1"];
-    [self.mobileEdgeCore.anonymizerSettings whitelistDomainForSelfSignedCertificates: @"192.168.1.124"];
-    [self.mobileEdgeCore.anonymizerSettings whitelistDomainForSelfSignedCertificates: @"192.168.1.131"];
-    [self.mobileEdgeCore.anonymizerSettings whitelistDomainForSelfSignedCertificates: @"129.187.100.231"];
-    [self.mobileEdgeCore.tor startTor];
+    self.mobileEdgeCore = [[MOBCore alloc] initWithAnonymizerSettings: [[MOBTorSettings alloc] init]];
+    [self.mobileEdgeCore.anonymizer.settings whitelistDomainForSelfSignedCertificates: @"localhost"];
+    [self.mobileEdgeCore.anonymizer.settings whitelistDomainForSelfSignedCertificates: @"127.0.0.1"];
+    [self.mobileEdgeCore.anonymizer.settings whitelistDomainForSelfSignedCertificates: @"192.168.1.124"];
+    [self.mobileEdgeCore.anonymizer.settings whitelistDomainForSelfSignedCertificates: @"192.168.1.131"];
+    [self.mobileEdgeCore.anonymizer.settings whitelistDomainForSelfSignedCertificates: @"129.187.100.231"];
     DDLogVerbose(@"%@", [[NACLAsymmetricKeyPair keyPair].privateKey.data base64EncodedStringWithOptions:0]);
     MOBIdentity *myIdentity = [[MOBIdentity alloc] init]; // load an Identity (key pair).
     MOBAxolotl *axolotl = [[MOBAxolotl alloc] initWithIdentity: myIdentity]; //TODO: Create Axolotl instance (identity)
@@ -78,10 +76,15 @@
                            DDLogError(@"Error during key exchange. %@", error);
                        }];
     };
-    [axolotl performKeyExchangeWithBob: remote
-        andSendKeyExchangeMessageUsing: sendBlock
-                                 error: nil]; // TODO: error handling
+    ConnectSuccessfulBlock onConnect= ^()
+    {
+        [axolotl performKeyExchangeWithBob: remote
+            andSendKeyExchangeMessageUsing: sendBlock
+                                     error: nil]; // TODO: error handling
+    };
+    [self.mobileEdgeCore.anonymizer connectOnFinishExecuteBlock: onConnect failure: NULL];
     //TODO: output shared secret
+    
     
     return YES;
 }
