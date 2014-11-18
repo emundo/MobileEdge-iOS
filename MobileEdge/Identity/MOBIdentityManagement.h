@@ -24,11 +24,11 @@
 
 @interface MOBIdentityManagement : NSObject
 
-- (MOBIdentity *) createId;
++ (MOBIdentity *) createIdentity;
 
-- (MOBIdentity *) createIdWithOptions: (NSDictionary *) aOptions; //TODO change to clearer type
++ (MOBIdentity *) createIdentityWithOptions: (NSDictionary *) aOptions;
 
-- (MOBIdentity *) refreshId: (MOBIdentity *) aIdentity;
++ (MOBIdentity *) refreshIdentity: (MOBIdentity *) aIdentity;
 
 //- (MOBRemote *) extractRemoteFromData: (NSData *) aData;
 
