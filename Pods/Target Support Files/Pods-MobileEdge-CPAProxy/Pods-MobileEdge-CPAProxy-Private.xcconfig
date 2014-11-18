@@ -1,0 +1,6 @@
+#include "Pods-MobileEdge-CPAProxy.xcconfig"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/CPAProxy" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworkActivityLogger" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/CPAProxy" "${PODS_ROOT}/Headers/Public/CocoaAsyncSocket" "${PODS_ROOT}/Headers/Public/CocoaLumberjack" "${PODS_ROOT}/Headers/Public/EncryptedCoreData" "${PODS_ROOT}/Headers/Public/FXKeychain" "${PODS_ROOT}/Headers/Public/HKDFKit" "${PODS_ROOT}/Headers/Public/Objection" "${PODS_ROOT}/Headers/Public/SQLCipher" "${PODS_ROOT}/Headers/Public/SodiumObjc"
+LIBRARY_SEARCH_PATHS = ${PODS_MOBILEEDGE_CPAPROXY_LIBRARY_SEARCH_PATHS}
+OTHER_LDFLAGS = ${PODS_MOBILEEDGE_CPAPROXY_OTHER_LDFLAGS} -ObjC
+PODS_ROOT = ${SRCROOT}

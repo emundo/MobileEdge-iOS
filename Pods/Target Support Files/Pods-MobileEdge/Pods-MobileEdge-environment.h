@@ -54,6 +54,18 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 4
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 1
 
+// CPAProxy
+#define COCOAPODS_POD_AVAILABLE_CPAProxy
+#define COCOAPODS_VERSION_MAJOR_CPAProxy 1
+#define COCOAPODS_VERSION_MINOR_CPAProxy 0
+#define COCOAPODS_VERSION_PATCH_CPAProxy 0
+
+// CocoaAsyncSocket
+#define COCOAPODS_POD_AVAILABLE_CocoaAsyncSocket
+#define COCOAPODS_VERSION_MAJOR_CocoaAsyncSocket 7
+#define COCOAPODS_VERSION_MINOR_CocoaAsyncSocket 3
+#define COCOAPODS_VERSION_PATCH_CocoaAsyncSocket 5
+
 // CocoaLumberjack
 #define COCOAPODS_POD_AVAILABLE_CocoaLumberjack
 #define COCOAPODS_VERSION_MAJOR_CocoaLumberjack 1
