@@ -19,6 +19,12 @@
  * Created by Raphael Arias on 8/7/14.
  */
 
+/**
+ * This file could provide operations such as mapping remote identities to
+ * different local identities, allowing to communicate with several remotes using
+ * a different Identity. This will remain unimplemented for now.
+ */
+
 #import <Foundation/Foundation.h>
 #import "MOBIdentity.h"
 
