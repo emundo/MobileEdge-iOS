@@ -31,6 +31,4 @@
 
 @property (nonatomic, retain) id <MOBAnonymizerSettings> settings;
 
-@property (nonatomic, retain) TorController *tor;
-
 @end

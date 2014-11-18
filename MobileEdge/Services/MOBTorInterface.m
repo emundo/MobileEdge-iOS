@@ -107,7 +107,6 @@
         // ... do something to notify user of tor's initialization progress ...
         NSLog(@"%li %@", (long)progress, summaryString);
     }];
-    //[self.tor startTor];
 }
 
 
