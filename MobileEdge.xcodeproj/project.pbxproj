@@ -21,22 +21,12 @@
 		234DB24C19F94B37006CD605 /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = 234DB24B19F94B37006CD605 /* server.cer */; };
 		234DB25619F94DD8006CD605 /* MobileEdge_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 234DB25519F94DD8006CD605 /* MobileEdge_Tests.m */; };
 		234DB25E19FFD286006CD605 /* MOBAxolotlLocalTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 234DB25D19FFD286006CD605 /* MOBAxolotlLocalTest.m */; };
-		23501C6A1A0BCEFA00E650BB /* geoip in Resources */ = {isa = PBXBuildFile; fileRef = 23501C691A0BCEFA00E650BB /* geoip */; };
 		23AF8C3D1998E63B00DB4B2B /* AMErrorHandlerUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8C3A1998E63B00DB4B2B /* AMErrorHandlerUI.m */; };
 		23AF8C3E1998E63B00DB4B2B /* AMErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8C3C1998E63B00DB4B2B /* AMErrorManager.m */; };
 		23AF8C3F1998F7C700DB4B2B /* MOBIDDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD77A4198A904400E3CD76 /* MOBIDDetailViewController.m */; };
 		23BAE211199B60E800D3CDD8 /* MOBHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE210199B60E800D3CDD8 /* MOBHTTPRequestOperationManager.m */; };
 		23BAE214199B62B000D3CDD8 /* MOBBlindedValueToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE213199B62B000D3CDD8 /* MOBBlindedValueToken.m */; };
-		23BAE22F19A1DC7300D3CDD8 /* CKHTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE22819A1DC7300D3CDD8 /* CKHTTPConnection.m */; };
-		23BAE23019A1DC7300D3CDD8 /* NSData+CocoaDevUsersAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE22A19A1DC7300D3CDD8 /* NSData+CocoaDevUsersAdditions.m */; };
-		23BAE23119A1DC7300D3CDD8 /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE22C19A1DC7300D3CDD8 /* NSData+Conversion.m */; };
-		23BAE23219A1DC7300D3CDD8 /* ProxyURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE22E19A1DC7300D3CDD8 /* ProxyURLProtocol.m */; };
 		23BAE23A19A1E4D400D3CDD8 /* MOBCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE23919A1E4D400D3CDD8 /* MOBCore.m */; };
-		23BAE24219A1EA2B00D3CDD8 /* TorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE23D19A1EA2B00D3CDD8 /* TorController.m */; };
-		23BAE24319A1EA2B00D3CDD8 /* torrc in Resources */ = {isa = PBXBuildFile; fileRef = 23BAE23E19A1EA2B00D3CDD8 /* torrc */; };
-		23BAE24419A1EA2B00D3CDD8 /* TorWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE24019A1EA2B00D3CDD8 /* TorWrapper.m */; };
-		23BAE24719A1F04500D3CDD8 /* ULINetSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE24619A1F04500D3CDD8 /* ULINetSocket.m */; };
-		23BAE24A19A1F07D00D3CDD8 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE24919A1F07D00D3CDD8 /* Reachability.m */; };
 		23BAE24C19A1FE8900D3CDD8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE24B19A1FE8900D3CDD8 /* libz.dylib */; };
 		23BAE27119A20AF900D3CDD8 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE26519A20AF900D3CDD8 /* libcrypto.a */; };
 		23BAE27219A20AF900D3CDD8 /* libcurve25519_donna.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE26619A20AF900D3CDD8 /* libcurve25519_donna.a */; };
@@ -112,8 +102,6 @@
 		234DB25519F94DD8006CD605 /* MobileEdge_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MobileEdge_Tests.m; sourceTree = "<group>"; };
 		234DB25C19F95CAE006CD605 /* MOBAnonymizerSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOBAnonymizerSettings.h; sourceTree = "<group>"; };
 		234DB25D19FFD286006CD605 /* MOBAxolotlLocalTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBAxolotlLocalTest.m; sourceTree = "<group>"; };
-		23501C691A0BCEFA00E650BB /* geoip */ = {isa = PBXFileReference; lastKnownFileType = text; name = geoip; path = ../../dependencies/share/geoip; sourceTree = "<group>"; };
-		23501C6B1A0BD50E00E650BB /* torrc */ = {isa = PBXFileReference; lastKnownFileType = text; name = torrc; path = external/Tor/torrc; sourceTree = "<group>"; };
 		23501C6C1A1267A000E650BB /* MOBAnonymizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MOBAnonymizer.h; path = ../Services/MOBAnonymizer.h; sourceTree = "<group>"; };
 		23AF8C381998E63B00DB4B2B /* AMErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMErrorHandler.h; sourceTree = "<group>"; };
 		23AF8C391998E63B00DB4B2B /* AMErrorHandlerUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMErrorHandlerUI.h; sourceTree = "<group>"; };
@@ -124,25 +112,8 @@
 		23BAE210199B60E800D3CDD8 /* MOBHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBHTTPRequestOperationManager.m; sourceTree = "<group>"; };
 		23BAE212199B62B000D3CDD8 /* MOBBlindedValueToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOBBlindedValueToken.h; path = Model/MOBBlindedValueToken.h; sourceTree = "<group>"; };
 		23BAE213199B62B000D3CDD8 /* MOBBlindedValueToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOBBlindedValueToken.m; path = Model/MOBBlindedValueToken.m; sourceTree = "<group>"; };
-		23BAE22719A1DC7300D3CDD8 /* CKHTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKHTTPConnection.h; sourceTree = "<group>"; };
-		23BAE22819A1DC7300D3CDD8 /* CKHTTPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CKHTTPConnection.m; sourceTree = "<group>"; };
-		23BAE22919A1DC7300D3CDD8 /* NSData+CocoaDevUsersAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+CocoaDevUsersAdditions.h"; sourceTree = "<group>"; };
-		23BAE22A19A1DC7300D3CDD8 /* NSData+CocoaDevUsersAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+CocoaDevUsersAdditions.m"; sourceTree = "<group>"; };
-		23BAE22B19A1DC7300D3CDD8 /* NSData+Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Conversion.h"; sourceTree = "<group>"; };
-		23BAE22C19A1DC7300D3CDD8 /* NSData+Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Conversion.m"; sourceTree = "<group>"; };
-		23BAE22D19A1DC7300D3CDD8 /* ProxyURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProxyURLProtocol.h; sourceTree = "<group>"; };
-		23BAE22E19A1DC7300D3CDD8 /* ProxyURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProxyURLProtocol.m; sourceTree = "<group>"; };
 		23BAE23819A1E4D400D3CDD8 /* MOBCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBCore.h; sourceTree = "<group>"; };
 		23BAE23919A1E4D400D3CDD8 /* MOBCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBCore.m; sourceTree = "<group>"; };
-		23BAE23C19A1EA2B00D3CDD8 /* TorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TorController.h; sourceTree = "<group>"; };
-		23BAE23D19A1EA2B00D3CDD8 /* TorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TorController.m; sourceTree = "<group>"; };
-		23BAE23E19A1EA2B00D3CDD8 /* torrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = torrc; sourceTree = "<group>"; };
-		23BAE23F19A1EA2B00D3CDD8 /* TorWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TorWrapper.h; sourceTree = "<group>"; };
-		23BAE24019A1EA2B00D3CDD8 /* TorWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TorWrapper.m; sourceTree = "<group>"; };
-		23BAE24519A1F04500D3CDD8 /* ULINetSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ULINetSocket.h; sourceTree = "<group>"; };
-		23BAE24619A1F04500D3CDD8 /* ULINetSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ULINetSocket.m; sourceTree = "<group>"; };
-		23BAE24819A1F07D00D3CDD8 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		23BAE24919A1F07D00D3CDD8 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		23BAE24B19A1FE8900D3CDD8 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		23BAE26519A20AF900D3CDD8 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = dependencies/lib/libcrypto.a; sourceTree = "<group>"; };
 		23BAE26619A20AF900D3CDD8 /* libcurve25519_donna.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurve25519_donna.a; path = dependencies/lib/libcurve25519_donna.a; sourceTree = "<group>"; };
@@ -311,39 +282,6 @@
 			path = ErrorHandler;
 			sourceTree = "<group>";
 		};
-		23BAE22519A1DC7300D3CDD8 /* external */ = {
-			isa = PBXGroup;
-			children = (
-				23BAE22619A1DC7300D3CDD8 /* Tor */,
-			);
-			path = external;
-			sourceTree = "<group>";
-		};
-		23BAE22619A1DC7300D3CDD8 /* Tor */ = {
-			isa = PBXGroup;
-			children = (
-				23501C691A0BCEFA00E650BB /* geoip */,
-				23BAE24819A1F07D00D3CDD8 /* Reachability.h */,
-				23BAE24919A1F07D00D3CDD8 /* Reachability.m */,
-				23BAE24519A1F04500D3CDD8 /* ULINetSocket.h */,
-				23BAE24619A1F04500D3CDD8 /* ULINetSocket.m */,
-				23BAE23C19A1EA2B00D3CDD8 /* TorController.h */,
-				23BAE23D19A1EA2B00D3CDD8 /* TorController.m */,
-				23BAE23E19A1EA2B00D3CDD8 /* torrc */,
-				23BAE23F19A1EA2B00D3CDD8 /* TorWrapper.h */,
-				23BAE24019A1EA2B00D3CDD8 /* TorWrapper.m */,
-				23BAE22719A1DC7300D3CDD8 /* CKHTTPConnection.h */,
-				23BAE22819A1DC7300D3CDD8 /* CKHTTPConnection.m */,
-				23BAE22919A1DC7300D3CDD8 /* NSData+CocoaDevUsersAdditions.h */,
-				23BAE22A19A1DC7300D3CDD8 /* NSData+CocoaDevUsersAdditions.m */,
-				23BAE22B19A1DC7300D3CDD8 /* NSData+Conversion.h */,
-				23BAE22C19A1DC7300D3CDD8 /* NSData+Conversion.m */,
-				23BAE22D19A1DC7300D3CDD8 /* ProxyURLProtocol.h */,
-				23BAE22E19A1DC7300D3CDD8 /* ProxyURLProtocol.m */,
-			);
-			path = Tor;
-			sourceTree = "<group>";
-		};
 		23F37DD519936F970074E62D /* Security */ = {
 			isa = PBXGroup;
 			children = (
@@ -462,8 +400,6 @@
 		8142F56F1988CEDC0088B18B = {
 			isa = PBXGroup;
 			children = (
-				23501C6B1A0BD50E00E650BB /* torrc */,
-				23BAE22519A1DC7300D3CDD8 /* external */,
 				23FD6717198A639100D1A344 /* iPad */,
 				23FD6720198A64C400D1A344 /* MobileEdge */,
 				234DB25219F94DD8006CD605 /* MobileEdge Tests */,
@@ -614,8 +550,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23BAE24319A1EA2B00D3CDD8 /* torrc in Resources */,
-				23501C6A1A0BCEFA00E650BB /* geoip in Resources */,
 				23FD6739198A64C400D1A344 /* Images.xcassets in Resources */,
 				23FD672E198A64C400D1A344 /* Main_iPhone.storyboard in Resources */,
 				23FD6725198A64C400D1A344 /* InfoPlist.strings in Resources */,
@@ -707,9 +641,6 @@
 				23FD6727198A64C400D1A344 /* main.m in Sources */,
 				234848461A152D44007D9BAA /* MOBRemoteIdentity.m in Sources */,
 				2348484D1A152D95007D9BAA /* MOBAxolotlChainKey.m in Sources */,
-				23BAE23119A1DC7300D3CDD8 /* NSData+Conversion.m in Sources */,
-				23BAE24219A1EA2B00D3CDD8 /* TorController.m in Sources */,
-				23BAE24A19A1F07D00D3CDD8 /* Reachability.m in Sources */,
 				23BAE211199B60E800D3CDD8 /* MOBHTTPRequestOperationManager.m in Sources */,
 				23C5904C1A091EE4007AC44F /* HKDFKit+Strings.m in Sources */,
 				23CDB802199A0E840007C3C5 /* MOBVendorSecret.m in Sources */,
@@ -720,7 +651,6 @@
 				23AF8C3D1998E63B00DB4B2B /* AMErrorHandlerUI.m in Sources */,
 				23E0115A1A0A3AC6008F7373 /* MOBError.m in Sources */,
 				23FD77B2198A904400E3CD76 /* MOBViewController.m in Sources */,
-				23BAE22F19A1DC7300D3CDD8 /* CKHTTPConnection.m in Sources */,
 				23F37DFF1998A34F0074E62D /* MOBTorInterface.m in Sources */,
 				234848431A152D44007D9BAA /* MOBBaseIdentity.m in Sources */,
 				2348484F1A152D95007D9BAA /* MOBAxolotlSkippedKeyRing.m in Sources */,
@@ -729,18 +659,14 @@
 				23F37DE11993700A0074E62D /* AMADataAccessCoreData.m in Sources */,
 				234848441A152D44007D9BAA /* MOBIdentity.m in Sources */,
 				23CDB7FF199A0E840007C3C5 /* MOBValueToken.m in Sources */,
-				23BAE23219A1DC7300D3CDD8 /* ProxyURLProtocol.m in Sources */,
-				23BAE23019A1DC7300D3CDD8 /* NSData+CocoaDevUsersAdditions.m in Sources */,
 				234848451A152D44007D9BAA /* MOBIdentityManagement.m in Sources */,
 				23F37DFC1998A1420074E62D /* MOBObjectionModule.m in Sources */,
 				23BAE27F19A241A000D3CDD8 /* NACLKey+ScalarMult.m in Sources */,
 				234848361A152CA8007D9BAA /* MOBAxolotl.m in Sources */,
 				23AF8C3E1998E63B00DB4B2B /* AMErrorManager.m in Sources */,
-				23BAE24719A1F04500D3CDD8 /* ULINetSocket.m in Sources */,
 				23FD77AD198A904400E3CD76 /* MOBBonusSystemViewController.m in Sources */,
 				23FD77AF198A904400E3CD76 /* MOBIDTableViewController.m in Sources */,
 				23AF8C3F1998F7C700DB4B2B /* MOBIDDetailViewController.m in Sources */,
-				23BAE24419A1EA2B00D3CDD8 /* TorWrapper.m in Sources */,
 				23BAE214199B62B000D3CDD8 /* MOBBlindedValueToken.m in Sources */,
 				234848371A152CA8007D9BAA /* MOBKeyExchangeMessage.m in Sources */,
 			);

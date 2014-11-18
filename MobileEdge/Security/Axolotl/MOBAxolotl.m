@@ -584,6 +584,7 @@
 
 #pragma mark -
 #pragma mark Testing functions
+#ifdef DEBUG
 - (NSData *) getSessionKeyMaterialForTestingForRemote: (MOBRemoteIdentity *) aRemote
 {
     if (self.sessions)
@@ -592,5 +593,5 @@
     }
     return nil;
 }
-
+#endif
 @end

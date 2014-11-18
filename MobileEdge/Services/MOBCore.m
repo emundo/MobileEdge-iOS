@@ -20,7 +20,6 @@
  */
 
 #import "MOBCore.h"
-#import "TorController.h"
 #import "MOBTorInterface.h"
 
 @implementation MOBCore
