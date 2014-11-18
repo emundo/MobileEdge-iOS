@@ -28,14 +28,6 @@
 		23BAE214199B62B000D3CDD8 /* MOBBlindedValueToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE213199B62B000D3CDD8 /* MOBBlindedValueToken.m */; };
 		23BAE23A19A1E4D400D3CDD8 /* MOBCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE23919A1E4D400D3CDD8 /* MOBCore.m */; };
 		23BAE24C19A1FE8900D3CDD8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE24B19A1FE8900D3CDD8 /* libz.dylib */; };
-		23BAE27119A20AF900D3CDD8 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE26519A20AF900D3CDD8 /* libcrypto.a */; };
-		23BAE27219A20AF900D3CDD8 /* libcurve25519_donna.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE26619A20AF900D3CDD8 /* libcurve25519_donna.a */; };
-		23BAE27719A20AF900D3CDD8 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE26B19A20AF900D3CDD8 /* libevent.a */; };
-		23BAE27819A20AF900D3CDD8 /* libor-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE26C19A20AF900D3CDD8 /* libor-crypto.a */; };
-		23BAE27919A20AF900D3CDD8 /* libor-event.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE26D19A20AF900D3CDD8 /* libor-event.a */; };
-		23BAE27A19A20AF900D3CDD8 /* libor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE26E19A20AF900D3CDD8 /* libor.a */; };
-		23BAE27B19A20AF900D3CDD8 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE26F19A20AF900D3CDD8 /* libssl.a */; };
-		23BAE27C19A20AF900D3CDD8 /* libtor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23BAE27019A20AF900D3CDD8 /* libtor.a */; };
 		23BAE27F19A241A000D3CDD8 /* NACLKey+ScalarMult.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE27E19A241A000D3CDD8 /* NACLKey+ScalarMult.m */; };
 		23BAE28219A4990A00D3CDD8 /* NSDictionary+Protocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE28119A4990A00D3CDD8 /* NSDictionary+Protocol.m */; };
 		23C5904C1A091EE4007AC44F /* HKDFKit+Strings.m in Sources */ = {isa = PBXBuildFile; fileRef = 23C5904B1A091EE4007AC44F /* HKDFKit+Strings.m */; };
@@ -190,14 +182,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23BAE27119A20AF900D3CDD8 /* libcrypto.a in Frameworks */,
-				23BAE27219A20AF900D3CDD8 /* libcurve25519_donna.a in Frameworks */,
-				23BAE27719A20AF900D3CDD8 /* libevent.a in Frameworks */,
-				23BAE27819A20AF900D3CDD8 /* libor-crypto.a in Frameworks */,
-				23BAE27919A20AF900D3CDD8 /* libor-event.a in Frameworks */,
-				23BAE27A19A20AF900D3CDD8 /* libor.a in Frameworks */,
-				23BAE27B19A20AF900D3CDD8 /* libssl.a in Frameworks */,
-				23BAE27C19A20AF900D3CDD8 /* libtor.a in Frameworks */,
 				23BAE24C19A1FE8900D3CDD8 /* libz.dylib in Frameworks */,
 				23FD671E198A64C400D1A344 /* CoreGraphics.framework in Frameworks */,
 				23FD671F198A64C400D1A344 /* UIKit.framework in Frameworks */,
@@ -767,55 +751,21 @@
 					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/CocoaLumberjack\"",
-					"\"${PODS_ROOT}/Headers/EncryptedCoreData\"",
-					"\"${PODS_ROOT}/Headers/FXKeychain\"",
-					"\"${PODS_ROOT}/Headers/NAChloride\"",
-					"\"${PODS_ROOT}/Headers/Objection\"",
-					"\"${PODS_ROOT}/Headers/SQLCipher\"",
-					"\"${PODS_ROOT}/Headers/SodiumObjc\"",
-					"\"${PODS_ROOT}/Headers/crypto_auth/hmacsha256/cp\"",
-					"\"${PODS_ROOT}/Headers/crypto_auth/hmacsha512/cp\"",
-					"\"${PODS_ROOT}/Headers/crypto_auth/hmacsha512256/cp\"",
-					"\"${PODS_ROOT}/Headers/crypto_box/curve25519xsalsa20poly1305/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_core/hsalsa20/ref2\"",
-					"\"${PODS_ROOT}/Headers/crypto_core/salsa20/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_core/salsa2012/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_core/salsa208/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_generichash/blake2/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_hash/sha256/cp\"",
-					"\"${PODS_ROOT}/Headers/crypto_hash/sha512/cp\"",
-					"\"${PODS_ROOT}/Headers/crypto_onetimeauth/poly1305/donna\"",
-					"\"${PODS_ROOT}/Headers/crypto_pwhash/scryptsalsa208sha256\"",
-					"\"${PODS_ROOT}/Headers/crypto_scalarmult/curve25519/donna_c64\"",
-					"\"${PODS_ROOT}/Headers/crypto_scalarmult/curve25519/ref10\"",
-					"\"${PODS_ROOT}/Headers/crypto_secretbox/xsalsa20poly1305/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_shorthash/siphash24/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_sign/ed25519/ref10\"",
-					"\"${PODS_ROOT}/Headers/crypto_sign/edwards25519sha512batch/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_stream/aes128ctr/portable\"",
-					"\"${PODS_ROOT}/Headers/crypto_stream/aes256estream/hongjun\"",
-					"\"${PODS_ROOT}/Headers/crypto_stream/chacha20/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_stream/salsa20/amd64_xmm6\"",
-					"\"${PODS_ROOT}/Headers/crypto_stream/salsa20/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_stream/salsa2012/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_stream/salsa208/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_stream/xsalsa20/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_verify/16/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_verify/32/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_verify/64/ref\"",
-					"\"${PODS_ROOT}/Headers/libsodium\"",
-					"\"${PODS_ROOT}/Headers/libsodium/sodium\"",
-					"\"${PROJECT_DIR}/dependencies/include\"/**",
-					"\"${PODS_ROOT}/SodiumObjc/lib/ios/include\"",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworkActivityLogger\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/CPAProxy\"",
+					"\"${PODS_ROOT}/Headers/Public/CocoaAsyncSocket\"",
+					"\"${PODS_ROOT}/Headers/Public/CocoaLumberjack\"",
+					"\"${PODS_ROOT}/Headers/Public/EncryptedCoreData\"",
+					"\"${PODS_ROOT}/Headers/Public/FXKeychain\"",
+					"\"${PODS_ROOT}/Headers/Public/HKDFKit\"",
+					"\"${PODS_ROOT}/Headers/Public/Objection\"",
+					"\"${PODS_ROOT}/Headers/Public/SQLCipher\"",
+					"\"${PODS_ROOT}/Headers/Public/SodiumObjc\"",
+					"\"${PODS_ROOT}/SodiumObjC/lib/ios/include/\"",
 				);
 				INFOPLIST_FILE = "MobileEdge/MobileEdge-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(PODS_ROOT)/SodiumObjc/lib/ios\"",
-					"$(PROJECT_DIR)/dependencies/lib",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -831,55 +781,21 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MobileEdge/MobileEdge-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/CocoaLumberjack\"",
-					"\"${PODS_ROOT}/Headers/EncryptedCoreData\"",
-					"\"${PODS_ROOT}/Headers/FXKeychain\"",
-					"\"${PODS_ROOT}/Headers/NAChloride\"",
-					"\"${PODS_ROOT}/Headers/Objection\"",
-					"\"${PODS_ROOT}/Headers/SQLCipher\"",
-					"\"${PODS_ROOT}/Headers/SodiumObjc\"",
-					"\"${PODS_ROOT}/Headers/crypto_auth/hmacsha256/cp\"",
-					"\"${PODS_ROOT}/Headers/crypto_auth/hmacsha512/cp\"",
-					"\"${PODS_ROOT}/Headers/crypto_auth/hmacsha512256/cp\"",
-					"\"${PODS_ROOT}/Headers/crypto_box/curve25519xsalsa20poly1305/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_core/hsalsa20/ref2\"",
-					"\"${PODS_ROOT}/Headers/crypto_core/salsa20/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_core/salsa2012/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_core/salsa208/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_generichash/blake2/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_hash/sha256/cp\"",
-					"\"${PODS_ROOT}/Headers/crypto_hash/sha512/cp\"",
-					"\"${PODS_ROOT}/Headers/crypto_onetimeauth/poly1305/donna\"",
-					"\"${PODS_ROOT}/Headers/crypto_pwhash/scryptsalsa208sha256\"",
-					"\"${PODS_ROOT}/Headers/crypto_scalarmult/curve25519/donna_c64\"",
-					"\"${PODS_ROOT}/Headers/crypto_scalarmult/curve25519/ref10\"",
-					"\"${PODS_ROOT}/Headers/crypto_secretbox/xsalsa20poly1305/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_shorthash/siphash24/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_sign/ed25519/ref10\"",
-					"\"${PODS_ROOT}/Headers/crypto_sign/edwards25519sha512batch/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_stream/aes128ctr/portable\"",
-					"\"${PODS_ROOT}/Headers/crypto_stream/aes256estream/hongjun\"",
-					"\"${PODS_ROOT}/Headers/crypto_stream/chacha20/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_stream/salsa20/amd64_xmm6\"",
-					"\"${PODS_ROOT}/Headers/crypto_stream/salsa20/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_stream/salsa2012/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_stream/salsa208/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_stream/xsalsa20/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_verify/16/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_verify/32/ref\"",
-					"\"${PODS_ROOT}/Headers/crypto_verify/64/ref\"",
-					"\"${PODS_ROOT}/Headers/libsodium\"",
-					"\"${PODS_ROOT}/Headers/libsodium/sodium\"",
-					"\"${PROJECT_DIR}/dependencies/include\"/**",
-					"\"${PODS_ROOT}/SodiumObjc/lib/ios/include\"",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworkActivityLogger\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/CPAProxy\"",
+					"\"${PODS_ROOT}/Headers/Public/CocoaAsyncSocket\"",
+					"\"${PODS_ROOT}/Headers/Public/CocoaLumberjack\"",
+					"\"${PODS_ROOT}/Headers/Public/EncryptedCoreData\"",
+					"\"${PODS_ROOT}/Headers/Public/FXKeychain\"",
+					"\"${PODS_ROOT}/Headers/Public/HKDFKit\"",
+					"\"${PODS_ROOT}/Headers/Public/Objection\"",
+					"\"${PODS_ROOT}/Headers/Public/SQLCipher\"",
+					"\"${PODS_ROOT}/Headers/Public/SodiumObjc\"",
+					"\"${PODS_ROOT}/SodiumObjC/lib/ios/include/\"",
 				);
 				INFOPLIST_FILE = "MobileEdge/MobileEdge-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(PODS_ROOT)/SodiumObjc/lib/ios\"",
-					"$(PROJECT_DIR)/dependencies/lib",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;

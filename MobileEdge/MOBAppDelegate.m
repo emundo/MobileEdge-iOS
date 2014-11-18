@@ -9,7 +9,6 @@
 #import "MOBAppDelegate.h"
 #import "EncryptedStore.h"
 #import "MOBCore.h"
-#import "TorController.h"
 #import <SodiumObjc.h>
 #import <AFNetworkActivityLogger.h>
 

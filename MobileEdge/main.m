@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 #import "MOBAppDelegate.h"
-#import "../external/Tor/ProxyURLProtocol.h"
 
 int main(int argc, char * argv[])
 {
