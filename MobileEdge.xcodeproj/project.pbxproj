@@ -32,7 +32,6 @@
 		23BAE23119A1DC7300D3CDD8 /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE22C19A1DC7300D3CDD8 /* NSData+Conversion.m */; };
 		23BAE23219A1DC7300D3CDD8 /* ProxyURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE22E19A1DC7300D3CDD8 /* ProxyURLProtocol.m */; };
 		23BAE23A19A1E4D400D3CDD8 /* MOBCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE23919A1E4D400D3CDD8 /* MOBCore.m */; };
-		23BAE24119A1EA2B00D3CDD8 /* tor_main.c in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE23B19A1EA2B00D3CDD8 /* tor_main.c */; };
 		23BAE24219A1EA2B00D3CDD8 /* TorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE23D19A1EA2B00D3CDD8 /* TorController.m */; };
 		23BAE24319A1EA2B00D3CDD8 /* torrc in Resources */ = {isa = PBXBuildFile; fileRef = 23BAE23E19A1EA2B00D3CDD8 /* torrc */; };
 		23BAE24419A1EA2B00D3CDD8 /* TorWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 23BAE24019A1EA2B00D3CDD8 /* TorWrapper.m */; };
@@ -135,7 +134,6 @@
 		23BAE22E19A1DC7300D3CDD8 /* ProxyURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProxyURLProtocol.m; sourceTree = "<group>"; };
 		23BAE23819A1E4D400D3CDD8 /* MOBCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBCore.h; sourceTree = "<group>"; };
 		23BAE23919A1E4D400D3CDD8 /* MOBCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBCore.m; sourceTree = "<group>"; };
-		23BAE23B19A1EA2B00D3CDD8 /* tor_main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tor_main.c; sourceTree = "<group>"; };
 		23BAE23C19A1EA2B00D3CDD8 /* TorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TorController.h; sourceTree = "<group>"; };
 		23BAE23D19A1EA2B00D3CDD8 /* TorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TorController.m; sourceTree = "<group>"; };
 		23BAE23E19A1EA2B00D3CDD8 /* torrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = torrc; sourceTree = "<group>"; };
@@ -329,7 +327,6 @@
 				23BAE24919A1F07D00D3CDD8 /* Reachability.m */,
 				23BAE24519A1F04500D3CDD8 /* ULINetSocket.h */,
 				23BAE24619A1F04500D3CDD8 /* ULINetSocket.m */,
-				23BAE23B19A1EA2B00D3CDD8 /* tor_main.c */,
 				23BAE23C19A1EA2B00D3CDD8 /* TorController.h */,
 				23BAE23D19A1EA2B00D3CDD8 /* TorController.m */,
 				23BAE23E19A1EA2B00D3CDD8 /* torrc */,
@@ -730,7 +727,6 @@
 				23BAE28219A4990A00D3CDD8 /* NSDictionary+Protocol.m in Sources */,
 				2348484E1A152D95007D9BAA /* MOBAxolotlSession.m in Sources */,
 				23F37DE11993700A0074E62D /* AMADataAccessCoreData.m in Sources */,
-				23BAE24119A1EA2B00D3CDD8 /* tor_main.c in Sources */,
 				234848441A152D44007D9BAA /* MOBIdentity.m in Sources */,
 				23CDB7FF199A0E840007C3C5 /* MOBValueToken.m in Sources */,
 				23BAE23219A1DC7300D3CDD8 /* ProxyURLProtocol.m in Sources */,
