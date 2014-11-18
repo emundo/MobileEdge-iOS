@@ -26,9 +26,9 @@
 
 - (MOBIdentity *) createId;
 
-- (MOBIdentity *) createIdWithOptions:(NSString *) options; //TODO change to clearer type
+- (MOBIdentity *) createIdWithOptions: (NSDictionary *) aOptions; //TODO change to clearer type
 
-- (MOBIdentity *) refreshId:(MOBIdentity *) aIdentity;
+- (MOBIdentity *) refreshId: (MOBIdentity *) aIdentity;
 
 //- (MOBRemote *) extractRemoteFromData: (NSData *) aData;
 

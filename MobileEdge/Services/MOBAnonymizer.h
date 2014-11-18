@@ -48,16 +48,4 @@ typedef void (^ConnectFailureBlock) (/* Parameters */);
                              failure: (ConnectFailureBlock) aOnFailure;
 
 
-/**
- * @discussion Lets the anonymizer interface know that connection has finished.
- *  The interface can now call the specified aOnConnect block.
- */
-- (void) notifyConnectionComplete;
-
-/**
- * @discussion Lets the anonymizer interface know that connection has failed.
- *  The interface can now call the specified aOnFailure block.
- */
-- (void) notifyConnectionFailed;
-
 @end

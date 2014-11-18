@@ -110,19 +110,5 @@
     //[self.tor startTor];
 }
 
-- (void) notifyConnectionComplete
-{
-    // TODO: parameters
-    DDLogDebug(@"connection complete!");
-    self.onConnect();
-    //dispatch_async(dispatch_get_main_queue(), self.onConnect);
-}
-
-- (void) notifyConnectionFailed
-{
-    // TODO: parameters
-    dispatch_async( dispatch_get_main_queue(), self.onFailure);
-}
-
 
 @end
