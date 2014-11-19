@@ -26,6 +26,15 @@
 
 @interface NSDictionary (Protocol)
 
+/**
+ * @discussion Decrypt the dictionary, which is assumed to be a parsed JSON
+ * message, using a remote identity, the protocol. Will set an error object,
+ * when decryption fails.
+ * @param aRemoteIdentity - the identity we received the message from.
+ * @param aProtocol - the MOBProtocol instance to use for decryption.
+ * @param aError - optional error object to set when an error occurrs.
+ * @return the decrypted data if decryption succeeds, nil if not.
+ */
 - (NSData *) decryptedDataFromSender: (MOBRemoteIdentity *) aRemoteIdentity
                         withProtocol: (id <MOBProtocol>) aProtocol
                                error: (NSError **) aError;
