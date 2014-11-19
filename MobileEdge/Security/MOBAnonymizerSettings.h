@@ -21,12 +21,29 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ * The protocol that defines which operations are possible on anonymizer settings.
+ */
 @protocol MOBAnonymizerSettings <NSObject>
 
+/**
+ * @discussion Add a domain to the whitelist for self-signed certificates.
+ * @param aDomain - the domain to add to the whitelist.
+ */
 - (void) whitelistDomainForSelfSignedCertificates: (NSString *) aDomain;
 
+/**
+ * @discussion Get the setting value for a given setting key.
+ * @param aKey - The key to query for
+ * @return the setting value object.
+ */
 - (id) getValueForKey: (NSString *) aKey;
 
+/**
+ * @discussion Set a new setting.
+ * @param aValue - the new value for the setting
+ * @param aKey - the key of the setting
+ */
 - (void) setValue: (id) aValue
            forKey: (NSString *) aKey;
 
