@@ -26,9 +26,16 @@
 typedef void (^ConnectSuccessfulBlock) (/* Parameters */);
 typedef void (^ConnectFailureBlock) (/* Parameters */);
 
-
+/**
+ * Protocol that defines the operations a encryption session/protocol needs to
+ * support.
+ */
 @protocol MOBAnonymizer <NSObject>
 
+/**
+ * @discussion Obtain settings for this Anonymizer.
+ * @return the settings for the anonymizer.
+ */
 - (id <MOBAnonymizerSettings>) settings;
 
 /**
@@ -46,6 +53,6 @@ typedef void (^ConnectFailureBlock) (/* Parameters */);
  */
 - (void) connectOnFinishExecuteBlock: (ConnectSuccessfulBlock) aOnConnect
                              failure: (ConnectFailureBlock) aOnFailure;
-
+// TODO: Should we add a progress block parameter here?
 
 @end
