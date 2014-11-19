@@ -23,13 +23,33 @@
 
 #define kMOBRemoteIdentityServiceURLKey @"serviceURL"
 
+/**
+ * A Class to represent a remote identity. This is a Identity where we don't
+ * know the private key. We might know some additional information, like 
+ * a service URL (a URL through which to contact the remote).
+ */
 @interface MOBRemoteIdentity : MOBBaseIdentity
 
+/**
+ * @discussion A service URL to contact the remote Identity.
+ */
 @property (nonatomic, strong) NSURL *serviceURL;
 
+/**
+ * @discussion Initialize a remote identity with a given public key and a service
+ * URL.
+ * @param aPublicKey - the remote's public key
+ * @param aServiceURL - the remote's service URL
+ * @return the initialized remote identity
+ */
 - (instancetype) initWithPublicKey: (NACLAsymmetricPublicKey *) aPublicKey
                         serviceURL: (NSURL *) aServiceURL;
 
+/**
+ * @discussion A convenience method to obtain the base64 string representation
+ * of the public key.
+ * @return the base64 representation of the public key
+ */
 - (NSString *) base64;
 
 @end
