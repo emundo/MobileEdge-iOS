@@ -22,12 +22,28 @@
 #import <Foundation/Foundation.h>
 
 @class NACLAsymmetricKeyPair, NACLAsymmetricPublicKey, NACLSymmetricPrivateKey;
+
+/**
+ * Representation of an Axolotl chain key including some utility methods to handle it.
+ */
 @interface MOBAxolotlChainKey : NSObject <NSCoding>
 
+/**
+ * @discussion The data of the chain key.
+ */
 @property (nonatomic, retain, readonly) NSData *data;
 
+/**
+ * @discussion Initialize a chain key with chain key data.
+ * @param aInputData - the data to initialize the key with
+ * @return the initialized chain key
+ */
 - (instancetype) initWithKeyData: (NSData *) aInputData;
 
+/**
+ * @discussion Generate and returnt the next message key. This also advances the chain key!
+ * @return the next message key
+ */
 - (NACLSymmetricPrivateKey *) nextMessageKey;
 
 @end
