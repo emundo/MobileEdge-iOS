@@ -21,7 +21,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class NACLAsymmetricKeyPair, NACLAsymmetricPublicKey, NACLSymmetricPrivateKey;
+@class NACLSymmetricPrivateKey;
 
 /**
  * Representation of an Axolotl chain key including some utility methods to handle it.
