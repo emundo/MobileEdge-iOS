@@ -20,6 +20,11 @@
  */
 
 #import "MOBRemoteIdentity.h"
+@interface MOBRemoteIdentity ()
+
+@property (nonatomic, strong) NSString *base64;
+
+@end
 
 @implementation MOBRemoteIdentity
 
@@ -36,7 +41,11 @@
 
 - (NSString *) base64
 {
-    return [self.identityKey.data base64EncodedStringWithOptions: 0];
+    if (!_base64)
+    {
+        _base64 = [self.identityKey.data base64EncodedStringWithOptions: 0];
+    }
+    return _base64;
 }
 
 #pragma mark -
