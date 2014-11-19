@@ -24,10 +24,22 @@
 
 #define kMOBBaseIdentityIdentityKey @"identityKey"
 
+/**
+ * @discussion The Identity base class. Only contains the public key.
+ */
 @interface MOBBaseIdentity : NSObject <NSCopying, NSCoding>
 
+/**
+ * @discussion The public identity key belonging to the Identity.
+ */
 @property (nonatomic,strong) NACLAsymmetricPublicKey *identityKey;
 
+
+/**
+ * @discussion Initialize the Identity with a public key.
+ * @param aPublicKey - The public key to set for this Identity.
+ * @return an initialized BaseIdentity object.
+ */
 - (instancetype) initWithPublicKey: (NACLAsymmetricPublicKey *) aPublicKey;
 
 @end
