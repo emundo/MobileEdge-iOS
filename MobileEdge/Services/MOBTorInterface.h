@@ -18,9 +18,6 @@
  *
  * Created by Raphael Arias on 8/11/14.
  */
-//
-//  Heavily inspired by OnionBrowser's way of doing things.
-//  https://github.com/mtigas/iOS-OnionBrowser
 
 #import <Foundation/Foundation.h>
 #import "MOBAnonymizer.h"
