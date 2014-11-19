@@ -25,8 +25,6 @@
 #import <Foundation/Foundation.h>
 #import "MOBAnonymizer.h"
 
-@class TorController;
-
 @interface MOBTorInterface : NSObject <MOBAnonymizer>
 
 @property (nonatomic, retain) id <MOBAnonymizerSettings> settings;
