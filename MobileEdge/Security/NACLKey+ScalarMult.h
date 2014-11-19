@@ -23,6 +23,12 @@
 
 @interface NACLKey (ScalarMult)
 
+/**
+ * @discussion Multiply the key with a given other key using scalar multiplication
+ * on curve25519. Uses libsodium/NaCl and is used for Diffie Hellman.
+ * @param aKey - the key to multiply with.
+ * @return a new key whose data is the result of the multiplication.
+ */
 - (instancetype) multWithKey: (NACLKey *) aKey;
 
 @end

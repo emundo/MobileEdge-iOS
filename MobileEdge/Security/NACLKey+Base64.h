@@ -23,6 +23,10 @@
 
 @interface NACLKey (Base64)
 
+/**
+ * @discussion The base64 representation of the key data.
+ * @return the base64 string
+ */
 - (NSString *) base64;
 
 @end
