@@ -23,6 +23,14 @@
 
 @interface HKDFKit (Strings)
 
+/**
+ * @discussion Allow strings as info and salt in HKDFKit.
+ * @param seed - the seed.
+ * @param info - the info string.
+ * @param salt - the salt string.
+ * @param outputSize - the size of key material to output.
+ * @return the derived key material
+ */
 + (NSData *) deriveKey: (NSData *) seed
             infoString: (NSString *) info
             saltString: (NSString *) salt
