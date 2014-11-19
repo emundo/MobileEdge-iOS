@@ -23,19 +23,21 @@
  * This file could provide operations such as mapping remote identities to
  * different local identities, allowing to communicate with several remotes using
  * a different Identity. This will remain unimplemented for now.
+ *
+ * Nothing useful here, for now.
  */
 
 #import <Foundation/Foundation.h>
 #import "MOBIdentity.h"
 
 @interface MOBIdentityManagement : NSObject
-
+/*
 + (MOBIdentity *) createIdentity;
 
 + (MOBIdentity *) createIdentityWithOptions: (NSDictionary *) aOptions;
 
 + (MOBIdentity *) refreshIdentity: (MOBIdentity *) aIdentity;
-
+*/
 //- (MOBRemote *) extractRemoteFromData: (NSData *) aData;
 
 @end
