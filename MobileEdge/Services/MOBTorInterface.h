@@ -25,8 +25,14 @@
 #import <Foundation/Foundation.h>
 #import "MOBAnonymizer.h"
 
+/**
+ * The first implementation of a MOBAnonymizer using Tor to anonymize connections.
+ */
 @interface MOBTorInterface : NSObject <MOBAnonymizer>
 
+/**
+ * @discussion The settings object. Must implement the MOBAnonymizerSettings protocol.
+ */
 @property (nonatomic, retain) id <MOBAnonymizerSettings> settings;
 
 @end
