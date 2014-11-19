@@ -24,6 +24,10 @@
 
 @class NACLAsymmetricKeyPair, NACLAsymmetricPublicKey, NACLSymmetricPrivateKey, MOBAxolotlChainKey, MOBAxolotlSkippedKeyRing;
 
+
+/**
+ * A session state for the Axolotl protocol.
+ */
 @interface MOBAxolotlSession : NSObject <NSCoding>
 #pragma mark -
 #pragma mark Identity keys
