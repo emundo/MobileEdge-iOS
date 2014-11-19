@@ -23,11 +23,27 @@
 
 @class NACLSymmetricPrivateKey;
 
+/**
+ * A key ring to store a header key and all its associated skipped message keys.
+ */
 @interface MOBAxolotlSkippedKeyRing : NSObject
 
+/**
+ * @discussion The header key
+ */
 @property (nonatomic, retain, readonly) NACLSymmetricPrivateKey *headerKey;
+
+/**
+ * @discussion The array of message keys.
+ */
 @property (nonatomic, retain, readonly) NSMutableArray *messageKeys;
 
+/**
+ * @discussion Initialize the key ring.
+ * @param aMessageKeys - the message keys to store
+ * @param aHeaderKey - the header key to store
+ * @return The initialized key ring
+ */
 - (instancetype) initWithMessageKeys: (NSMutableArray *) aMessageKeys
                         forHeaderKey: (NACLSymmetricPrivateKey *) aHeaderKey;
 
