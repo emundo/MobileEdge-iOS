@@ -22,11 +22,21 @@
 #import <Foundation/Foundation.h>
 #import "MOBProtocol.h"
 
-@class MOBRemoteIdentity, MOBIdentity;
+@class MOBRemoteIdentity;
 
+/**
+ * The first implementation of a MOBProtocol protocol. Uses Trevor Perrin and 
+ * Moxie Marlinspike's Axolotl protocol.
+ */
 @interface MOBAxolotl : NSObject  <MOBProtocol>
 
 #ifdef DEBUG
+/**
+ * @discussion Testing function to extract shared key material from the session.
+ * Used for tests and debugging.
+ * @param aRemote - the remote to get session data for.
+ * @return the shared key material as data.
+ */
 - (NSData *) getSessionKeyMaterialForTestingForRemote: (MOBRemoteIdentity *) aRemote;
 #endif
 @end
