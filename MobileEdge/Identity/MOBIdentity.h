@@ -60,8 +60,17 @@
  */
 @property (nonatomic, strong) NSString *comment;
 
+/**
+ * @discussion Initialize a new Identity object. A public/private key pair is
+ * created.
+ * @return the initialized Identity object.
+ */
 - (instancetype) init;
 
+/**
+ * @discussion Initialize a new Identity object with a given public/private key pair.
+ * @return the initialized Identity object.
+ */
 - (instancetype) initWithKeyPair: (NACLAsymmetricKeyPair *) aKeyPair;
 
 @end
