@@ -26,11 +26,7 @@
 -(instancetype) init
 {
     NACLAsymmetricKeyPair *newKeyPair = [NACLAsymmetricKeyPair keyPair];
-    if (self = [super initWithPublicKey:newKeyPair.publicKey])
-    {
-        _identityKeyPair = newKeyPair;
-    }
-    return self;
+    return [self initWithKeyPair: newKeyPair];
 }
 
 -(instancetype) initWithKeyPair: (NACLAsymmetricKeyPair *) aKeyPair
@@ -38,13 +34,11 @@
     if (self = [super initWithPublicKey:aKeyPair.publicKey])
     {
         _identityKeyPair = aKeyPair;
+        _creationDate = [NSDate date];
     }
     return self;
 }
 
-/*
- * No support for NSCopying!
- */
 #pragma mark -
 #pragma mark NSCopying
 
@@ -52,6 +46,9 @@
 {
     MOBIdentity *copy = [super copyWithZone:zone];
     copy->_identityKeyPair = [self.identityKeyPair copyWithZone: zone];
+    copy->_creationDate = [self.creationDate copyWithZone: zone];
+    copy.ttl = [self.ttl copyWithZone: zone];
+    copy.comment = [self.comment copyWithZone: zone];
     return copy;
 }
 
@@ -59,7 +56,16 @@
 - (void) encodeWithCoder: (NSCoder *) encoder
 {
     [super encodeWithCoder: encoder];
-    [encoder encodeObject: _identityKeyPair forKey: kMOBIdentityKeyPairKey];
+    [encoder encodeObject: self.identityKeyPair forKey: kMOBIdentityKeyPairKey];
+    [encoder encodeObject: self.creationDate forKey: kMOBIdentityCreationDateKey];
+    if (self.ttl)
+    {
+        [encoder encodeObject: self.ttl forKey: kMOBIdentityTTLKey];
+    }
+    if (self.comment)
+    {
+        [encoder encodeObject: self.comment forKey: kMOBIdentityTTLKey];
+    }
 }
 
 - (id)initWithCoder: (NSCoder *) coder
@@ -67,6 +73,9 @@
     if ( (self = [super initWithCoder: coder]) )
     {
         _identityKeyPair = [coder decodeObjectForKey: kMOBIdentityKeyPairKey];
+        _creationDate = [coder decodeObjectForKey: kMOBIdentityCreationDateKey];
+        self.ttl = [coder decodeObjectForKey: kMOBIdentityTTLKey];
+        self.comment = [coder decodeObjectForKey: kMOBIdentityCommentKey];
     }
     return self;
 }

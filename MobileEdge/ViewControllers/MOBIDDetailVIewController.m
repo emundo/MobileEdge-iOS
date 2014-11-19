@@ -47,10 +47,8 @@
 
 -(void)refreshViewForID
 {
-    self.ttlText.text = self.idObject.ttl;
-    self.macText.text = self.idObject.mac;
-    self.nonceText.text = self.idObject.nonce;
-    self.creationDateText.text = self.idObject.creationDate;
+    //self.ttlText.text = self.idObject.ttl;
+    //self.creationDateText.text = self.idObject.creationDate;
 }
 
 /*

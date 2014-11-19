@@ -24,14 +24,41 @@
 #import <SodiumObjc.h>
 
 #define kMOBIdentityKeyPairKey @"identityKeyPair"
+#define kMOBIdentityCreationDateKey @"creationDate"
+#define kMOBIdentityTTLKey @"ttl"
+#define kMOBIdentityCommentKey @"comment"
 
+/**
+ * @discussion A Class to represent a local Identity. Inherits from MOBBaseIdentity,
+ * So it has an extra public key field, additionally to the identityKeyPair defined
+ * here.
+ */
 @interface MOBIdentity : MOBBaseIdentity
 
+/**
+ * @discussion The identity public and private key pair.
+ */
 @property (nonatomic, strong, readonly) NACLAsymmetricKeyPair *identityKeyPair;
-@property (nonatomic, strong) NSString *ttl;
-@property (nonatomic, strong) NSString *nonce;
-@property (nonatomic, strong) NSString *mac;
-@property (nonatomic, strong) NSString *creationDate;
+
+/**
+ * @discussion A optional time to live for the identity.
+ * This is not yet implemented, but using an identity with elapsed ttl
+ * should fail and force application programmers to either create new identity
+ * or refresh this one.
+ */
+@property (nonatomic, strong) NSDate *ttl;
+
+/**
+ * @discussion Date of the identity creation. This could be useful for users to
+ * associate identities with some context.
+ */
+@property (nonatomic, strong, readonly) NSDate *creationDate;
+
+/**
+ * @discussion A comment the application can add to the identity to make it more
+ * identifiable.
+ */
+@property (nonatomic, strong) NSString *comment;
 
 - (instancetype) init;
 

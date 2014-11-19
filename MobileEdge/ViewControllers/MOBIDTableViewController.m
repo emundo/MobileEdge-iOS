@@ -31,10 +31,6 @@
     self.arrayIDs = [[NSMutableArray alloc] init];
     
     MOBIdentity *ID1 = [[MOBIdentity alloc] init];
-    ID1.ttl = @"tomorrow";
-    ID1.nonce = @"lalala";
-    ID1.mac = @"code";
-    ID1.creationDate = @"today";
     
     [self.arrayIDs addObject:ID1];
     [self.tableView reloadData];
