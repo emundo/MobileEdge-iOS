@@ -159,11 +159,9 @@
 		25B6D2F63A7D4E3AA5DE0C24 /* libPods-MobileEdge.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MobileEdge.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F44481F8F920D1271FECAF6 /* Pods-MobileEdge Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileEdge Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MobileEdge Tests/Pods-MobileEdge Tests.release.xcconfig"; sourceTree = "<group>"; };
 		521ED3DAC370A2EFA84E0CC2 /* libPods-MobileEdge Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MobileEdge Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8142F5781988CEDC0088B18B /* MOBviewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MOBviewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8142F57B1988CEDC0088B18B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8142F57D1988CEDC0088B18B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		8142F57F1988CEDC0088B18B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		8142F5991988CEDC0088B18B /* MOBviewTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MOBviewTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8142F59A1988CEDC0088B18B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		A70CE4E402B1B3F6FEA03C5C /* Pods-MobileEdge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileEdge.release.xcconfig"; path = "Pods/Target Support Files/Pods-MobileEdge/Pods-MobileEdge.release.xcconfig"; sourceTree = "<group>"; };
 		C4E4ECE17FFAE5F9590A71E4 /* Pods-MobileEdge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileEdge.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MobileEdge/Pods-MobileEdge.debug.xcconfig"; sourceTree = "<group>"; };
@@ -397,8 +395,6 @@
 		8142F5791988CEDC0088B18B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8142F5781988CEDC0088B18B /* MOBviewTest.app */,
-				8142F5991988CEDC0088B18B /* MOBviewTestTests.xctest */,
 				23FD671C198A64C400D1A344 /* MobileEdge.app */,
 				234DB25119F94DD8006CD605 /* MobileEdge Tests.xctest */,
 			);
