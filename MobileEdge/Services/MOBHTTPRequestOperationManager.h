@@ -24,21 +24,59 @@
 
 @class MOBIdentity, MOBRemoteIdentity;
 
+/**
+ * Subclass of AFHTTPRequestOperationManager that behaves the same, except that
+ * it uses our Anonymizer and Protocol to route and encrypt requests.
+ * Transparently performs the key exchange with remotes if possible.
+ */
 @interface MOBHTTPRequestOperationManager : AFHTTPRequestOperationManager
 
-@property (nonatomic,strong) MOBIdentity *myIdentity;
-@property (nonatomic,assign) BOOL shouldUseTor;
+/**
+ * @discussion Our own identity.
+ */
+@property (nonatomic, strong) MOBIdentity *myIdentity;
+/**
+ * @discussion We should anonymize requests.
+ */
+@property (nonatomic, assign) BOOL shouldAnonymize;
 
-
+/**
+ * @discussion Initializes a RequestOperationManager with a given local Identity.
+ * Note that a remote identity needs to be added, before encryption can take place.
+ * @param aMyIdentity - our own Identity.
+ * @return the initialized RequestOperationManager.
+ */
 - (instancetype) initWithIdentity: (MOBIdentity *) aMyIdentity;
 
+/**
+ * @discussion Initializes a RequestOperationManager with a local and a remote
+ * identity.
+ * @param aMyIdentity - our own Identity.
+ * @param aRemoteIdentity - the remote Identity.
+ * @return the initialized RequestOperationManager.
+ */
 - (instancetype) initWithIdentity: (MOBIdentity *) aMyIdentity
                    remoteIdentity: (MOBRemoteIdentity *) aRemoteIdentity;
 
+/**
+ * @discussion Initializes a RequestOperationManager. As no own identity is given,
+ * a new one is created.
+ * @return the initialized RequestOperationManager.
+ */
 - (instancetype) init;
 
+/**
+ * @discussion Initializes a RequestOperationManager with a remote identity. A
+ * local new one is created, as none is given.
+ * @param aRemoteIdentity - the remote Identity.
+ * @return the initialized RequestOperationManager.
+ */
 - (instancetype) initWithRemoteIdentity: (MOBRemoteIdentity *) aRemoteIdentity;
 
+/**
+ * @discussion Adds a remote identity to the RequestOperationManager.
+ * @param aRemoteIdentity - the remote Identity.
+ */
 - (void) addRemoteIdentity: (MOBRemoteIdentity *) aRemoteIdentity;
 
 @end

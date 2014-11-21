@@ -44,7 +44,7 @@
 {
     if (self = [super init])
     {
-        self.shouldUseTor = YES;
+        self.shouldAnonymize = YES;
         self.myIdentity = [[MOBIdentity alloc] init];
     }
     return self;
@@ -54,7 +54,7 @@
 {
     if (self = [super init])
     {
-        self.shouldUseTor = YES;
+        self.shouldAnonymize = YES;
         self.myIdentity = aMyIdentity;
     }
     return self;
@@ -235,20 +235,6 @@ typedef void (^RequestOperationOnFailureBlock) ( AFHTTPRequestOperation *operati
         self.remotes = [NSMutableDictionary dictionary];
     }
     [self.remotes setObject:aRemoteIdentity forKey: aRemoteIdentity.serviceURL.absoluteString];
-}
-
-- (void) setShouldUseTor: (BOOL) aShouldUseTor
-{
-    if (aShouldUseTor)
-    {
-        //TODO register class
-        _shouldUseTor = YES;
-    }
-    else
-    {
-        //TODO unregister class
-        _shouldUseTor = NO;
-    }
 }
 
 @end
