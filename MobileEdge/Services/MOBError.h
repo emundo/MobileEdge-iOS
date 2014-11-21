@@ -21,10 +21,19 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ * Error domain for Protocol-related errors.
+ */
+#define kMOBErrorDomainProtocol @"emundo.mobileedge.ProtocolErrorDomain"
 
-#define kMOBErrorDomainProtocol @"axolotl.protocol.error.domain"
-#define kMOBErrorDomainAnonymizer @"tor.anonymizer.error.domain"
+/**
+ * Error domain for Anonymizer-related errors.
+ */
+#define kMOBErrorDomainAnonymizer @"emundo.mobileedge.AnonymizerErrorDomain"
 
+/**
+ * Error codes for protocol-related errors.
+ */
 enum MOBProtocolErrorCode
 {
     kMOBProtocolKeyExchangeMessageInvalid,
@@ -37,13 +46,25 @@ enum MOBProtocolErrorCode
     kMOBAxolotlExceedingSkippedMessageLimit
 };
 
+/**
+ * Error codes for anonymizer-related errors.
+ */
 enum MOBAnonymizerErrorCode
 {
     kMOBAnonymizerConnectionFailed
 };
 
+/**
+ * A utility Error class used by MobileEdge internally to populate NSError objects.
+ */
 @interface MOBError : NSObject
 
+/**
+ * @discussion Populate an error object that might have been passed into the library.
+ * @param aError - the error object pointer (can be nil)
+ * @param aErrorDomain - the error domain.
+ * @param aErrorCode - the error code.
+ */
 + (void) populateErrorObject: (NSError **) aError
                    forDomain: (NSString *) aErrorDomain
                    errorCode: (NSInteger) aErrorCode;
