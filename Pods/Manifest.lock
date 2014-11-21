@@ -31,34 +31,22 @@ PODS:
     - CocoaLumberjack/Core
   - CPAProxy (1.0.0):
     - CocoaAsyncSocket (~> 7.3)
-  - EncryptedCoreData (3.0):
-    - SQLCipher (~> 3.1.0)
   - FXKeychain (1.5.2)
   - HKDFKit (0.0.3)
-  - Objection (1.4)
   - SodiumObjc (1.1)
-  - SQLCipher (3.1.0):
-    - SQLCipher/standard
-  - SQLCipher/common (3.1.0)
-  - SQLCipher/standard (3.1.0):
-    - SQLCipher/common
 
 DEPENDENCIES:
   - AFNetworkActivityLogger
   - AFNetworking (~> 2.0)
   - CocoaLumberjack (~> 1.9.2)
   - CPAProxy (from `https://github.com/ursachec/CPAProxy.git`)
-  - EncryptedCoreData (from `https://github.com/project-imas/encrypted-core-data.git`)
   - FXKeychain (~> 1.5.1)
   - HKDFKit (~> 0.0.3)
-  - Objection (~> 1.4)
   - SodiumObjc (from `https://github.com/r-arias/SodiumObjc.git`)
 
 EXTERNAL SOURCES:
   CPAProxy:
     :git: https://github.com/ursachec/CPAProxy.git
-  EncryptedCoreData:
-    :git: https://github.com/project-imas/encrypted-core-data.git
   SodiumObjc:
     :git: https://github.com/r-arias/SodiumObjc.git
 
@@ -68,11 +56,8 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 45bdbbc1c0a5ed0640ff4c42af325ba43a2f099a
   CocoaLumberjack: 205769c032b5fef85b92472046bcc8b7e7c8a817
   CPAProxy: 46859765bfe23a93286ab0e86bb53897a887205f
-  EncryptedCoreData: a52183de3620d305b78b8c8a3b323ebf7adf76a5
   FXKeychain: c97c352f1923809032339514ec4d6b0ed151bc3b
   HKDFKit: 5998cf1bbb611e7ecc6bd3eaaef8c7a7da7be949
-  Objection: 8176a996209cdcd23490c57d6e807a25faa8d54d
   SodiumObjc: 69c90c435fe0d6d91bdb0ac5e5deb8fe0b93502c
-  SQLCipher: 981110217eb93c2779c34fb59e646a1c1da918d8
 
 COCOAPODS: 0.34.2

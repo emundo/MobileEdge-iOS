@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>E61649DC-11CF-4591-8A3A-E78AE372FCBA</string>
+	<string>A8C58F9B-C78A-4132-8FDE-CDC8F74A1704</string>
 	<key>IDESourceControlProjectName</key>
 	<string>MobileEdge-iOS</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -14,11 +14,11 @@
 		<string>myqo.de:anty/mobileedge-ios.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>MobileEdge-iOS.xcodeproj</string>
+	<string>MobileEdge-iOS.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>36E113C8C739D39155DDA8B4CA3C7623B67CD1C7</key>
-		<string>../..</string>
+		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>myqo.de:anty/mobileedge-ios.git</string>

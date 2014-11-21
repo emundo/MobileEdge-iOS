@@ -28,6 +28,8 @@
 		235A00381A1F84830042318E /* MOBAxolotlLocalTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00371A1F84830042318E /* MOBAxolotlLocalTest.m */; };
 		235A003A1A1F84C30042318E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 235A00391A1F84C30042318E /* libz.dylib */; };
 		235AFFE41A1F82140042318E /* libMobileEdge-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 235AFFD81A1F82140042318E /* libMobileEdge-iOS.a */; };
+		6B7F07D5410EB70AE2099388 /* libPods-MobileEdge-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A43814194A8B4FB72913701 /* libPods-MobileEdge-iOS.a */; };
+		88ED508D2C3A14B72ACEA141 /* libPods-MobileEdge-iOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D492A48C09FCF51B14859DC /* libPods-MobileEdge-iOSTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +99,12 @@
 		235AFFFD1A1F837F0042318E /* MOBAxolotl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBAxolotl.h; sourceTree = "<group>"; };
 		235AFFFE1A1F837F0042318E /* MOBAxolotl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBAxolotl.m; sourceTree = "<group>"; };
 		235AFFFF1A1F837F0042318E /* MOBAxolotlChainKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBAxolotlChainKey.h; sourceTree = "<group>"; };
+		3C303E1DD9036CD8B767E73D /* Pods-MobileEdge-iOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileEdge-iOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MobileEdge-iOSTests/Pods-MobileEdge-iOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		856868AE4D00D7CE7BAD7D57 /* Pods-MobileEdge-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileEdge-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-MobileEdge-iOS/Pods-MobileEdge-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		8A43814194A8B4FB72913701 /* libPods-MobileEdge-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MobileEdge-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D492A48C09FCF51B14859DC /* libPods-MobileEdge-iOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MobileEdge-iOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCCA81AF948498C93D820080 /* Pods-MobileEdge-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileEdge-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MobileEdge-iOS/Pods-MobileEdge-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		E59658DD28ED2F2D6E332B63 /* Pods-MobileEdge-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileEdge-iOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MobileEdge-iOSTests/Pods-MobileEdge-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +113,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				235A003A1A1F84C30042318E /* libz.dylib in Frameworks */,
+				6B7F07D5410EB70AE2099388 /* libPods-MobileEdge-iOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,12 +122,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				235AFFE41A1F82140042318E /* libMobileEdge-iOS.a in Frameworks */,
+				88ED508D2C3A14B72ACEA141 /* libPods-MobileEdge-iOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		067B4A064E4118309A1458C8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BCCA81AF948498C93D820080 /* Pods-MobileEdge-iOS.debug.xcconfig */,
+				856868AE4D00D7CE7BAD7D57 /* Pods-MobileEdge-iOS.release.xcconfig */,
+				E59658DD28ED2F2D6E332B63 /* Pods-MobileEdge-iOSTests.debug.xcconfig */,
+				3C303E1DD9036CD8B767E73D /* Pods-MobileEdge-iOSTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		235A00111A1F837F0042318E /* Tor */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,10 +167,12 @@
 		235AFFCF1A1F82140042318E = {
 			isa = PBXGroup;
 			children = (
-				235A00391A1F84C30042318E /* libz.dylib */,
 				235AFFDA1A1F82140042318E /* MobileEdge-iOS */,
 				235AFFE71A1F82140042318E /* MobileEdge-iOSTests */,
 				235AFFD91A1F82140042318E /* Products */,
+				067B4A064E4118309A1458C8 /* Pods */,
+				993473B9380EEB92CA5C966B /* Frameworks */,
+				235A00391A1F84C30042318E /* libz.dylib */,
 			);
 			sourceTree = "<group>";
 		};
@@ -241,6 +264,15 @@
 			path = Axolotl;
 			sourceTree = "<group>";
 		};
+		993473B9380EEB92CA5C966B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8A43814194A8B4FB72913701 /* libPods-MobileEdge-iOS.a */,
+				9D492A48C09FCF51B14859DC /* libPods-MobileEdge-iOSTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -248,9 +280,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 235AFFEC1A1F82140042318E /* Build configuration list for PBXNativeTarget "MobileEdge-iOS" */;
 			buildPhases = (
+				19E0BDE50BD7A53CDAD81A08 /* Check Pods Manifest.lock */,
 				235AFFD41A1F82140042318E /* Sources */,
 				235AFFD51A1F82140042318E /* Frameworks */,
 				235AFFD61A1F82140042318E /* CopyFiles */,
+				7F5106A4EEB589B375366097 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -265,9 +299,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 235AFFEF1A1F82140042318E /* Build configuration list for PBXNativeTarget "MobileEdge-iOSTests" */;
 			buildPhases = (
+				B9753ECD38CB375DCD711A96 /* Check Pods Manifest.lock */,
 				235AFFDF1A1F82140042318E /* Sources */,
 				235AFFE01A1F82140042318E /* Frameworks */,
 				235AFFE11A1F82140042318E /* Resources */,
+				25931809CB691AF11130E76B /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -323,6 +359,69 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		19E0BDE50BD7A53CDAD81A08 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		25931809CB691AF11130E76B /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MobileEdge-iOSTests/Pods-MobileEdge-iOSTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7F5106A4EEB589B375366097 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MobileEdge-iOS/Pods-MobileEdge-iOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B9753ECD38CB375DCD711A96 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		235AFFD41A1F82140042318E /* Sources */ = {
@@ -402,6 +501,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"${PODS_ROOT}/SodiumObjC/lib/ios/include/\"",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -436,6 +540,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"${PODS_ROOT}/SodiumObjC/lib/ios/include/\"",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -445,8 +554,21 @@
 		};
 		235AFFED1A1F82140042318E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BCCA81AF948498C93D820080 /* Pods-MobileEdge-iOS.debug.xcconfig */;
 			buildSettings = {
-				OTHER_LDFLAGS = "-ObjC";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworkActivityLogger\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/CPAProxy\"",
+					"\"${PODS_ROOT}/Headers/Public/CocoaAsyncSocket\"",
+					"\"${PODS_ROOT}/Headers/Public/CocoaLumberjack\"",
+					"\"${PODS_ROOT}/Headers/Public/FXKeychain\"",
+					"\"${PODS_ROOT}/Headers/Public/HKDFKit\"",
+					"\"${PODS_ROOT}/Headers/Public/SodiumObjc\"",
+					"$(inherited)",
+					"\"${PODS_ROOT}/SodiumObjC/lib/ios/include/\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -454,8 +576,21 @@
 		};
 		235AFFEE1A1F82140042318E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 856868AE4D00D7CE7BAD7D57 /* Pods-MobileEdge-iOS.release.xcconfig */;
 			buildSettings = {
-				OTHER_LDFLAGS = "-ObjC";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworkActivityLogger\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/CPAProxy\"",
+					"\"${PODS_ROOT}/Headers/Public/CocoaAsyncSocket\"",
+					"\"${PODS_ROOT}/Headers/Public/CocoaLumberjack\"",
+					"\"${PODS_ROOT}/Headers/Public/FXKeychain\"",
+					"\"${PODS_ROOT}/Headers/Public/HKDFKit\"",
+					"\"${PODS_ROOT}/Headers/Public/SodiumObjc\"",
+					"$(inherited)",
+					"\"${PODS_ROOT}/SodiumObjC/lib/ios/include/\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -463,6 +598,7 @@
 		};
 		235AFFF01A1F82140042318E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E59658DD28ED2F2D6E332B63 /* Pods-MobileEdge-iOSTests.debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -472,6 +608,19 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworkActivityLogger\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/CPAProxy\"",
+					"\"${PODS_ROOT}/Headers/Public/CocoaAsyncSocket\"",
+					"\"${PODS_ROOT}/Headers/Public/CocoaLumberjack\"",
+					"\"${PODS_ROOT}/Headers/Public/FXKeychain\"",
+					"\"${PODS_ROOT}/Headers/Public/HKDFKit\"",
+					"\"${PODS_ROOT}/Headers/Public/SodiumObjc\"",
+					"$(inherited)",
+					"\"${PODS_ROOT}/SodiumObjC/lib/ios/include/\"",
+				);
 				INFOPLIST_FILE = "MobileEdge-iOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -480,10 +629,24 @@
 		};
 		235AFFF11A1F82140042318E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C303E1DD9036CD8B767E73D /* Pods-MobileEdge-iOSTests.release.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworkActivityLogger\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/CPAProxy\"",
+					"\"${PODS_ROOT}/Headers/Public/CocoaAsyncSocket\"",
+					"\"${PODS_ROOT}/Headers/Public/CocoaLumberjack\"",
+					"\"${PODS_ROOT}/Headers/Public/FXKeychain\"",
+					"\"${PODS_ROOT}/Headers/Public/HKDFKit\"",
+					"\"${PODS_ROOT}/Headers/Public/SodiumObjc\"",
+					"$(inherited)",
+					"\"${PODS_ROOT}/SodiumObjC/lib/ios/include/\"",
 				);
 				INFOPLIST_FILE = "MobileEdge-iOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -510,6 +673,7 @@
 				235AFFEE1A1F82140042318E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		235AFFEF1A1F82140042318E /* Build configuration list for PBXNativeTarget "MobileEdge-iOSTests" */ = {
 			isa = XCConfigurationList;
@@ -518,6 +682,7 @@
 				235AFFF11A1F82140042318E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
