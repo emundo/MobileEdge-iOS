@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
                    * Finally, don't worry about the indent, CocoaPods strips it!
                    DESC
 
-  s.homepage     = "http://EXAMPLE/MobileEdge"
+  s.homepage     = "http://mobileedgesec.com"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -39,7 +39,7 @@ Pod::Spec.new do |s|
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
-  s.license      = "MIT (example)"
+  s.license      = "LGPL v3 or newer"
   # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
 
 
@@ -78,7 +78,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "http://EXAMPLE/MobileEdge.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/emundo/MobileEdge-iOS.git", :tag => "0.0.1" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -131,6 +131,15 @@ Pod::Spec.new do |s|
   # s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
+  s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(PODS_ROOT)/SodiumObjC/lib/ios/include/" }
   # s.dependency "JSONKit", "~> 1.4"
+  s.dependency "AFNetworking",         "~> 2.0"
+  s.dependency "AFNetworkActivityLogger", "~> 2.0"
+  s.dependency "CocoaLumberjack",      "~> 1.9.2"
+  s.dependency "FXKeychain",           "~> 1.5.1"
+  s.dependency "HKDFKit",              "~> 0.0.3"
+  s.dependency "SodiumObjc",           "~> 1.1", :git => "https://github.com/r-arias/SodiumObjc.git"
+  s.dependency "CPAProxy",             "~> 0.1", :git => 'https://github.com/ursachec/CPAProxy.git' 
+ 
 
 end
