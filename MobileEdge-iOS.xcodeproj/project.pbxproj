@@ -1,0 +1,525 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		235A00201A1F837F0042318E /* MOBBaseIdentity.m in Sources */ = {isa = PBXBuildFile; fileRef = 235AFFF41A1F837F0042318E /* MOBBaseIdentity.m */; };
+		235A00211A1F837F0042318E /* MOBIdentity.m in Sources */ = {isa = PBXBuildFile; fileRef = 235AFFF61A1F837F0042318E /* MOBIdentity.m */; };
+		235A00221A1F837F0042318E /* MOBIdentityManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 235AFFF81A1F837F0042318E /* MOBIdentityManagement.m */; };
+		235A00231A1F837F0042318E /* MOBRemoteIdentity.m in Sources */ = {isa = PBXBuildFile; fileRef = 235AFFFA1A1F837F0042318E /* MOBRemoteIdentity.m */; };
+		235A00241A1F837F0042318E /* MOBAxolotl.m in Sources */ = {isa = PBXBuildFile; fileRef = 235AFFFE1A1F837F0042318E /* MOBAxolotl.m */; };
+		235A00251A1F837F0042318E /* MOBAxolotlChainKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00001A1F837F0042318E /* MOBAxolotlChainKey.m */; };
+		235A00261A1F837F0042318E /* MOBAxolotlSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00021A1F837F0042318E /* MOBAxolotlSession.m */; };
+		235A00271A1F837F0042318E /* MOBAxolotlSkippedKeyRing.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00041A1F837F0042318E /* MOBAxolotlSkippedKeyRing.m */; };
+		235A00281A1F837F0042318E /* MOBKeyExchangeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00061A1F837F0042318E /* MOBKeyExchangeMessage.m */; };
+		235A00291A1F837F0042318E /* HKDFKit+Strings.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00081A1F837F0042318E /* HKDFKit+Strings.m */; };
+		235A002A1A1F837F0042318E /* NACLKey+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A000C1A1F837F0042318E /* NACLKey+Base64.m */; };
+		235A002B1A1F837F0042318E /* NACLKey+ScalarMult.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A000E1A1F837F0042318E /* NACLKey+ScalarMult.m */; };
+		235A002C1A1F837F0042318E /* NSDictionary+Protocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00101A1F837F0042318E /* NSDictionary+Protocol.m */; };
+		235A002D1A1F837F0042318E /* MOBTorSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00131A1F837F0042318E /* MOBTorSettings.m */; };
+		235A002E1A1F837F0042318E /* MOBCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00171A1F837F0042318E /* MOBCore.m */; };
+		235A002F1A1F837F0042318E /* MOBError.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00191A1F837F0042318E /* MOBError.m */; };
+		235A00301A1F837F0042318E /* MOBHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A001B1A1F837F0042318E /* MOBHTTPRequestOperationManager.m */; };
+		235A00351A1F840F0042318E /* MOBTorInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00341A1F840F0042318E /* MOBTorInterface.m */; };
+		235A00381A1F84830042318E /* MOBAxolotlLocalTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00371A1F84830042318E /* MOBAxolotlLocalTest.m */; };
+		235A003A1A1F84C30042318E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 235A00391A1F84C30042318E /* libz.dylib */; };
+		235AFFE41A1F82140042318E /* libMobileEdge-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 235AFFD81A1F82140042318E /* libMobileEdge-iOS.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		235AFFE51A1F82140042318E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 235AFFD01A1F82140042318E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 235AFFD71A1F82140042318E;
+			remoteInfo = "MobileEdge-iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		235AFFD61A1F82140042318E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		235A00001A1F837F0042318E /* MOBAxolotlChainKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBAxolotlChainKey.m; sourceTree = "<group>"; };
+		235A00011A1F837F0042318E /* MOBAxolotlSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBAxolotlSession.h; sourceTree = "<group>"; };
+		235A00021A1F837F0042318E /* MOBAxolotlSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBAxolotlSession.m; sourceTree = "<group>"; };
+		235A00031A1F837F0042318E /* MOBAxolotlSkippedKeyRing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBAxolotlSkippedKeyRing.h; sourceTree = "<group>"; };
+		235A00041A1F837F0042318E /* MOBAxolotlSkippedKeyRing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBAxolotlSkippedKeyRing.m; sourceTree = "<group>"; };
+		235A00051A1F837F0042318E /* MOBKeyExchangeMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBKeyExchangeMessage.h; sourceTree = "<group>"; };
+		235A00061A1F837F0042318E /* MOBKeyExchangeMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBKeyExchangeMessage.m; sourceTree = "<group>"; };
+		235A00071A1F837F0042318E /* HKDFKit+Strings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HKDFKit+Strings.h"; sourceTree = "<group>"; };
+		235A00081A1F837F0042318E /* HKDFKit+Strings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HKDFKit+Strings.m"; sourceTree = "<group>"; };
+		235A00091A1F837F0042318E /* MOBAnonymizerSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBAnonymizerSettings.h; sourceTree = "<group>"; };
+		235A000A1A1F837F0042318E /* MOBProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBProtocol.h; sourceTree = "<group>"; };
+		235A000B1A1F837F0042318E /* NACLKey+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NACLKey+Base64.h"; sourceTree = "<group>"; };
+		235A000C1A1F837F0042318E /* NACLKey+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NACLKey+Base64.m"; sourceTree = "<group>"; };
+		235A000D1A1F837F0042318E /* NACLKey+ScalarMult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NACLKey+ScalarMult.h"; sourceTree = "<group>"; };
+		235A000E1A1F837F0042318E /* NACLKey+ScalarMult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NACLKey+ScalarMult.m"; sourceTree = "<group>"; };
+		235A000F1A1F837F0042318E /* NSDictionary+Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Protocol.h"; sourceTree = "<group>"; };
+		235A00101A1F837F0042318E /* NSDictionary+Protocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Protocol.m"; sourceTree = "<group>"; };
+		235A00121A1F837F0042318E /* MOBTorSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBTorSettings.h; sourceTree = "<group>"; };
+		235A00131A1F837F0042318E /* MOBTorSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBTorSettings.m; sourceTree = "<group>"; };
+		235A00161A1F837F0042318E /* MOBCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBCore.h; sourceTree = "<group>"; };
+		235A00171A1F837F0042318E /* MOBCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBCore.m; sourceTree = "<group>"; };
+		235A00181A1F837F0042318E /* MOBError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBError.h; sourceTree = "<group>"; };
+		235A00191A1F837F0042318E /* MOBError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBError.m; sourceTree = "<group>"; };
+		235A001A1A1F837F0042318E /* MOBHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBHTTPRequestOperationManager.h; sourceTree = "<group>"; };
+		235A001B1A1F837F0042318E /* MOBHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBHTTPRequestOperationManager.m; sourceTree = "<group>"; };
+		235A00331A1F840F0042318E /* MOBTorInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBTorInterface.h; sourceTree = "<group>"; };
+		235A00341A1F840F0042318E /* MOBTorInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBTorInterface.m; sourceTree = "<group>"; };
+		235A00361A1F84240042318E /* MOBAnonymizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBAnonymizer.h; sourceTree = "<group>"; };
+		235A00371A1F84830042318E /* MOBAxolotlLocalTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBAxolotlLocalTest.m; sourceTree = "<group>"; };
+		235A00391A1F84C30042318E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		235AFFD81A1F82140042318E /* libMobileEdge-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libMobileEdge-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		235AFFE31A1F82140042318E /* MobileEdge-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MobileEdge-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		235AFFE91A1F82140042318E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		235AFFF31A1F837F0042318E /* MOBBaseIdentity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBBaseIdentity.h; sourceTree = "<group>"; };
+		235AFFF41A1F837F0042318E /* MOBBaseIdentity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBBaseIdentity.m; sourceTree = "<group>"; };
+		235AFFF51A1F837F0042318E /* MOBIdentity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBIdentity.h; sourceTree = "<group>"; };
+		235AFFF61A1F837F0042318E /* MOBIdentity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBIdentity.m; sourceTree = "<group>"; };
+		235AFFF71A1F837F0042318E /* MOBIdentityManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBIdentityManagement.h; sourceTree = "<group>"; };
+		235AFFF81A1F837F0042318E /* MOBIdentityManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBIdentityManagement.m; sourceTree = "<group>"; };
+		235AFFF91A1F837F0042318E /* MOBRemoteIdentity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBRemoteIdentity.h; sourceTree = "<group>"; };
+		235AFFFA1A1F837F0042318E /* MOBRemoteIdentity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBRemoteIdentity.m; sourceTree = "<group>"; };
+		235AFFFD1A1F837F0042318E /* MOBAxolotl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBAxolotl.h; sourceTree = "<group>"; };
+		235AFFFE1A1F837F0042318E /* MOBAxolotl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBAxolotl.m; sourceTree = "<group>"; };
+		235AFFFF1A1F837F0042318E /* MOBAxolotlChainKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBAxolotlChainKey.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		235AFFD51A1F82140042318E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				235A003A1A1F84C30042318E /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		235AFFE01A1F82140042318E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				235AFFE41A1F82140042318E /* libMobileEdge-iOS.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		235A00111A1F837F0042318E /* Tor */ = {
+			isa = PBXGroup;
+			children = (
+				235A00331A1F840F0042318E /* MOBTorInterface.h */,
+				235A00341A1F840F0042318E /* MOBTorInterface.m */,
+				235A00121A1F837F0042318E /* MOBTorSettings.h */,
+				235A00131A1F837F0042318E /* MOBTorSettings.m */,
+			);
+			path = Tor;
+			sourceTree = "<group>";
+		};
+		235A00141A1F837F0042318E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				235A00161A1F837F0042318E /* MOBCore.h */,
+				235A00171A1F837F0042318E /* MOBCore.m */,
+				235A00181A1F837F0042318E /* MOBError.h */,
+				235A00191A1F837F0042318E /* MOBError.m */,
+				235A001A1A1F837F0042318E /* MOBHTTPRequestOperationManager.h */,
+				235A001B1A1F837F0042318E /* MOBHTTPRequestOperationManager.m */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		235AFFCF1A1F82140042318E = {
+			isa = PBXGroup;
+			children = (
+				235A00391A1F84C30042318E /* libz.dylib */,
+				235AFFDA1A1F82140042318E /* MobileEdge-iOS */,
+				235AFFE71A1F82140042318E /* MobileEdge-iOSTests */,
+				235AFFD91A1F82140042318E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		235AFFD91A1F82140042318E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				235AFFD81A1F82140042318E /* libMobileEdge-iOS.a */,
+				235AFFE31A1F82140042318E /* MobileEdge-iOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		235AFFDA1A1F82140042318E /* MobileEdge-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				235AFFF21A1F837F0042318E /* Identity */,
+				235AFFFB1A1F837F0042318E /* Security */,
+				235A00141A1F837F0042318E /* Services */,
+			);
+			path = "MobileEdge-iOS";
+			sourceTree = "<group>";
+		};
+		235AFFE71A1F82140042318E /* MobileEdge-iOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				235A00371A1F84830042318E /* MOBAxolotlLocalTest.m */,
+				235AFFE81A1F82140042318E /* Supporting Files */,
+			);
+			path = "MobileEdge-iOSTests";
+			sourceTree = "<group>";
+		};
+		235AFFE81A1F82140042318E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				235AFFE91A1F82140042318E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		235AFFF21A1F837F0042318E /* Identity */ = {
+			isa = PBXGroup;
+			children = (
+				235AFFF31A1F837F0042318E /* MOBBaseIdentity.h */,
+				235AFFF41A1F837F0042318E /* MOBBaseIdentity.m */,
+				235AFFF51A1F837F0042318E /* MOBIdentity.h */,
+				235AFFF61A1F837F0042318E /* MOBIdentity.m */,
+				235AFFF71A1F837F0042318E /* MOBIdentityManagement.h */,
+				235AFFF81A1F837F0042318E /* MOBIdentityManagement.m */,
+				235AFFF91A1F837F0042318E /* MOBRemoteIdentity.h */,
+				235AFFFA1A1F837F0042318E /* MOBRemoteIdentity.m */,
+			);
+			path = Identity;
+			sourceTree = "<group>";
+		};
+		235AFFFB1A1F837F0042318E /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				235AFFFC1A1F837F0042318E /* Axolotl */,
+				235A00111A1F837F0042318E /* Tor */,
+				235A00361A1F84240042318E /* MOBAnonymizer.h */,
+				235A00091A1F837F0042318E /* MOBAnonymizerSettings.h */,
+				235A000A1A1F837F0042318E /* MOBProtocol.h */,
+				235A00071A1F837F0042318E /* HKDFKit+Strings.h */,
+				235A00081A1F837F0042318E /* HKDFKit+Strings.m */,
+				235A000B1A1F837F0042318E /* NACLKey+Base64.h */,
+				235A000C1A1F837F0042318E /* NACLKey+Base64.m */,
+				235A000D1A1F837F0042318E /* NACLKey+ScalarMult.h */,
+				235A000E1A1F837F0042318E /* NACLKey+ScalarMult.m */,
+				235A000F1A1F837F0042318E /* NSDictionary+Protocol.h */,
+				235A00101A1F837F0042318E /* NSDictionary+Protocol.m */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		235AFFFC1A1F837F0042318E /* Axolotl */ = {
+			isa = PBXGroup;
+			children = (
+				235AFFFD1A1F837F0042318E /* MOBAxolotl.h */,
+				235AFFFE1A1F837F0042318E /* MOBAxolotl.m */,
+				235AFFFF1A1F837F0042318E /* MOBAxolotlChainKey.h */,
+				235A00001A1F837F0042318E /* MOBAxolotlChainKey.m */,
+				235A00011A1F837F0042318E /* MOBAxolotlSession.h */,
+				235A00021A1F837F0042318E /* MOBAxolotlSession.m */,
+				235A00031A1F837F0042318E /* MOBAxolotlSkippedKeyRing.h */,
+				235A00041A1F837F0042318E /* MOBAxolotlSkippedKeyRing.m */,
+				235A00051A1F837F0042318E /* MOBKeyExchangeMessage.h */,
+				235A00061A1F837F0042318E /* MOBKeyExchangeMessage.m */,
+			);
+			path = Axolotl;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		235AFFD71A1F82140042318E /* MobileEdge-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 235AFFEC1A1F82140042318E /* Build configuration list for PBXNativeTarget "MobileEdge-iOS" */;
+			buildPhases = (
+				235AFFD41A1F82140042318E /* Sources */,
+				235AFFD51A1F82140042318E /* Frameworks */,
+				235AFFD61A1F82140042318E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MobileEdge-iOS";
+			productName = "MobileEdge-iOS";
+			productReference = 235AFFD81A1F82140042318E /* libMobileEdge-iOS.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		235AFFE21A1F82140042318E /* MobileEdge-iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 235AFFEF1A1F82140042318E /* Build configuration list for PBXNativeTarget "MobileEdge-iOSTests" */;
+			buildPhases = (
+				235AFFDF1A1F82140042318E /* Sources */,
+				235AFFE01A1F82140042318E /* Frameworks */,
+				235AFFE11A1F82140042318E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				235AFFE61A1F82140042318E /* PBXTargetDependency */,
+			);
+			name = "MobileEdge-iOSTests";
+			productName = "MobileEdge-iOSTests";
+			productReference = 235AFFE31A1F82140042318E /* MobileEdge-iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		235AFFD01A1F82140042318E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = eMundo;
+				TargetAttributes = {
+					235AFFD71A1F82140042318E = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					235AFFE21A1F82140042318E = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
+			};
+			buildConfigurationList = 235AFFD31A1F82140042318E /* Build configuration list for PBXProject "MobileEdge-iOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 235AFFCF1A1F82140042318E;
+			productRefGroup = 235AFFD91A1F82140042318E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				235AFFD71A1F82140042318E /* MobileEdge-iOS */,
+				235AFFE21A1F82140042318E /* MobileEdge-iOSTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		235AFFE11A1F82140042318E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		235AFFD41A1F82140042318E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				235A00241A1F837F0042318E /* MOBAxolotl.m in Sources */,
+				235A002D1A1F837F0042318E /* MOBTorSettings.m in Sources */,
+				235A002B1A1F837F0042318E /* NACLKey+ScalarMult.m in Sources */,
+				235A00211A1F837F0042318E /* MOBIdentity.m in Sources */,
+				235A00221A1F837F0042318E /* MOBIdentityManagement.m in Sources */,
+				235A002A1A1F837F0042318E /* NACLKey+Base64.m in Sources */,
+				235A00231A1F837F0042318E /* MOBRemoteIdentity.m in Sources */,
+				235A00251A1F837F0042318E /* MOBAxolotlChainKey.m in Sources */,
+				235A00281A1F837F0042318E /* MOBKeyExchangeMessage.m in Sources */,
+				235A00291A1F837F0042318E /* HKDFKit+Strings.m in Sources */,
+				235A00261A1F837F0042318E /* MOBAxolotlSession.m in Sources */,
+				235A00201A1F837F0042318E /* MOBBaseIdentity.m in Sources */,
+				235A00271A1F837F0042318E /* MOBAxolotlSkippedKeyRing.m in Sources */,
+				235A002F1A1F837F0042318E /* MOBError.m in Sources */,
+				235A002E1A1F837F0042318E /* MOBCore.m in Sources */,
+				235A002C1A1F837F0042318E /* NSDictionary+Protocol.m in Sources */,
+				235A00301A1F837F0042318E /* MOBHTTPRequestOperationManager.m in Sources */,
+				235A00351A1F840F0042318E /* MOBTorInterface.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		235AFFDF1A1F82140042318E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				235A00381A1F84830042318E /* MOBAxolotlLocalTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		235AFFE61A1F82140042318E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 235AFFD71A1F82140042318E /* MobileEdge-iOS */;
+			targetProxy = 235AFFE51A1F82140042318E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		235AFFEA1A1F82140042318E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		235AFFEB1A1F82140042318E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		235AFFED1A1F82140042318E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		235AFFEE1A1F82140042318E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		235AFFF01A1F82140042318E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "MobileEdge-iOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		235AFFF11A1F82140042318E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "MobileEdge-iOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		235AFFD31A1F82140042318E /* Build configuration list for PBXProject "MobileEdge-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				235AFFEA1A1F82140042318E /* Debug */,
+				235AFFEB1A1F82140042318E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		235AFFEC1A1F82140042318E /* Build configuration list for PBXNativeTarget "MobileEdge-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				235AFFED1A1F82140042318E /* Debug */,
+				235AFFEE1A1F82140042318E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		235AFFEF1A1F82140042318E /* Build configuration list for PBXNativeTarget "MobileEdge-iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				235AFFF01A1F82140042318E /* Debug */,
+				235AFFF11A1F82140042318E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 235AFFD01A1F82140042318E /* Project object */;
+}

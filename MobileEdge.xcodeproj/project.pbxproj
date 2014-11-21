@@ -107,14 +107,6 @@
 		23BAE23819A1E4D400D3CDD8 /* MOBCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBCore.h; sourceTree = "<group>"; };
 		23BAE23919A1E4D400D3CDD8 /* MOBCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBCore.m; sourceTree = "<group>"; };
 		23BAE24B19A1FE8900D3CDD8 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		23BAE26519A20AF900D3CDD8 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = dependencies/lib/libcrypto.a; sourceTree = "<group>"; };
-		23BAE26619A20AF900D3CDD8 /* libcurve25519_donna.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurve25519_donna.a; path = dependencies/lib/libcurve25519_donna.a; sourceTree = "<group>"; };
-		23BAE26B19A20AF900D3CDD8 /* libevent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libevent.a; path = dependencies/lib/libevent.a; sourceTree = "<group>"; };
-		23BAE26C19A20AF900D3CDD8 /* libor-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libor-crypto.a"; path = "dependencies/lib/libor-crypto.a"; sourceTree = "<group>"; };
-		23BAE26D19A20AF900D3CDD8 /* libor-event.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libor-event.a"; path = "dependencies/lib/libor-event.a"; sourceTree = "<group>"; };
-		23BAE26E19A20AF900D3CDD8 /* libor.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libor.a; path = dependencies/lib/libor.a; sourceTree = "<group>"; };
-		23BAE26F19A20AF900D3CDD8 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = dependencies/lib/libssl.a; sourceTree = "<group>"; };
-		23BAE27019A20AF900D3CDD8 /* libtor.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtor.a; path = dependencies/lib/libtor.a; sourceTree = "<group>"; };
 		23BAE27D19A241A000D3CDD8 /* NACLKey+ScalarMult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NACLKey+ScalarMult.h"; sourceTree = "<group>"; };
 		23BAE27E19A241A000D3CDD8 /* NACLKey+ScalarMult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NACLKey+ScalarMult.m"; sourceTree = "<group>"; };
 		23BAE28019A4990A00D3CDD8 /* NSDictionary+Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Protocol.h"; sourceTree = "<group>"; };
@@ -404,14 +396,6 @@
 		8142F57A1988CEDC0088B18B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				23BAE26519A20AF900D3CDD8 /* libcrypto.a */,
-				23BAE26619A20AF900D3CDD8 /* libcurve25519_donna.a */,
-				23BAE26B19A20AF900D3CDD8 /* libevent.a */,
-				23BAE26C19A20AF900D3CDD8 /* libor-crypto.a */,
-				23BAE26D19A20AF900D3CDD8 /* libor-event.a */,
-				23BAE26E19A20AF900D3CDD8 /* libor.a */,
-				23BAE26F19A20AF900D3CDD8 /* libssl.a */,
-				23BAE27019A20AF900D3CDD8 /* libtor.a */,
 				23BAE24B19A1FE8900D3CDD8 /* libz.dylib */,
 				8142F57B1988CEDC0088B18B /* Foundation.framework */,
 				8142F57D1988CEDC0088B18B /* CoreGraphics.framework */,
