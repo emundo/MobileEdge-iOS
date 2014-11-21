@@ -38,12 +38,22 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 static const int ddLogLevel = LOG_LEVEL_WARN;
 #endif
 
-@class TorController;
-
+/**
+ * This is the class that client apps should import. It exports all necessary
+ * classes and protocols to manage Identities, Anonymizers and Encryption protocols.
+ */
 @interface MOBCore : NSObject
 
+/**
+ * @discussion The anonymizer.
+ */
 @property (nonatomic, strong) id <MOBAnonymizer> anonymizer;
 
+/**
+ * @discussion Initialize a Core object with anonymizer settings.
+ * @param aSettings - the settings for the anonymizer.
+ * @return the initialized MOBCore.
+ */
 - (instancetype) initWithAnonymizerSettings: (id<MOBAnonymizerSettings>) aSettings;
 
 @end
