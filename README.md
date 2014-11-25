@@ -40,7 +40,7 @@ MobileEdge-iOS is installable via CocoaPods, although we have not
 yet submitted the podspec. In your podfile you need the following
 lines to use MobileEdge in your iOS project.
 
-```
+```ruby
 pod "SodiumObjc",          :git => "https://github.com/r-arias/SodiumObjc.git"
 pod "CPAProxy",            :git => "https://github.com/ursachec/CPAProxy.git"
 pod "MobileEdge",          "~> 0.0", :git => "https://github.com/emundo/MobileEdge-iOS.git"  
