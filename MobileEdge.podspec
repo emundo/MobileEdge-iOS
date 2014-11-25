@@ -17,15 +17,14 @@ Pod::Spec.new do |s|
 
   s.name         = "MobileEdge"
   s.version      = "0.0.1"
-  s.summary      = "A short description of MobileEdge."
+  s.summary      = "The iOS version of the client-side MobileEdge framework."
 
   s.description  = <<-DESC
-                   A longer description of MobileEdge in Markdown format.
-
-                   * Think: Why did you write this? What is the focus? What does it do?
-                   * CocoaPods will be using this to generate tags, and improve search results.
-                   * Try to keep it short, snappy and to the point.
-                   * Finally, don't worry about the indent, CocoaPods strips it!
+                    This is the MobileEdge-iOS pod. MobileEdge-iOS is the iOS version
+                    of the client-side Framework for the MobileEdge system. 
+                    MobileEdge provides an easy way to include both encryption between
+                    multiple clients and services, as well as anonymity, by routing
+                    connections through Tor.
                    DESC
 
   s.homepage     = "http://mobileedgesec.com"
@@ -54,9 +53,9 @@ Pod::Spec.new do |s|
   #
 
   s.author             = { "Raphael Arias" => "raphael.arias@e-mundo.de" }
+  s.social_media_url   = "http://twitter.com/MobileEdgeSec"
   # Or just: s.author    = "Raphael Arias"
   # s.authors            = { "Raphael Arias" => "raphael.arias@e-mundo.de" }
-  # s.social_media_url   = "http://twitter.com/Raphael Arias"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -65,7 +64,7 @@ Pod::Spec.new do |s|
   #
 
   # s.platform     = :ios
-  # s.platform     = :ios, "5.0"
+  s.platform     = :ios, "8.1"
 
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
@@ -89,8 +88,8 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "Classes", "Classes/**/*.{h,m}"
-  s.exclude_files = "Classes/Exclude"
+  s.source_files  = "MobileEdge-iOS/**/*.{h,m}" #, "Classes/**/*.{h,m}"
+  #s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
 
@@ -130,16 +129,14 @@ Pod::Spec.new do |s|
 
   # s.requires_arc = true
 
-  # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(PODS_ROOT)/SodiumObjC/lib/ios/include/" }
-  # s.dependency "JSONKit", "~> 1.4"
   s.dependency "AFNetworking",         "~> 2.0"
   s.dependency "AFNetworkActivityLogger", "~> 2.0"
   s.dependency "CocoaLumberjack",      "~> 1.9.2"
   s.dependency "FXKeychain",           "~> 1.5.1"
   s.dependency "HKDFKit",              "~> 0.0.3"
-  s.dependency "SodiumObjc",           "~> 1.1", :git => "https://github.com/r-arias/SodiumObjc.git"
-  s.dependency "CPAProxy",             "~> 0.1", :git => 'https://github.com/ursachec/CPAProxy.git' 
+  s.dependency "SodiumObjc" # ,           :git => "https://github.com/r-arias/SodiumObjc.git"
+  s.dependency "CPAProxy" #,              :git => 'https://github.com/ursachec/CPAProxy.git' 
  
 
 end
