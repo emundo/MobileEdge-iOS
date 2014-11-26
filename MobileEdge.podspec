@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "MobileEdge"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "The iOS version of the client-side MobileEdge framework."
 
   s.description  = <<-DESC
@@ -77,7 +77,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/emundo/MobileEdge-iOS.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/emundo/MobileEdge-iOS.git", :tag => "0.0.2" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
