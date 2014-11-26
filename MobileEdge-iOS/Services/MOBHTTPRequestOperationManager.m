@@ -81,12 +81,12 @@
 
 #pragma mark -
 #pragma mark Overrides for inherited methods
-typedef void (^RequestOperationOnSuccessBlock) ( AFHTTPRequestOperation *operation, id responseObject );
-typedef void (^RequestOperationOnFailureBlock) ( AFHTTPRequestOperation *operation, NSError *error );
+typedef void (^RequestOperationOnSuccessBlock) (AFHTTPRequestOperation *operation, id responseObject);
+typedef void (^RequestOperationOnFailureBlock) (AFHTTPRequestOperation *operation, NSError *error);
 
 - (AFHTTPRequestOperation *) HTTPRequestOperationWithRequest: (NSURLRequest *) request
-                                                     success: (void ( ^ ) ( AFHTTPRequestOperation *operation , id responseObject )) success
-                                                     failure: (void ( ^ ) ( AFHTTPRequestOperation *operation , NSError *error )) failure
+                                                     success: (void ( ^ ) (AFHTTPRequestOperation *operation, id responseObject)) success
+                                                     failure: (void ( ^ ) (AFHTTPRequestOperation *operation, NSError *error)) failure
 {
     //TODO perform protocol cleaning
     //TODO perform key exchanges/encryption if necessary and possible
@@ -95,77 +95,86 @@ typedef void (^RequestOperationOnFailureBlock) ( AFHTTPRequestOperation *operati
     MOBRemoteIdentity *remoteIdentity;
     if (!(remoteIdentity = self.remotes[request.URL.absoluteString]))
     {
-        return [super HTTPRequestOperationWithRequest:request success:success failure:failure];
+        return [super HTTPRequestOperationWithRequest: request
+                                              success: success
+                                              failure: failure];
     }
     id <MOBProtocol> axolotl;
     axolotl = [[MOBAxolotl alloc] initWithIdentity: self.myIdentity];
     
     __block AFHTTPRequestOperation *keyExchangeRequestOperation;
+    __block RequestOperationOnSuccessBlock onSuccessfulKeyExchange;
+    RequestOperationOnFailureBlock onFailedKeyExchange;
+    
+    RequestOperationOnSuccessBlock onSuccessfulEncryptedRequest;
+    RequestOperationOnFailureBlock onFailedEncryptedRequest;
+    onSuccessfulEncryptedRequest = ^(AFHTTPRequestOperation *operation, id responseObject)
+    {
+        NSMutableDictionary *decryptedResponseObject = [NSMutableDictionary dictionary];
+        // When the encryption was successful and the server responds in an expected way,
+        // the structure of the response should look as follows:
+        // { "nonce" : ..., "head" : ..., "body": ... }
+        NSDictionary *encryptedMessage = responseObject;
+        NSData *decryptedData = [encryptedMessage decryptedDataFromSender: remoteIdentity
+                                                             withProtocol: axolotl
+                                                                    error: nil];
+        //[axolotl decryptMessage: responseObject
+                                        //fromSender: remoteIdentity];
+        // TODO: use client's responseSerializer if any!
+        
+        DDLogDebug(@"Received: %@", decryptedData);
+        success(operation, decryptedResponseObject);
+    };
+    onFailedEncryptedRequest = ^(AFHTTPRequestOperation *operation, NSError *error)
+    {
+        // When the operation fails at the MobileEdge service we get an object back
+        // that looks as follows:
+        // { "errCode" : ..., "errMsg": ..., "errDevMsg" }
+        DDLogError(@"Encrypted request to %@ failed (Error:%@)", request.URL, error);
+        failure(keyExchangeRequestOperation, [NSError errorWithDomain:@"MOBEncryptedRequestFailure" code:-1 userInfo:nil]);
+    };
+
+    onFailedKeyExchange = ^(AFHTTPRequestOperation *operation, NSError *error)
+    {
+        DDLogError(@"No key exchange possible with %@ (Error:%@)", request.URL, error);
+        // actually call the failure block passed to us!
+        // Not doing so and defaulting back to unencrypted data opens up security vulnerabilites!
+        //[super HTTPRequestOperationWithRequest:request success:success failure:failure];
+        failure(keyExchangeRequestOperation, [NSError errorWithDomain:@"MOBKeyExchangeFailure" code:-1 userInfo:nil]);
+    };
+    
     KeyExchangeSendBlock sendBlock;
     sendBlock = ^(NSDictionary *keyExchangeMessageOut, KeyExchangeFinalizeBlock finalizeBlock)
     {
-        RequestOperationOnSuccessBlock onSuccessfulKeyExchange;
-        RequestOperationOnFailureBlock onFailedKeyExchange;
-        
-        RequestOperationOnSuccessBlock onSuccessfulEncryptedRequest;
-        RequestOperationOnFailureBlock onFailedEncryptedRequest;
-        onSuccessfulEncryptedRequest = ^(AFHTTPRequestOperation *operation, id responseObject)
-        {
-            NSMutableDictionary *decryptedResponseObject = [NSMutableDictionary dictionary];
-            // When the encryption was successful and the server responds in an expected way,
-            // the structure of the response should look as follows:
-            // { "nonce" : ..., "head" : ..., "body": ... }
-            NSDictionary *encryptedMessage = responseObject;
-            NSData *decryptedData = [encryptedMessage decryptedDataFromSender: remoteIdentity
-                                                                 withProtocol: axolotl
-                                                                        error: nil]; //[axolotl decryptMessage: responseObject
-                                            //fromSender: remoteIdentity];
-            // TODO: use client's responseSerializer if any!
-            
-            DDLogDebug(@"Received: %@", decryptedData);
-            success(operation, decryptedResponseObject);
-        };
-        onFailedEncryptedRequest = ^(AFHTTPRequestOperation *operation, NSError *error)
-        {
-            // When the operation fails at the MobileEdge service we get an object back
-            // that looks as follows:
-            // { "errCode" : ..., "errMsg": ..., "errDevMsg" }
-            DDLogError(@"Encrypted request to %@ failed (Error:%@)", request.URL, error);
-            failure(keyExchangeRequestOperation, [NSError errorWithDomain:@"MOBEncryptedRequestFailure" code:-1 userInfo:nil]);
-        };
         onSuccessfulKeyExchange = ^(AFHTTPRequestOperation *operation, id responseObject)
         {
             // When the key exchange was successful and the server responds in an expected way,
             // the structure of the response should look as follows:
             // { "message" : { "id" : ..., "eph0" : ..., "eph1" : ... } }
             finalizeBlock(responseObject[@"message"]);
-            NSDictionary *encryptedData = [axolotl encryptData:request.HTTPBody
-                                            forRecipient: remoteIdentity
-                                                   error: nil]; // TODO: error handling
+            NSDictionary *encryptedMessage = [axolotl encryptData: request.HTTPBody
+                                                     forRecipient: remoteIdentity
+                                                            error: nil]; // TODO: error handling
+            NSData *encryptedData = [NSJSONSerialization dataWithJSONObject: encryptedMessage
+                                                                    options: 0
+                                                                      error: nil]; // TODO: error handling
             NSMutableURLRequest *newRequest = [request mutableCopy]; //[NSMutableURLRequest requestWithURL:request.URL];
+            
             [newRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
             [newRequest setHTTPMethod:@"POST"];
-            [newRequest setHTTPBody: encryptedData]; // TODO FIXME: type!
+            [newRequest setHTTPBody: encryptedData];
             
-            AFHTTPRequestOperation *encryptedRequest = [super HTTPRequestOperationWithRequest:newRequest
-                                                                                      success:onSuccessfulEncryptedRequest
-                                                                                      failure:onFailedEncryptedRequest];
+            AFHTTPRequestOperation *encryptedRequest =
+                [super HTTPRequestOperationWithRequest: newRequest
+                                               success: onSuccessfulEncryptedRequest
+                                               failure: onFailedEncryptedRequest];
             [encryptedRequest start];
         };
-        onFailedKeyExchange = ^(AFHTTPRequestOperation *operation, NSError *error)
-        {
-            DDLogError(@"No key exchange possible with %@ (Error:%@)", request.URL, error);
-            // actually call the failure block passed to us!
-            // Not doing so and defaulting back to unencrypted data opens up security vulnerabilites!
-            //[super HTTPRequestOperationWithRequest:request success:success failure:failure];
-            failure(keyExchangeRequestOperation, [NSError errorWithDomain:@"MOBKeyExchangeFailure" code:-1 userInfo:nil]);
-        };
-        
         //TODO request serialization using json?
         NSData *keyExchangeDataOut = [NSJSONSerialization dataWithJSONObject: keyExchangeMessageOut
                                                                      options: 0
                                                                        error: nil]; //TODO real error handling
-        NSMutableURLRequest *keyExchangeRequest = [NSMutableURLRequest requestWithURL:request.URL];
+        NSMutableURLRequest *keyExchangeRequest = [NSMutableURLRequest requestWithURL: request.URL];
         [keyExchangeRequest setValue: @"application/json" forHTTPHeaderField: @"Content-Type"];
         [keyExchangeRequest setHTTPMethod: @"POST"];
         [keyExchangeRequest setHTTPBody: keyExchangeDataOut];
