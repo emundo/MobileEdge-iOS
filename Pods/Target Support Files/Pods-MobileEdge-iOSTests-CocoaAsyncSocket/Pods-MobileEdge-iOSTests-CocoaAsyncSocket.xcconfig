@@ -1,1 +1,0 @@
-PODS_MOBILEEDGE_IOSTESTS_COCOAASYNCSOCKET_OTHER_LDFLAGS = -framework "CFNetwork" -framework "Security"
