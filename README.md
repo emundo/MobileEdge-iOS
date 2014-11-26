@@ -21,19 +21,30 @@ of messages, as well as prekey storage.
 
 While the server functions as a proxy between actual backend and
 the network, the client frameworks are actually integrated into the
-app and used by app developers. 
+app and used by app developers.
+
+Key exchange and ratcheting is done using the 
+[Axolotl protocol](https://github.com/trevp/axolotl/wiki). Unfortunately,
+we started (and almost finished) developing our own implementation of Axolotl before 
+WhisperSystems released their [AxolotlKit](https://github.com/WhisperSystems/AxolotlKit).
+Future versions might replace our own implementation with AxolotlKit,
+if appropriate. For now, we continue using our own implementation
+with header encryption and NaCl crypto secretbox as encryption primitive
+(via [SodiumObjC] (https://github.com/Tabbedout/SodiumObjc)). 
+
+For anonymization we use [CPAProxy] (https://github.com/ursachec/CPAProxy).
 
 ##Usage
-We make use of the AFNetworking API to make developers feel at home.
-They should be able to use a MOBHTTPRequestOperationManager much 
-in the same way they use an AFHTTPRequestOperationManager, after
+We provide a AFNetworking-style API to make developers feel at home.
+You should be able to use a MOBHTTPRequestOperationManager much 
+in the same way you use an AFHTTPRequestOperationManager, after
 some initial configuration.
 
 %TODO: Sample code here.
 
 ##Dependencies
 All dependencies should be installable via CocoaPods, alongside the
-Frameweork. See the _Installation_ instructions below for details.
+framework. See the _Installation_ instructions below for details.
 
 ##Installation
 MobileEdge-iOS is installable via CocoaPods, although we have not
