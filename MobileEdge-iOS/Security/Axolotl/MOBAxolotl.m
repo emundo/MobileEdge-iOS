@@ -107,25 +107,24 @@
     NACLNonce *nonce2 = [NACLNonce nonce];
     
     // encrypt Axolotl body:
-    NSData *encryptedBody = [[aData encryptedDataUsingPrivateKey: messageKey
+    NSData *encryptedBody = [aData encryptedDataUsingPrivateKey: messageKey
                                                            nonce: nonce1
-                                                           error: nil] dataWithoutNonce]; // TODO: error handling
+                                                           error: nil]; // TODO: error handling
     
     // encrypt Axolotl header:
     NSArray *header = [NSArray arrayWithObjects:
                        [NSNumber numberWithUnsignedInteger: session.messagesSentCount],
                        [NSNumber numberWithUnsignedInteger: session.messagesSentUnderPreviousRatchetCount],
                        [session.senderDiffieHellmanKey.publicKey.data base64EncodedStringWithOptions: 0],
-                       [nonce1.data base64EncodedStringWithOptions: 0], nil];
+                       nil];
     NSData *headerData = [NSJSONSerialization dataWithJSONObject: header
                                                          options: 0
                                                            error: nil]; // TODO: error handling
-    NSData *encryptedHeader = [[headerData encryptedDataUsingPrivateKey: session.senderHeaderKey
+    NSData *encryptedHeader = [headerData encryptedDataUsingPrivateKey: session.senderHeaderKey
                                                                   nonce: nonce2
-                                                                  error: nil] dataWithoutNonce]; // TODO: error handling
+                                                                   error: nil]; // TODO: error handling
     // pack message:
     NSMutableDictionary *message = [NSMutableDictionary dictionaryWithDictionary: @{ @"v" : @"0.1",
-                                      @"nonce" : [nonce2.data base64EncodedStringWithOptions: 0],
                                       @"head" : [encryptedHeader base64EncodedStringWithOptions: 0],
                                       @"body" : [encryptedBody base64EncodedStringWithOptions: 0] }];
     if (self.appendEncryptedSenderInformation)
@@ -139,12 +138,11 @@
                                                                saltString: @"salty"
                                                                outputSize: [NACLSymmetricPrivateKey keyLength]]]; //FIXME: int conversion?
         NSData *encryptedPubKeyData =
-            [[self.identity.identityKey.data encryptedDataUsingPrivateKey: pubKeyEncryptionKey
+            [self.identity.identityKey.data encryptedDataUsingPrivateKey: pubKeyEncryptionKey
                                                                     nonce: pubKeyNonce
-                                                                    error: nil] dataWithoutNonce];
+                                                                    error: nil];
         message[@"eph"] = [ephKeyPair.publicKey.data base64EncodedStringWithOptions: 0];
         message[@"from"] = [encryptedPubKeyData base64EncodedStringWithOptions: 0];
-        message[@"pknonce"] = [pubKeyNonce.data base64EncodedStringWithOptions: 0];
     }
     // advance session state:
     [session advanceStateAfterSending];
@@ -157,16 +155,11 @@
 
 - (NSArray *) decryptAndParseHeader: (NSString *) aBase64Header
                             withKey: (NACLSymmetricPrivateKey *) aHeaderKey
-                           andNonce: (NSString *) aBase64Nonce
 {
     NSData *headerData = [[NSData alloc] initWithBase64EncodedString: aBase64Header
                                                              options: 0];
-    NACLNonce *nonce = [NACLNonce nonceWithData:
-                        [[NSData alloc] initWithBase64EncodedString: aBase64Nonce
-                                                            options: 0]];
     NSData *decryptedHeader;
     if (!(decryptedHeader = [headerData decryptedDataUsingPrivateKey: aHeaderKey
-                                                               nonce: nonce
                                                                error: nil]))
     { // Decryption of the header failed.
         return nil;
@@ -177,7 +170,7 @@
                                                               error: nil];
     if (!parsedHeaderObject
         || ![parsedHeaderObject isKindOfClass: [NSArray class]]
-        || ([parsedHeaderObject count] != 4))
+        || ([parsedHeaderObject count] != 3))
     { // Header format invalid.
         return nil;
     }
@@ -193,21 +186,16 @@
     {
         // attempt decryption of header:
         NSArray *parsedHeader = [self decryptAndParseHeader: aEncryptedMessage[@"head"]
-                                                    withKey: keyRing.headerKey
-                                                   andNonce: aEncryptedMessage[@"nonce"]];
+                                                    withKey: keyRing.headerKey];
         if (!parsedHeader)
         {
             continue;
         }
-        NACLNonce *innerNonce = [NACLNonce nonceWithData:
-                                 [[NSData alloc] initWithBase64EncodedString: parsedHeader[3]
-                                                                     options: 0]];
         NSData *messageBodyData = [[NSData alloc] initWithBase64EncodedString: aEncryptedMessage[@"body"]
                                                                       options: 0];
         for (NACLSymmetricPrivateKey *messageKey in keyRing.messageKeys) {
             // attempt decryption:
             if ((decryptedMessageBody = [messageBodyData decryptedDataUsingPrivateKey: messageKey
-                                                                                nonce: innerNonce
                                                                                 error: nil]))
             { // Decryption successful.
                 // delete message key from array:
@@ -260,8 +248,7 @@
 {
     // attempt to decrypt header with receiverHeaderKey:
     NSArray *parsedHeader = [self decryptAndParseHeader: aEncryptedMessage[@"head"]
-                                                withKey: aSession.receiverHeaderKey
-                                               andNonce: aEncryptedMessage[@"nonce"]];
+                                                withKey: aSession.receiverHeaderKey];
     if (!parsedHeader)
     { // TODO: error handling
         return nil;
@@ -277,14 +264,10 @@
     NACLSymmetricPrivateKey *messageKey = aSession.currentMessageKey;
     
     // attempt to decrypt message body:
-    NACLNonce *innerNonce = [NACLNonce nonceWithData:
-                                 [[NSData alloc] initWithBase64EncodedString: parsedHeader[3]
-                                                                     options: 0]];
     NSData *messageBodyData = [[NSData alloc] initWithBase64EncodedString: aEncryptedMessage[@"body"]
                                                                   options: 0];
     NSData *decryptedMessage;
     if (!(decryptedMessage = [messageBodyData decryptedDataUsingPrivateKey: messageKey
-                                                                     nonce: innerNonce
                                                                      error: nil]))
     { // Decryption failed. Do something here. TODO!
         DDLogError(@"Error while decrypting with existing chain. Header key matches but message key does not.");
@@ -317,8 +300,7 @@
                                                            error: (NSError **) aError
 {
     NSArray *parsedHeader = [self decryptAndParseHeader: aEncryptedMessage[@"head"]
-                                                withKey: aSession.receiverNextHeaderKey
-                                               andNonce: aEncryptedMessage[@"nonce"]];
+                                                withKey: aSession.receiverNextHeaderKey];
     if (!parsedHeader)
     {
         return nil;
@@ -355,13 +337,9 @@
                               error: aError];
   
     // Attempt decrypting message body:
-    NACLNonce *innerNonce = [NACLNonce nonceWithData:
-                                 [[NSData alloc] initWithBase64EncodedString: parsedHeader[3]
-                                                                     options: 0]];
     NSData *messageBodyData = [[NSData alloc] initWithBase64EncodedString: aEncryptedMessage[@"body"]
                                                                   options: 0];
     NSData *decryptedMessageBody = [messageBodyData decryptedDataUsingPrivateKey: aSession.currentMessageKey
-                                                                           nonce: innerNonce
                                                                            error: nil];
     if (!decryptedMessageBody)
     { // Decryption failed (again).
@@ -451,8 +429,7 @@
                       error: (NSError **) aError
 {
     if (!aEncryptedMessage[@"from"]
-        || !aEncryptedMessage[@"eph"]
-        || !aEncryptedMessage[@"pknonce"])
+        || !aEncryptedMessage[@"eph"])
     { // We cannot decrypt a message without information about the sender:
         [MOBError populateErrorObject: aError
                             forDomain: kMOBErrorDomainProtocol
@@ -463,8 +440,6 @@
                                                                       options: 0];
     NSData *ephPubData = [[NSData alloc] initWithBase64EncodedString: aEncryptedMessage[@"eph"]
                                                              options: 0];
-    NSData *pubKeyNonce = [[NSData alloc] initWithBase64EncodedString: aEncryptedMessage[@"pknonce"]
-                                                              options: 0];
     NACLAsymmetricPublicKey *ephPubKey = [[NACLAsymmetricPublicKey alloc] initWithData: ephPubData];
     NSData *diffieHellmanData = [self.identity.identityKeyPair.privateKey multWithKey: ephPubKey].data;
 
@@ -474,7 +449,6 @@
                                                                saltString: @"salty"
                                                                outputSize: [NACLSymmetricPrivateKey keyLength]]]; //FIXME: int conversion?
     NSData *decryptedSenderData = [encryptedSenderData decryptedDataUsingPrivateKey: pubKeyCipher
-                                                                              nonce: [NACLNonce nonceWithData: pubKeyNonce]
                                                                               error: nil];
     if (!decryptedSenderData)
     { // Could not decrypt the sender information. It was incomplete or incorrect.
