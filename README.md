@@ -62,6 +62,9 @@ The connection to the Tor network on first startup is very slow.
 This seems to be a known issue with CPAProxy and should hopefully
 be fixed in the near future.
 
+##Missing features
+There is currently no direct prekey handling implemented.
+
 ##Troubleshooting
 Please don't hesitate to open an issue here on github, if you have any
 trouble or questions. We have tested the functionality on a small
