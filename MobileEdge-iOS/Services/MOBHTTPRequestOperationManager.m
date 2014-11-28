@@ -164,7 +164,7 @@ typedef void (^RequestOperationOnFailureBlock) (AFHTTPRequestOperation *operatio
             [newRequest setHTTPMethod:@"POST"];
             [newRequest setHTTPBody: encryptedData];
             
-            AFHTTPRequestOperation *encryptedRequest =
+            AFHTTPRequestOperation *encryptedRequest = //TODO: go through anonymizer!
                 [super HTTPRequestOperationWithRequest: newRequest
                                                success: onSuccessfulEncryptedRequest
                                                failure: onFailedEncryptedRequest];
