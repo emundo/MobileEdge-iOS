@@ -10,8 +10,12 @@ we encourage you to contribute ideas and code if you feel like it!
 We are also still working on the server-side counterpart, as well as
 an Android version of this framework.
 
+Please note, that there might be major bugs here. We still want
+to release this, so others get a chance to start looking at it
+(and finding the bugs ;)).
+
 ##Architecture
-The MobileEdge architecture consists of two seperate parts:
+The MobileEdge architecture consists of two separate parts:
 
 1. client-side frameworks that encrypt data for remote identities 
 and decrypt received messages, as well as allowing the routing
