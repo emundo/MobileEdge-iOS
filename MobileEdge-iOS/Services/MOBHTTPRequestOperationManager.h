@@ -22,7 +22,11 @@
 
 #import "AFHTTPRequestOperationManager.h"
 
-@class MOBIdentity, MOBRemoteIdentity;
+@class MOBIdentity, MOBRemoteIdentity, MOBCore;
+
+typedef void (^RequestOperationOnSuccessBlock) (AFHTTPRequestOperation *operation, id responseObject);
+typedef void (^RequestOperationOnFailureBlock) (AFHTTPRequestOperation *operation, NSError *error);
+
 
 /**
  * Subclass of AFHTTPRequestOperationManager that behaves the same, except that
@@ -31,6 +35,7 @@
  */
 @interface MOBHTTPRequestOperationManager : AFHTTPRequestOperationManager
 
+@property (nonatomic, strong) MOBCore *core;
 /**
  * @discussion Our own identity.
  */

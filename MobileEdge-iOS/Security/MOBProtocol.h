@@ -125,6 +125,13 @@ typedef void (^KeyExchangeSendBlockBob) (NSDictionary *keyExchangeMessage);
 
 
 /**
+ * @discussion Checks whether a session exists for a given remote.
+ * @param aBob - Bob's identity
+ * @return YES if it exists, else NO
+ */
+- (BOOL) hasSessionForRemote: (MOBRemoteIdentity *) aBob;
+
+/**
  * @discussion Perform an Axolotl key agreement with a given peer.
  *  This will usually be the MobileEdge server or a vendor identity.
  * @param aBob - Bob's identity

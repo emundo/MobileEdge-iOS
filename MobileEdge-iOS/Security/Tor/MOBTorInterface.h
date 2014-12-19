@@ -25,7 +25,7 @@
 /**
  * The first implementation of a MOBAnonymizer using Tor to anonymize connections.
  */
-@interface MOBTorInterface : NSObject <MOBAnonymizer>
+@interface MOBTorInterface : NSObject <MOBAnonymizer, NSURLSessionDataDelegate>
 
 /**
  * @discussion The settings object. Must implement the MOBAnonymizerSettings protocol.

@@ -25,6 +25,8 @@
 
 typedef void (^ConnectSuccessfulBlock) (/* Parameters */);
 typedef void (^ConnectFailureBlock) (/* Parameters */);
+typedef void (^AnonymizedRequestCompletionBlock) (NSData *data, NSURLResponse *response, NSError *error);
+
 
 /**
  * Protocol that defines the operations a encryption session/protocol needs to
@@ -55,4 +57,13 @@ typedef void (^ConnectFailureBlock) (/* Parameters */);
                              failure: (ConnectFailureBlock) aOnFailure;
 // TODO: Should we add a progress block parameter here?
 
+/**
+ * @discussion Starts an anonymized request for the given URL and HTTP body.
+ * @param aRequest - the URL request
+ * @param aOnCompletion - the block to be called once the request completes.
+ *  This will receive the response data and NSURLResponse object if the request
+ *  is successful and an error parameter will be set otherwise.
+ */
+- (void) startAnonymousHTTPRequest: (NSURLRequest *) aRequest
+                 completionHandler: (AnonymizedRequestCompletionBlock) aOnCompletion;
 @end

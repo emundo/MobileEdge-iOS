@@ -35,6 +35,8 @@
 
 @property (nonatomic, strong) CPAProxyManager *cpaProxyManager;
 
+@property (nonatomic, strong) NSURLSession *urlSession;
+
 @end
 
 @implementation MOBTorInterface
@@ -76,14 +78,9 @@
     configuration.connectionProxyDictionary = proxyDict;
     
     // Create a NSURLSession with the configuration
-    NSURLSession *urlSession = [NSURLSession sessionWithConfiguration: configuration
-                                                             delegate: self
-                                                        delegateQueue: [NSOperationQueue mainQueue]];
-    
-    // Send an HTTP GET Request using NSURLSessionDataTask
-    NSURL *URL = [NSURL URLWithString: @"https://check.torproject.org"];
-    NSURLSessionDataTask *dataTask = [urlSession dataTaskWithURL: URL];
-    [dataTask resume];
+    self.urlSession = [NSURLSession sessionWithConfiguration: configuration
+                                                    delegate: self
+                                               delegateQueue: [NSOperationQueue mainQueue]];
     
     // ...
 }
@@ -94,8 +91,10 @@
     self.onConnect = aOnConnect;
     self.onFailure = aOnFailure;
     // TODO: Add connection code here!
-    [self.cpaProxyManager setupWithCompletion:^(NSString *socksHost, NSUInteger socksPort, NSError *error) {
-        if (error == nil) {
+    [self.cpaProxyManager setupWithCompletion:^(NSString *socksHost, NSUInteger socksPort, NSError *error)
+    {
+        if (error == nil)
+        {
             // ... do something with Tor socks hostname & port ...
             NSLog(@"Connected: host=%@, port=%lu", socksHost, (long) socksPort);
             
@@ -103,10 +102,22 @@
             [self handleCPAProxySetupWithSOCKSHost: socksHost SOCKSPort: socksPort];
             self.onConnect();
         }
-    } progress:^(NSInteger progress, NSString *summaryString) {
+    }
+                                     progress:^(NSInteger progress, NSString *summaryString)
+    {
         // ... do something to notify user of tor's initialization progress ...
         NSLog(@"%li %@", (long)progress, summaryString);
     }];
+}
+
+- (void) startAnonymousHTTPRequest: (NSURLRequest *) aRequest
+                 completionHandler: (AnonymizedRequestCompletionBlock) aOnCompletion;
+{
+    //NSURL *URL = [NSURL URLWithString: @"https://check.torproject.org"];
+    NSURLSessionDataTask *dataTask = [self.urlSession dataTaskWithRequest: aRequest
+                                                        completionHandler: aOnCompletion];
+    DDLogDebug(@"Starting anonymized request: %@.", aRequest);
+    [dataTask resume];
 }
 
 

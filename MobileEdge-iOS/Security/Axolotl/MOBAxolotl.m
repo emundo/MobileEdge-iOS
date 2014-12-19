@@ -546,6 +546,19 @@
 #pragma mark -
 #pragma mark Session management
 
+- (BOOL) hasSessionForRemote: (MOBRemoteIdentity *) aBob
+{
+    if (!self.sessions)
+    {
+        return NO;
+    }
+    if ([self.sessions objectForKey: [aBob base64]])
+    {
+        return YES;
+    }
+    return NO;
+}
+
 - (void) addSession: (MOBAxolotlSession *) aSession
           forRemote: (MOBRemoteIdentity *) aRemoteIdentity
 {

@@ -81,9 +81,66 @@
 
 #pragma mark -
 #pragma mark Overrides for inherited methods
-typedef void (^RequestOperationOnSuccessBlock) (AFHTTPRequestOperation *operation, id responseObject);
-typedef void (^RequestOperationOnFailureBlock) (AFHTTPRequestOperation *operation, NSError *error);
 
+- (void) encryptAndSendRequest: (NSURLRequest *) aRequest
+                      toRemote: (MOBRemoteIdentity *) aRemoteIdentity
+                  withProtocol: (id<MOBProtocol>) aProtocol
+             relevantOperation: (AFHTTPRequestOperation *) aOperation
+                       success: (RequestOperationOnSuccessBlock) aOnSuccess
+                       failure: (RequestOperationOnFailureBlock) aOnFailure
+{
+    NSDictionary *encryptedMessage = [aProtocol encryptData: aRequest.HTTPBody
+                                               forRecipient: aRemoteIdentity
+                                                      error: nil]; // TODO: error handling
+    NSData *encryptedData = [NSJSONSerialization dataWithJSONObject: encryptedMessage
+                                                            options: 0
+                                                              error: nil]; // TODO: error handling
+    NSMutableURLRequest *newRequest = [aRequest mutableCopy];
+    
+    [newRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [newRequest setHTTPMethod:@"POST"];
+    [newRequest setHTTPBody: encryptedData];
+    
+    if (!self.shouldAnonymize)
+    {
+        AFHTTPRequestOperation *encryptedRequestOperation =
+            [super HTTPRequestOperationWithRequest: newRequest
+                                           success: aOnSuccess
+                                           failure: aOnFailure];
+        [encryptedRequestOperation start]; // FIXME: return this, and don't start it yet
+        return;
+    }
+    // go through anonymizer!
+    AnonymizedRequestCompletionBlock onCompletion = ^(NSData *data, NSURLResponse *response, NSError *error)
+    {
+        if (error)
+        {
+            aOnFailure(aOperation, error);
+            return;
+        }
+        // TODO: populate responseObject... How does that look like?
+    };
+    [self.core.anonymizer startAnonymousHTTPRequest: newRequest
+                                  completionHandler: onCompletion];
+}
+
+/**
+ * This is the overriden HTTPRequestOperationWithRequest:success:failure.
+ * What we do here:
+ *  - check if the remote URL is a supported one; if not, behave like
+ *    regular AFNetworking interface.
+ *  - if the remote is a MobileEdge system, we create an Axolotl instance.
+ *  - we then need to check whether a key exchange needs to happen.
+ *  - if not: encrypt request and hand the encrypted requestOperation back
+ *    to the user. This is not so easy if we want to go through CPAProxy...
+ *    In that case, we cannot use a standard AFHTTPRequestOperation, as that
+ *    will ignore our anonymizer. Instead we probably need to subclass it and
+ *    override the relevant methods.
+ *  - if key exchange is necessary: create a keyExchange operation that
+ *    sends an encrypted request once the key exchange is done.
+ *  - hand that operation back to the user, he might not want to trigger it
+ *    instantly.
+ */
 - (AFHTTPRequestOperation *) HTTPRequestOperationWithRequest: (NSURLRequest *) request
                                                      success: (void ( ^ ) (AFHTTPRequestOperation *operation, id responseObject)) success
                                                      failure: (void ( ^ ) (AFHTTPRequestOperation *operation, NSError *error)) failure
@@ -133,6 +190,16 @@ typedef void (^RequestOperationOnFailureBlock) (AFHTTPRequestOperation *operatio
         DDLogError(@"Encrypted request to %@ failed (Error:%@)", request.URL, error);
         failure(keyExchangeRequestOperation, [NSError errorWithDomain:@"MOBEncryptedRequestFailure" code:-1 userInfo:nil]);
     };
+    
+    if ([axolotl hasSessionForRemote: remoteIdentity])
+    {
+        [self encryptAndSendRequest: request
+                           toRemote: remoteIdentity
+                       withProtocol: axolotl
+                  relevantOperation:<#(AFHTTPRequestOperation *)#> // What here?
+                            success: onSuccessfulEncryptedRequest
+                            failure: onFailedEncryptedRequest];
+    }
 
     onFailedKeyExchange = ^(AFHTTPRequestOperation *operation, NSError *error)
     {
@@ -196,6 +263,7 @@ typedef void (^RequestOperationOnFailureBlock) (AFHTTPRequestOperation *operatio
                                  error: nil]; // TODO: error handling
     return keyExchangeRequestOperation;
 }
+
 
 - (void) addCachedResponseSerializersObject: (AFHTTPResponseSerializer *) object
                                      forKey: (AFHTTPRequestOperation *) operation
