@@ -76,13 +76,12 @@
                                 };
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
     configuration.connectionProxyDictionary = proxyDict;
+    [MOBHTTPSessionManager setDefaultSessionConfiguration: configuration];
     
     // Create a NSURLSession with the configuration
-    self.urlSession = [NSURLSession sessionWithConfiguration: configuration
-                                                    delegate: self
-                                               delegateQueue: [NSOperationQueue mainQueue]];
-    
-    // ...
+    //self.urlSession = [NSURLSession sessionWithConfiguration: configuration
+    //                                                delegate: self
+    //                                           delegateQueue: [NSOperationQueue mainQueue]];
 }
 
 - (void) connectOnFinishExecuteBlock: (ConnectSuccessfulBlock) aOnConnect
@@ -106,7 +105,7 @@
                                      progress:^(NSInteger progress, NSString *summaryString)
     {
         // ... do something to notify user of tor's initialization progress ...
-        NSLog(@"%li %@", (long)progress, summaryString);
+        DDLogDebug(@"%li %@", (long)progress, summaryString);
     }];
 }
 
