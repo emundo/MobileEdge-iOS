@@ -20,22 +20,26 @@
  */
 
 #import <Foundation/Foundation.h>
-#import <DDLog.h>
-#import <DDTTYLogger.h>
+#import <CocoaLumberjack/CocoaLumberjack.h>
+
 #import "MOBIdentity.h"
 #import "MOBRemoteIdentity.h"
 #import "MOBAxolotl.h"
-#import "MOBHTTPRequestOperationManager.h"
+#import "MOBHTTPSessionManager.h"
 #import "MOBAnonymizerSettings.h"
 #import "MOBAnonymizer.h"
 #import "MOBTorSettings.h"
 #import "MOBError.h"
+#import "NSDictionary+Protocol.h"
 
 
 #ifdef DEBUG
-static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+#undef LOG_LEVEL_DEF
+#define LOG_LEVEL_DEF mobileEdgeLogLevel
+// Log levels: off, error, warn, info, verbose
+static const DDLogLevel mobileEdgeLogLevel = DDLogLevelVerbose;
 #else
-static const int ddLogLevel = LOG_LEVEL_WARN;
+static const DDLogLevel mobileEdgeLogLevel = DDLogLevelWarn;
 #endif
 
 /**

@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "MobileEdge"
-  s.version      = "0.0.2"
+  s.version      = "0.1.0"
   s.summary      = "The iOS version of the client-side MobileEdge framework."
 
   s.description  = <<-DESC
@@ -77,7 +77,8 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/emundo/MobileEdge-iOS.git", :tag => "0.0.2" }
+  s.source       = { :git => "https://github.com/emundo/MobileEdge-iOS.git", 
+                     :tag => s.version.to_s }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -132,7 +133,7 @@ Pod::Spec.new do |s|
   s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(PODS_ROOT)/SodiumObjC/lib/ios/include/" }
   s.dependency "AFNetworking",         "~> 2.0"
   s.dependency "AFNetworkActivityLogger", "~> 2.0"
-  s.dependency "CocoaLumberjack",      "~> 1.9.2"
+  s.dependency "CocoaLumberjack",      "~> 2.0"
   s.dependency "FXKeychain",           "~> 1.5.1"
   s.dependency "HKDFKit",              "~> 0.0.3"
   s.dependency "SodiumObjc" # ,           :git => "https://github.com/r-arias/SodiumObjc.git"
