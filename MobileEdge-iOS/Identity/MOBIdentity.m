@@ -21,6 +21,13 @@
 
 #import "MOBIdentity.h"
 
+@interface MOBIdentity ()
+
+@property (nonatomic, strong) NSString *base64;
+
+@end
+
+
 @implementation MOBIdentity
 
 -(instancetype) init
@@ -37,6 +44,15 @@
         _creationDate = [NSDate date];
     }
     return self;
+}
+
+- (NSString *) base64
+{
+    if (!_base64)
+    {
+        _base64 = [self.identityKeyPair.publicKey.data base64EncodedStringWithOptions: 0];
+    }
+    return _base64;
 }
 
 #pragma mark -

@@ -73,4 +73,7 @@
  */
 - (instancetype) initWithKeyPair: (NACLAsymmetricKeyPair *) aKeyPair;
 
+
+- (NSString *) base64;
+
 @end
