@@ -28,6 +28,7 @@
 		235A00381A1F84830042318E /* MOBAxolotlLocalTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00371A1F84830042318E /* MOBAxolotlLocalTest.m */; };
 		235A003A1A1F84C30042318E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 235A00391A1F84C30042318E /* libz.dylib */; };
 		235AFFE41A1F82140042318E /* libMobileEdge-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 235AFFD81A1F82140042318E /* libMobileEdge-iOS.a */; };
+		23A3C97B1A66847D00A13612 /* MOBHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 23A3C97A1A66847D00A13612 /* MOBHTTPSessionManager.m */; };
 		6B7F07D5410EB70AE2099388 /* libPods-MobileEdge-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A43814194A8B4FB72913701 /* libPods-MobileEdge-iOS.a */; };
 		88ED508D2C3A14B72ACEA141 /* libPods-MobileEdge-iOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D492A48C09FCF51B14859DC /* libPods-MobileEdge-iOSTests.a */; };
 /* End PBXBuildFile section */
@@ -99,6 +100,8 @@
 		235AFFFD1A1F837F0042318E /* MOBAxolotl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBAxolotl.h; sourceTree = "<group>"; };
 		235AFFFE1A1F837F0042318E /* MOBAxolotl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBAxolotl.m; sourceTree = "<group>"; };
 		235AFFFF1A1F837F0042318E /* MOBAxolotlChainKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBAxolotlChainKey.h; sourceTree = "<group>"; };
+		23A3C9791A66847D00A13612 /* MOBHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBHTTPSessionManager.h; sourceTree = "<group>"; };
+		23A3C97A1A66847D00A13612 /* MOBHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBHTTPSessionManager.m; sourceTree = "<group>"; };
 		3C303E1DD9036CD8B767E73D /* Pods-MobileEdge-iOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileEdge-iOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MobileEdge-iOSTests/Pods-MobileEdge-iOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		856868AE4D00D7CE7BAD7D57 /* Pods-MobileEdge-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileEdge-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-MobileEdge-iOS/Pods-MobileEdge-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		8A43814194A8B4FB72913701 /* libPods-MobileEdge-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MobileEdge-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +163,8 @@
 				235A00191A1F837F0042318E /* MOBError.m */,
 				235A001A1A1F837F0042318E /* MOBHTTPRequestOperationManager.h */,
 				235A001B1A1F837F0042318E /* MOBHTTPRequestOperationManager.m */,
+				23A3C9791A66847D00A13612 /* MOBHTTPSessionManager.h */,
+				23A3C97A1A66847D00A13612 /* MOBHTTPSessionManager.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -444,6 +449,7 @@
 				235A002F1A1F837F0042318E /* MOBError.m in Sources */,
 				235A002E1A1F837F0042318E /* MOBCore.m in Sources */,
 				235A002C1A1F837F0042318E /* NSDictionary+Protocol.m in Sources */,
+				23A3C97B1A66847D00A13612 /* MOBHTTPSessionManager.m in Sources */,
 				235A00301A1F837F0042318E /* MOBHTTPRequestOperationManager.m in Sources */,
 				235A00351A1F840F0042318E /* MOBTorInterface.m in Sources */,
 			);
