@@ -131,9 +131,9 @@ Pod::Spec.new do |s|
   # s.requires_arc = true
 
   s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(PODS_ROOT)/SodiumObjC/lib/ios/include/" }
-  s.dependency "AFNetworking",         "~> 2.0"
+  s.dependency "AFNetworking",         "~> 2.0."
   s.dependency "AFNetworkActivityLogger", "~> 2.0"
-  s.dependency "CocoaLumberjack",      "~> 2.0"
+  s.dependency "CocoaLumberjack",      "~> 2.0.0"
   s.dependency "FXKeychain",           "~> 1.5.1"
   s.dependency "HKDFKit",              "~> 0.0.3"
   s.dependency "SodiumObjc" # ,           :git => "https://github.com/r-arias/SodiumObjc.git"
