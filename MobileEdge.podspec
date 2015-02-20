@@ -78,7 +78,7 @@ Pod::Spec.new do |s|
   #
 
   s.source       = { :git => "https://github.com/emundo/MobileEdge-iOS.git", 
-                     :tag => s.version.to_s }
+                     :tag => "v0.1.0" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

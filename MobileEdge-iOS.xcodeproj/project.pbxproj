@@ -23,7 +23,6 @@
 		235A002D1A1F837F0042318E /* MOBTorSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00131A1F837F0042318E /* MOBTorSettings.m */; };
 		235A002E1A1F837F0042318E /* MOBCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00171A1F837F0042318E /* MOBCore.m */; };
 		235A002F1A1F837F0042318E /* MOBError.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00191A1F837F0042318E /* MOBError.m */; };
-		235A00301A1F837F0042318E /* MOBHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A001B1A1F837F0042318E /* MOBHTTPRequestOperationManager.m */; };
 		235A00351A1F840F0042318E /* MOBTorInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00341A1F840F0042318E /* MOBTorInterface.m */; };
 		235A00381A1F84830042318E /* MOBAxolotlLocalTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A00371A1F84830042318E /* MOBAxolotlLocalTest.m */; };
 		235A003A1A1F84C30042318E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 235A00391A1F84C30042318E /* libz.dylib */; };
@@ -79,8 +78,6 @@
 		235A00171A1F837F0042318E /* MOBCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBCore.m; sourceTree = "<group>"; };
 		235A00181A1F837F0042318E /* MOBError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBError.h; sourceTree = "<group>"; };
 		235A00191A1F837F0042318E /* MOBError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBError.m; sourceTree = "<group>"; };
-		235A001A1A1F837F0042318E /* MOBHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBHTTPRequestOperationManager.h; sourceTree = "<group>"; };
-		235A001B1A1F837F0042318E /* MOBHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBHTTPRequestOperationManager.m; sourceTree = "<group>"; };
 		235A00331A1F840F0042318E /* MOBTorInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBTorInterface.h; sourceTree = "<group>"; };
 		235A00341A1F840F0042318E /* MOBTorInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOBTorInterface.m; sourceTree = "<group>"; };
 		235A00361A1F84240042318E /* MOBAnonymizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOBAnonymizer.h; sourceTree = "<group>"; };
@@ -161,8 +158,6 @@
 				235A00171A1F837F0042318E /* MOBCore.m */,
 				235A00181A1F837F0042318E /* MOBError.h */,
 				235A00191A1F837F0042318E /* MOBError.m */,
-				235A001A1A1F837F0042318E /* MOBHTTPRequestOperationManager.h */,
-				235A001B1A1F837F0042318E /* MOBHTTPRequestOperationManager.m */,
 				23A3C9791A66847D00A13612 /* MOBHTTPSessionManager.h */,
 				23A3C97A1A66847D00A13612 /* MOBHTTPSessionManager.m */,
 			);
@@ -450,7 +445,6 @@
 				235A002E1A1F837F0042318E /* MOBCore.m in Sources */,
 				235A002C1A1F837F0042318E /* NSDictionary+Protocol.m in Sources */,
 				23A3C97B1A66847D00A13612 /* MOBHTTPSessionManager.m in Sources */,
-				235A00301A1F837F0042318E /* MOBHTTPRequestOperationManager.m in Sources */,
 				235A00351A1F840F0042318E /* MOBTorInterface.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
