@@ -8,7 +8,7 @@ target "MobileEdge-iOS" do
 
 pod "AFNetworking",         "~> 2.0"
 pod "AFNetworkActivityLogger", "~> 2.0"
-pod "CocoaLumberjack",      "~> 2.0.0"
+pod "CocoaLumberjack",      "~> 2.0.0-rc2"
 pod "FXKeychain",           "~> 1.5.1"
 pod "HKDFKit",              "~> 0.0.3"
 pod "SodiumObjc",           :git => "https://github.com/r-arias/SodiumObjc.git"
