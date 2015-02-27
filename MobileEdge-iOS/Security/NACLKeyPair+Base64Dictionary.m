@@ -12,7 +12,16 @@
  */
 
 #import "NACLKeyPair+Base64Dictionary.h"
+#import "NACLKey+Base64.h"
 
 @implementation NACLKeyPair (Base64Dictionary)
+
+- (NSDictionary *) base64Dictionary
+{
+    return @{
+             @"privateKey" : [self.privateKey base64],
+             @"publicKey" : [self.publicKey base64]
+             };
+}
 
 @end

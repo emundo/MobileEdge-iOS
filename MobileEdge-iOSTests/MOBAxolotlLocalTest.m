@@ -23,7 +23,8 @@
 #import "MOBCore.h"
 #import "MOBAxolotl.h"
 #import "MOBProtocol.h"
-
+#import "HKDFKit+Strings.h"
+#import "MOBAxolotlChainKey.h"
 
 @interface MOBAxolotlLocalTest : XCTestCase
 
@@ -74,7 +75,7 @@
                                               error: nil];
         KeyExchangeSendBlockBob bobsSendingBlock = ^(NSDictionary *bobsKeyExchangeMessage)
         {
-            alicesFinalizeBlock ([NSJSONSerialization dataWithJSONObject: bobsKeyExchangeMessage options: 0 error: nil]);
+            alicesFinalizeBlock (bobsKeyExchangeMessage);
         };
         [self.bxolotl performKeyExchangeWithAlice: self.aRemote
                           usingKeyExchangeMessage: alicesKeyExchangeMessageData
@@ -393,6 +394,45 @@
     XCTAssert(decryptedMessageData, @"Decrypted message data should not be nil/NULL.");
     NSString *decryptedMessage = [[NSString alloc] initWithData: decryptedMessageData encoding: NSUTF8StringEncoding];
     XCTAssert([decryptedMessage isEqualToString: message1], @"Original: %@, Decrypted: %@", message1, decryptedMessage);
+}
+
+- (void) testHKDF
+{
+    NSData *inputKeyMaterial = [NSData dataWithBytes: "\xcf\x83\xe1\x35\x7e\xef\xb8\xbd\xf1\x54\x28\x50\xd6\x6d\x80\x07\xd6\x20\xe4\x05\x0b\x57\x15\xdc\x83\xf4\xa9\x21\xd3\x6c\xe9\xce\x47\xd0\xd1\x3c\x5d\x85\xf2\xb0\xff\x83\x18\xd2\x87\x7e\xec\x2f\x63\xb9\x31\xbd\x47\x41\x7a\x81\xa5\x38\x32\x7a\xf9\x27\xda\x3e" length: 64];
+    NSData *data = [HKDFKit deriveKey: inputKeyMaterial
+                           infoString: @"MobileEdge"
+                           saltString: @"salty"
+                           outputSize: 32];
+    NSLog(@"%@", data);
+    XCTAssert([[data description] isEqualToString:@"<e911aa16 3751af8e b1ca7f9f cb76adb9 45dc0f49 c67b21a1 d79cb458 788a3fd5>"]);
+}
+
+- (void) testChainKeyAdvance
+{
+    MOBAxolotlChainKey *chainKey = [[MOBAxolotlChainKey alloc] initWithKeyData: [NSMutableData dataWithLength: 32]];
+    NSData *copy = [chainKey.data copy];
+    NSLog(@"before:%@", chainKey.data);
+    [chainKey nextChainKey];
+    NSLog(@"after:%@", chainKey.data);
+    XCTAssert(![copy isEqualToData: chainKey.data]);
+}
+
+- (void) testChainKeyPersistence
+{
+    MOBAxolotlChainKey *chainKey = [[MOBAxolotlChainKey alloc] initWithKeyData: [NSMutableData dataWithLength: 32]];
+    [chainKey nextChainKey];
+    NSData *copy = [chainKey.data copy];
+    NSMutableData *archive = [NSMutableData data];
+    NSLog(@"before:%@", chainKey.data);
+    NSKeyedArchiver *coder = [[NSKeyedArchiver alloc] initForWritingWithMutableData: archive];
+    [chainKey encodeWithCoder: coder];
+    [coder finishEncoding];
+    chainKey = nil;
+    NSCoder *decoder = [[NSKeyedUnarchiver alloc] initForReadingWithData: archive];
+    chainKey = [decoder decodeObjectForKey: @"testKey"];
+    chainKey = [[MOBAxolotlChainKey alloc] initWithCoder: decoder];
+    NSLog(@"after:%@", chainKey.data);
+    XCTAssert([copy isEqualToData: chainKey.data]);
 }
 
 @end

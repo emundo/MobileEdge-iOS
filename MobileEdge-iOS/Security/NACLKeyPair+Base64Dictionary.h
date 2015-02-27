@@ -15,4 +15,6 @@
 
 @interface NACLKeyPair (Base64Dictionary)
 
+- (NSDictionary *) base64Dictionary;
+
 @end

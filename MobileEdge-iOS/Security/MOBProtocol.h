@@ -28,7 +28,7 @@
  *  This block is created by the protocol library and should be called in
  *  the KeyExchangeSendBlock provided by the library user.
  */
-typedef void (^KeyExchangeFinalizeBlock) (NSData *keyExchangeMessageIn);
+typedef void (^KeyExchangeFinalizeBlock) (NSDictionary *keyExchangeMessageIn);
 
 /**
  * @discussion A type for the block that is needed by the method that

@@ -46,4 +46,5 @@
  */
 - (NACLSymmetricPrivateKey *) nextMessageKey;
 
+- (void) nextChainKey;
 @end

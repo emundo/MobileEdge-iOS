@@ -30,6 +30,9 @@
  */
 @interface MOBAxolotl : NSObject  <MOBProtocol>
 
+
++ (instancetype) cachedProtocolForIdentity: (MOBIdentity *) identity;
+
 #ifdef DEBUG
 /**
  * @discussion Testing function to extract shared key material from the session.

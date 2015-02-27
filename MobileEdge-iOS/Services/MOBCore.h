@@ -28,6 +28,7 @@
 #import "MOBHTTPSessionManager.h"
 #import "MOBAnonymizerSettings.h"
 #import "MOBAnonymizer.h"
+#import "MOBProtocol.h"
 #import "MOBTorSettings.h"
 #import "MOBError.h"
 #import "NSDictionary+Protocol.h"

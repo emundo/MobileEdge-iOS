@@ -162,7 +162,7 @@ static NSURLSessionConfiguration *defaultConfiguration = nil;
     
     // We do have a matching remote. Prepare for sending an encrypted request.
     id <MOBProtocol> axolotl;
-    axolotl = [[MOBAxolotl alloc] initWithIdentity: self.myIdentity];
+    axolotl = [MOBAxolotl cachedProtocolForIdentity: self.myIdentity];
    
     
     // if a key exchange needs to be performed, handle success and failure:
@@ -225,12 +225,20 @@ static NSURLSessionConfiguration *defaultConfiguration = nil;
 #pragma mark -
 #pragma mark Helper methods
 
+//- (NSURL *) extendURL: (NSURL*) url
+//           withRemote: (MOBRemoteIdentity *) remote
+//{
+//    NSURL *result = [NSURL URLWithString: [url path] relativeToURL: remote.serviceURL];
+//    return result;
+//}
+
 - (NSURLSessionDataTask *) sendKeyExchangeMessage: (NSDictionary *) keyExchangeMessageOut
                                        forRequest: (NSURLRequest *) request
                                 completionHandler: (DataTaskCompletionHandler) completionHandler
 {
     NSError *error = nil;
-    NSData *keyExchangeDataOut = [NSJSONSerialization dataWithJSONObject: keyExchangeMessageOut
+    NSDictionary *keyExchangeMessageWrapper = [NSDictionary dictionaryWithObjectsAndKeys: @"KEYXC", @"type", keyExchangeMessageOut, @"keys", nil];
+    NSData *keyExchangeDataOut = [NSJSONSerialization dataWithJSONObject: keyExchangeMessageWrapper
                                                                  options: 0
                                                                    error: &error];
     if (error)
@@ -239,6 +247,8 @@ static NSURLSessionConfiguration *defaultConfiguration = nil;
         completionHandler(nil, nil, error);
         return nil;
     }
+    
+    
     NSMutableURLRequest *keyExchangeRequest = [NSMutableURLRequest requestWithURL: request.URL];
     [keyExchangeRequest setValue: @"application/json" forHTTPHeaderField: @"Content-Type"];
     [keyExchangeRequest setHTTPMethod: @"POST"];
@@ -255,13 +265,19 @@ static NSURLSessionConfiguration *defaultConfiguration = nil;
     NSDictionary *encryptedMessage = [aProtocol encryptData: aRequest.HTTPBody
                                                forRecipient: aRemoteIdentity
                                                       error: &error];
+    NSMutableDictionary *mutMessage = [NSMutableDictionary dictionaryWithDictionary:encryptedMessage];
+    mutMessage[@"type"] = @"CRYPT";
+    //NSDictionary *messageWrapper = @{
+    //                                 @"type" : @"CRYPT",
+    //                                 @"payload" : mutMessage
+    //                                 };
     if (error)
     {
         DDLogError(@"Error during encryption: %@ %@", error, error.userInfo);
         aCompletionHandler(nil, nil, error);
         return nil;
     }
-    NSData *encryptedData = [NSJSONSerialization dataWithJSONObject: encryptedMessage
+    NSData *encryptedData = [NSJSONSerialization dataWithJSONObject: mutMessage
                                                             options: 0
                                                               error: &error];
     if (error)
@@ -286,6 +302,7 @@ static NSURLSessionConfiguration *defaultConfiguration = nil;
                                 withProtocol: (id <MOBProtocol>) axolotl
                            completionHandler: (DataTaskCompletionHandler) completionHandler
 {
+    DDLogDebug(@"Handling request completion");
     if (error)
     { // An error occurred during the request.
         //TODO: check if this is a server side error that can be handled here.
@@ -326,6 +343,7 @@ static NSURLSessionConfiguration *defaultConfiguration = nil;
                                    finalizeBlock: (KeyExchangeFinalizeBlock) finalizeBlock
                                completionHandler: (DataTaskCompletionHandler) completionHandler
 {
+    DDLogDebug(@"Handling key exchange completion");
     if (error)
     { // An error occurred during the key exchange request.
         //TODO: check if this is a server side error that can be handled here.
@@ -336,11 +354,12 @@ static NSURLSessionConfiguration *defaultConfiguration = nil;
     // When the key exchange was successful and the server responds in an expected way,
     // the structure of the response should look as follows:
     // { "message" : { "id" : ..., "eph0" : ..., "eph1" : ... } }
-    finalizeBlock(responseObject[@"message"]);
-    [self encryptAndSendRequest: request
-                       toRemote: remoteIdentity
-                   withProtocol: axolotl
-              completionHandler: completionHandler];
+    finalizeBlock(responseObject);
+    NSURLSessionDataTask *dataTask = [self encryptAndSendRequest: request
+                                                        toRemote: remoteIdentity
+                                                    withProtocol: axolotl
+                                               completionHandler: completionHandler];
+    [dataTask resume];
 }
 
 #pragma mark -

@@ -35,6 +35,7 @@
 #import <sodium/crypto_auth_hmacsha256.h>
 #import <FXKeychain.h>
 
+static NSMutableDictionary *cachedAxolotls = nil;
 #pragma mark -
 #pragma mark Class Extension
 
@@ -54,6 +55,22 @@
 #pragma mark Implementation
 
 @implementation MOBAxolotl
+
++ (instancetype) cachedProtocolForIdentity: (MOBIdentity *) identity
+{
+    MOBAxolotl *axolotl = nil;
+    if (!cachedAxolotls)
+    {
+        cachedAxolotls = [NSMutableDictionary dictionaryWithObject: [[MOBAxolotl alloc] initWithIdentity: identity]
+                                                            forKey: [identity base64]];
+    }
+    if (!(axolotl = cachedAxolotls[[identity base64]]))
+    {
+        cachedAxolotls[[identity base64]] = [[MOBAxolotl alloc] initWithIdentity: identity];
+    }
+    return cachedAxolotls[[identity base64]];
+}
+
 
 - (instancetype) initWithIdentity: (MOBIdentity *) aIdentity
 {
@@ -100,6 +117,7 @@
     }
     
     // Derive a new message key from chain key":
+    DDLogDebug(@"Deriving key from chain key: \n%@", session.senderChainKey.data);
     NACLSymmetricPrivateKey *messageKey = [session.senderChainKey nextMessageKey];
     
     // generate nonces:
@@ -111,6 +129,7 @@
                                                            nonce: nonce1
                                                            error: nil]; // TODO: error handling
     
+    DDLogDebug(@"Encrypted message with key: \n%@\nfor Identity: %@", messageKey.data, [aRecipient base64]);
     // encrypt Axolotl header:
     NSArray *header = [NSArray arrayWithObjects:
                        [NSNumber numberWithUnsignedInteger: session.messagesSentCount],
@@ -284,7 +303,7 @@
                        theirEphemeral: (NACLAsymmetricPublicKey *) aTheirEphemeral
 {
     NSData *diffieHellman = [aOurEphemeral multWithKey: aTheirEphemeral].data;
-    NSMutableData *inputKeyMaterial = [NSMutableData dataWithCapacity: (256 / 8)];
+    NSMutableData *inputKeyMaterial = [NSMutableData dataWithLength: (256 / 8)];
     crypto_auth_hmacsha256(inputKeyMaterial.mutableBytes,
                            diffieHellman.bytes,
                            [diffieHellman length],
@@ -475,13 +494,10 @@
     [keyExchangeMessageOut setObject:[self.identity.identityKey.data base64EncodedStringWithOptions: 0] forKey:@"id"];
     [keyExchangeMessageOut setObject:[myEphemeralKeyPair.publicKey.data base64EncodedStringWithOptions: 0] forKey:@"eph0"];
     KeyExchangeFinalizeBlock finalizeBlock;
-    finalizeBlock = ^(NSData *theirKeyExchangeMessage)
+    finalizeBlock = ^(NSDictionary *keyExchangeMessageIn)
     {
         MOBAxolotlSession *newSession = [[MOBAxolotlSession alloc] initWithMyIdentityKeyPair: self.identity.identityKeyPair
                                                                             theirIdentityKey: aBob.identityKey];
-        NSDictionary *keyExchangeMessageIn = [NSJSONSerialization JSONObjectWithData: theirKeyExchangeMessage
-                                                                             options: 0
-                                                                               error: nil]; // TODO: error / conversion might already have been handled!
         [newSession finishKeyAgreementWithKeyExchangeMessage: keyExchangeMessageIn
                                           myEphemeralKeyPair: myEphemeralKeyPair];
         [self addSession:newSession forRemote:aBob];
