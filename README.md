@@ -58,7 +58,7 @@ lines to use MobileEdge in your iOS project.
 ```ruby
 pod "SodiumObjc",          :git => "https://github.com/r-arias/SodiumObjc.git"
 pod "CPAProxy",            :git => "https://github.com/ursachec/CPAProxy.git"
-pod "MobileEdge",          "~> 0.0", :git => "https://github.com/emundo/MobileEdge-iOS.git"  
+pod "MobileEdge",          "~> 0.1.1", :git => "https://github.com/emundo/MobileEdge-iOS.git"  
 ```
 
 ##Known issues
